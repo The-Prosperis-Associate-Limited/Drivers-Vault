@@ -8,6 +8,7 @@ const ROUTES = {
   AUTH: "/auth",
   DASHBOARD: "/dashboard",
   ONBOARDING: "/onboarding",
+  MARKETPLACE: "/marketplace",
 } as const;
 
 // The emailed verification link lands here with a token, and the Google
@@ -66,7 +67,8 @@ export default function proxy(request: NextRequest) {
 
   if (
     pathname.startsWith(ROUTES.DASHBOARD) ||
-    pathname.startsWith(ROUTES.ONBOARDING)
+    pathname.startsWith(ROUTES.ONBOARDING) ||
+    pathname.startsWith(ROUTES.MARKETPLACE)
   ) {
     if (!hasValidSession) return redirectToLogin();
 
@@ -79,5 +81,10 @@ export default function proxy(request: NextRequest) {
 
 // "/" is the public landing page, so unlike the driver app it is not matched.
 export const config = {
-  matcher: ["/auth/:path*", "/dashboard/:path*", "/onboarding/:path*"],
+  matcher: [
+    "/auth/:path*",
+    "/dashboard/:path*",
+    "/onboarding/:path*",
+    "/marketplace/:path*",
+  ],
 };

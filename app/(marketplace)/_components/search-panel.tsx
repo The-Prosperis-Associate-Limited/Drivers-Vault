@@ -1,0 +1,117 @@
+"use client";
+
+import { AppSelect } from "@/components/shared/app-select";
+import { Button } from "@/components/ui/button";
+import { BUDGET_RANGE_OPTIONS, cn, DRIVER_TYPE_OPTIONS } from "@/lib/utils";
+import { City, State } from "country-state-city";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+
+export interface SearchFilters {
+  driver_type?: string;
+  state?: string;
+  city?: string;
+  budget?: string;
+}
+
+interface Props {
+  defaults?: SearchFilters;
+  buttonLabel?: string;
+  className?: string;
+}
+
+// The marketplace is Nigeria-only for now — "Verified hiring for Nigeria".
+const NIGERIA = "NG";
+
+export const SearchPanel = function ({
+  defaults,
+  buttonLabel = "Search",
+  className,
+}: Props) {
+  const router = useRouter();
+
+  const [driverType, setDriverType] = useState(defaults?.driver_type ?? "");
+  const [state, setState] = useState(defaults?.state ?? "");
+  const [city, setCity] = useState(defaults?.city ?? "");
+  const [budget, setBudget] = useState(defaults?.budget ?? "");
+
+  const states = useMemo(
+    () =>
+      State.getStatesOfCountry(NIGERIA).map((entry) => ({
+        value: entry.name,
+        label: `${entry.name}, Nigeria`,
+      })),
+    [],
+  );
+
+  const cities = useMemo(() => {
+    const iso = State.getStatesOfCountry(NIGERIA).find(
+      (entry) => entry.name === state,
+    )?.isoCode;
+    if (!iso) return [];
+
+    return City.getCitiesOfState(NIGERIA, iso).map((entry) => ({
+      value: entry.name,
+      label: entry.name,
+    }));
+  }, [state]);
+
+  const onSearch = () => {
+    const params = new URLSearchParams();
+    if (driverType) params.set("driver_type", driverType);
+    if (state) params.set("state", state);
+    if (city) params.set("city", city);
+    if (budget) params.set("budget", budget);
+
+    router.push(`/marketplace/search?${params.toString()}`);
+  };
+
+  return (
+    <div
+      className={cn(
+        "grid grid-cols-1 items-end gap-4 rounded-2xl bg-white p-5 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_auto]",
+        className,
+      )}
+    >
+      <AppSelect
+        label="Category"
+        placeholder="Any category"
+        options={DRIVER_TYPE_OPTIONS}
+        value={driverType || null}
+        onValueChange={(value) => setDriverType(value ?? "")}
+      />
+
+      <AppSelect
+        label="State, Country"
+        placeholder="Anywhere in Nigeria"
+        options={states}
+        value={state || null}
+        onValueChange={(value) => {
+          setState(value ?? "");
+          setCity("");
+        }}
+      />
+
+      <AppSelect
+        label="Local Government"
+        placeholder={state ? "Any area" : "Pick a state first"}
+        options={cities}
+        value={city || null}
+        onValueChange={(value) => setCity(value ?? "")}
+        disabled={!state}
+      />
+
+      <AppSelect
+        label="Salary Budget"
+        placeholder="Any budget"
+        options={BUDGET_RANGE_OPTIONS}
+        value={budget || null}
+        onValueChange={(value) => setBudget(value ?? "")}
+      />
+
+      <Button onClick={onSearch} className="h-12 rounded-xl px-8 text-sm">
+        {buttonLabel}
+      </Button>
+    </div>
+  );
+};

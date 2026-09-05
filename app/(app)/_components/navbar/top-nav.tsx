@@ -7,8 +7,8 @@ import { API_ENDPOINTS } from "@/lib/endpoints";
 import { Bell, Headset } from "lucide-react";
 import { useState } from "react";
 import type { APIResponse } from "@/types/response";
-import { NotificationsSheet } from "../notifications-sheet";
-import { SupportSheet } from "../support/support-sheet";
+import { NotificationsSheet } from "@/components/notifications/notifications-sheet";
+import { SupportSheet } from "@/components/support/support-sheet";
 
 interface Props {
   mobileTrigger?: React.ReactNode;

@@ -229,6 +229,33 @@ export const BUDGET_RANGE_OPTIONS: { value: BudgetRange; label: string }[] = [
   { value: "RANGE_301K_PLUS", label: "₦301k / per month and above" },
 ];
 
+// Kobo bounds per budget option — what the search actually sends. Kept beside
+// the labels so a new range is one entry, not two edits.
+export const BUDGET_RANGE_BOUNDS: Record<
+  BudgetRange,
+  { min?: number; max?: number }
+> = {
+  RANGE_150_200K: { min: 15_000_000, max: 20_000_000 },
+  RANGE_201_250K: { min: 20_100_000, max: 25_000_000 },
+  RANGE_251_300K: { min: 25_100_000, max: 30_000_000 },
+  RANGE_301K_PLUS: { min: 30_100_000 },
+};
+
+export const driverTypeLabel = function (type?: string | null) {
+  if (!type) return "Driver";
+  return (
+    DRIVER_TYPE_OPTIONS.find((option) => option.value === type)?.label ??
+    prettifyEnum(type)
+  );
+};
+
+export const prettifyEnum = (value: string) =>
+  value
+    .toLowerCase()
+    .split("_")
+    .map((word) => word[0]?.toUpperCase() + word.slice(1))
+    .join(" ");
+
 export const TICKET_CATEGORIES = [
   { value: "ACCOUNT", label: "Account" },
   { value: "BOOKING", label: "Booking" },
