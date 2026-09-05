@@ -2,6 +2,13 @@ import { QueryClient } from "@tanstack/react-query";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { format } from "date-fns";
+import type {
+  AssignmentType,
+  BudgetRange,
+  ClientDriverCategory,
+  DriversNeededRange,
+  HiringTimeline,
+} from "@/types/auth";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,9 +32,10 @@ export const isSafeCallback = function (url: string | null): url is string {
 
 // This app is the client surface. A driver signing in here has an account but
 // no screens, so they are sent to their own surface rather than dropped into a
-// dashboard built for clients.
+// dashboard built for clients. A client lands on the wizard, which forwards
+// anyone already onboarded to the dashboard.
 export const handleSigninRedirect = function (role: string) {
-  if (role === "CLIENT") return "/dashboard";
+  if (role === "CLIENT") return "/onboarding";
   return "/";
 };
 
@@ -133,4 +141,90 @@ export const DRIVER_TYPE_OPTIONS = [
   { value: "LOGISTICS_DRIVER", label: "Logistics Driver" },
   { value: "RIDE_HAILING_DRIVER", label: "Ride Hailing Driver" },
   { value: "HEAVY_DUTY_DRIVER", label: "Heavy Duty Driver" },
+];
+
+/*
+================= NOTE: onboarding — the step order the wizard runs in, and the
+option lists its cards render. Values mirror the server enums exactly — a value
+that is not in the server enum is a 400 the client cannot fix.
+*/
+
+export const ONBOARDING_STEPS = [
+  { path: "/onboarding/hire-type", label: "How will you hire?" },
+  { path: "/onboarding/category", label: "Category of drivers" },
+  { path: "/onboarding/capacity", label: "How many, and for how long" },
+  { path: "/onboarding/location", label: "Where and when" },
+  { path: "/onboarding/budget", label: "Budget per driver" },
+] as const;
+
+export const CLIENT_DRIVER_CATEGORY_OPTIONS: {
+  value: ClientDriverCategory;
+  label: string;
+  blurb: string;
+}[] = [
+  {
+    value: "CONTRACT",
+    label: "Contract driver",
+    blurb: "Hiring for myself or family",
+  },
+  {
+    value: "PRIVATE",
+    label: "Private driver",
+    blurb: "Hiring for myself or family",
+  },
+  {
+    value: "CORPORATE",
+    label: "Corporate driver",
+    blurb: "Hiring for a company",
+  },
+  {
+    value: "EXECUTIVE",
+    label: "Executive driver",
+    blurb: "Hiring for myself or family",
+  },
+  {
+    value: "SPY",
+    label: "Spy drivers",
+    blurb: "Hiring for myself or family",
+  },
+  {
+    value: "EXPATRIATE",
+    label: "Expatriate drivers",
+    blurb: "Hiring for a company",
+  },
+];
+
+export const DRIVERS_NEEDED_OPTIONS: {
+  value: DriversNeededRange;
+  label: string;
+}[] = [
+  { value: "ONE", label: "1" },
+  { value: "TWO_TO_FIVE", label: "2–5" },
+  { value: "SIX_TO_FIFTEEN", label: "6–15" },
+  { value: "SIXTEEN_PLUS", label: "16+" },
+];
+
+export const ASSIGNMENT_TYPE_OPTIONS: {
+  value: AssignmentType;
+  label: string;
+}[] = [
+  { value: "PERMANENT", label: "Permanent" },
+  { value: "TEMPORARY", label: "Temporary / Short-term" },
+];
+
+export const HIRING_TIMELINE_OPTIONS: {
+  value: HiringTimeline;
+  label: string;
+}[] = [
+  { value: "IMMEDIATELY", label: "Immediately" },
+  { value: "WITHIN_TWO_WEEKS", label: "Within 2 weeks" },
+  { value: "THIS_MONTH", label: "This month" },
+  { value: "EXPLORING", label: "Just exploring" },
+];
+
+export const BUDGET_RANGE_OPTIONS: { value: BudgetRange; label: string }[] = [
+  { value: "RANGE_150_200K", label: "₦150k – ₦200k / month" },
+  { value: "RANGE_201_250K", label: "₦201k – ₦250k / month" },
+  { value: "RANGE_251_300K", label: "₦251k – ₦300k / month" },
+  { value: "RANGE_301K_PLUS", label: "₦301k / per month and above" },
 ];

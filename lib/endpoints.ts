@@ -24,6 +24,11 @@ export const API_ENDPOINTS = {
     reviews: (id: string) => `/client/drivers/${id}/reviews`,
   },
 
+  onboarding: {
+    preferences: "/client/onboarding",
+    complete: "/client/onboarding/complete",
+  },
+
   bookings: {
     list: ({ page, limit }: { page: number; limit: number }) =>
       `/client/bookings?page=${page}&limit=${limit}`,
