@@ -228,3 +228,11 @@ export const BUDGET_RANGE_OPTIONS: { value: BudgetRange; label: string }[] = [
   { value: "RANGE_251_300K", label: "₦251k – ₦300k / month" },
   { value: "RANGE_301K_PLUS", label: "₦301k / per month and above" },
 ];
+
+export const TICKET_CATEGORIES = [
+  { value: "ACCOUNT", label: "Account" },
+  { value: "BOOKING", label: "Booking" },
+  { value: "PAYMENT", label: "Payment" },
+  { value: "BUG_REPORT", label: "Report an issue" },
+  { value: "OTHER", label: "Other" },
+];

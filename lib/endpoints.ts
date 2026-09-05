@@ -29,6 +29,10 @@ export const API_ENDPOINTS = {
     complete: "/client/onboarding/complete",
   },
 
+  dashboard: {
+    stats: "/client/dashboard/stats",
+  },
+
   bookings: {
     list: ({ page, limit }: { page: number; limit: number }) =>
       `/client/bookings?page=${page}&limit=${limit}`,
@@ -46,5 +50,13 @@ export const API_ENDPOINTS = {
     markAsRead: (id: string) => `/notifications/${id}/read`,
     markAllAsRead: "/notifications/read-all",
     remove: (id: string) => `/notifications/${id}`,
+  },
+
+  tickets: {
+    create: "/tickets",
+    list: ({ page, limit }: { page: number; limit: number }) =>
+      `/tickets?page=${page}&limit=${limit}`,
+    get: (id: string) => `/tickets/${id}`,
+    comment: (id: string) => `/tickets/${id}/comments`,
   },
 } as const;
