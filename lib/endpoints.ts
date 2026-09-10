@@ -31,6 +31,32 @@ export const API_ENDPOINTS = {
 
   dashboard: {
     stats: "/client/dashboard/stats",
+    overview: "/client/dashboard/overview",
+  },
+
+  hires: {
+    list: ({ page, limit }: { page: number; limit: number }) =>
+      `/client/hires?page=${page}&limit=${limit}`,
+    detail: (reference: string) => `/client/hires/${reference}`,
+  },
+
+  wallet: {
+    get: "/client/wallet",
+    transactions: ({
+      page,
+      limit,
+      type,
+    }: {
+      page: number;
+      limit: number;
+      type?: string;
+    }) =>
+      `/client/wallet/transactions?page=${page}&limit=${limit}${type ? `&type=${type}` : ""}`,
+    summary: "/client/wallet/summary",
+    quote: (amountMinor: number) =>
+      `/client/wallet/quote?amount_minor=${amountMinor}`,
+    pay: "/client/wallet/pay",
+    sync: "/client/wallet/sync",
   },
 
   bookings: {

@@ -1,9 +1,10 @@
 import {
   BookOpen,
-  Briefcase,
-  CreditCard,
+  BriefcaseBusiness,
   LayoutGrid,
+  ReceiptText,
   Settings,
+  WalletMinimal,
   type LucideIcon,
 } from "lucide-react";
 
@@ -15,9 +16,14 @@ export interface NavLink {
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Overview", href: "/dashboard", icon: LayoutGrid },
-  { label: "My drivers", href: "/dashboard/my-drivers", icon: Briefcase },
+  { label: "My Hire", href: "/dashboard/my-hire", icon: BriefcaseBusiness },
   { label: "Request", href: "/dashboard/requests", icon: BookOpen },
-  { label: "Billings and plan", href: "/dashboard/billing", icon: CreditCard },
+  { label: "Wallet", href: "/dashboard/wallet", icon: WalletMinimal },
+  {
+    label: "Transactions",
+    href: "/dashboard/transactions",
+    icon: ReceiptText,
+  },
 ];
 
 export const FOOTER_LINKS: NavLink[] = [

@@ -73,6 +73,31 @@ export const toMinorUnits = (amount: number) => Math.round(amount * 100);
 
 export const toMajorUnits = (minor: number) => minor / 100;
 
+// ₦405k — the overview stat card format. Falls back to the full figure below
+// four digits, where compacting saves nothing.
+export const formatMoneyCompact = function (
+  minor: number | undefined,
+  currency = "NGN",
+) {
+  const major = (minor ?? 0) / 100;
+  const symbol =
+    currencyMapper[currency as keyof typeof currencyMapper] ?? `${currency} `;
+
+  if (major >= 1_000_000)
+    return `${symbol}${(major / 1_000_000).toFixed(major % 1_000_000 === 0 ? 0 : 1)}M`;
+  if (major >= 1_000) return `${symbol}${Math.round(major / 1_000)}k`;
+
+  return formatMoney(minor, currency);
+};
+
+export const ENGAGEMENT_TYPE_LABELS: Record<string, string> = {
+  ONE_OFF: "One-off",
+  DAILY: "Daily",
+  WEEKLY: "Weekly",
+  MONTHLY: "Full-time",
+  CONTRACT: "Contract",
+};
+
 export function formatRelativeTime(date: string | Date) {
   const now = new Date();
   const then = new Date(date);
