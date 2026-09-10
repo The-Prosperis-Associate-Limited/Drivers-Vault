@@ -14,6 +14,7 @@ import { useState } from "react";
 import type { APIResponse } from "@/types/response";
 import type { WalletSummary, WalletTransaction } from "@/types/wallet";
 import { useWalletTransactions } from "../wallet/_hooks/use-wallet";
+import { ReceiptDialog } from "./_components/receipt-dialog";
 
 const PAGE_SIZE = 10;
 
@@ -39,6 +40,7 @@ const STATUS_STYLES: Record<string, { label: string; className: string }> = {
 
 export default function TransactionsPage() {
   const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState<WalletTransaction | null>(null);
 
   const { data: summaryData } = useGetData<APIResponse<WalletSummary>>({
     url: API_ENDPOINTS.wallet.summary,
@@ -198,7 +200,8 @@ export default function TransactionsPage() {
                     return (
                       <tr
                         key={transaction.id}
-                        className="border-border border-b last:border-0"
+                        onClick={() => setSelected(transaction)}
+                        className="border-border hover:bg-muted/30 cursor-pointer border-b last:border-0"
                       >
                         <td className="px-5 py-4">{transaction.reference}</td>
                         <td className="px-5 py-4">{staffName(transaction)}</td>
@@ -235,7 +238,8 @@ export default function TransactionsPage() {
                 return (
                   <div
                     key={transaction.id}
-                    className="border-border rounded-xl border p-4"
+                    onClick={() => setSelected(transaction)}
+                    className="border-border cursor-pointer rounded-xl border p-4"
                   >
                     <span className="flex items-center justify-between gap-2">
                       <AppText type="label" className="text-sm">
@@ -270,6 +274,11 @@ export default function TransactionsPage() {
           </Pagination>
         )}
       </div>
+
+      <ReceiptDialog
+        transaction={selected}
+        onOpenChange={(open) => !open && setSelected(null)}
+      />
     </div>
   );
 }

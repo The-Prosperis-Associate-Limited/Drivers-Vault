@@ -11,8 +11,8 @@ import { ArrowLeft, ArrowRight, SearchX } from "lucide-react";
 import Image from "next/image";
 import { State } from "country-state-city";
 import { useMemo, useState } from "react";
-import { SearchPanel } from "../_components/search-panel";
-import { useDriverSearch } from "../_hooks/use-driver-search";
+import { SearchPanel } from "@/components/drivers/search-panel";
+import { useDriverSearch } from "@/hooks/use-driver-search";
 
 const PAGE_SIZE = 6;
 

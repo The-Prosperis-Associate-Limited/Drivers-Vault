@@ -1,6 +1,5 @@
 "use client";
 
-import { DriverProfileDialog } from "@/components/drivers/driver-profile-dialog";
 import { AppText } from "@/components/shared/app-text";
 import { BackLink } from "@/components/shared/back-link";
 import { StarRating } from "@/components/shared/star-rating";
@@ -20,6 +19,7 @@ import { use, useState } from "react";
 import { MakePaymentDialog } from "../_components/make-payment-dialog";
 import { ReviewCard } from "../_components/review-card";
 import { useHire } from "../_hooks/use-hires";
+import Link from "next/link";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -30,7 +30,6 @@ export default function HireDetail({
 }) {
   const { reference } = use(params);
   const [payOpen, setPayOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
 
   const { hire, isFetching } = useHire(reference);
 
@@ -238,9 +237,11 @@ export default function HireDetail({
             <Button
               variant="outline"
               className="mt-5 h-11 w-full rounded-xl text-sm"
-              onClick={() => setProfileOpen(true)}
+              asChild
             >
-              View Full profile
+              <Link href={`/dashboard/drivers/${hire.driver?.id}`}>
+                View Full profile
+              </Link>
             </Button>
           </div>
 
@@ -265,13 +266,6 @@ export default function HireDetail({
         isOpen={payOpen}
         onOpenChange={setPayOpen}
       />
-
-      {profileOpen && hire.driver && (
-        <DriverProfileDialog
-          driverUserId={hire.driver.id}
-          onOpenChange={(open) => !open && setProfileOpen(false)}
-        />
-      )}
     </div>
   );
 }

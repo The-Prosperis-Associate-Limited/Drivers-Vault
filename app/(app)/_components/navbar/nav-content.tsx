@@ -68,7 +68,7 @@ export const NavContent = function ({ user, onNavigate }: Props) {
 
       <div className="px-3">
         <Link
-          href="/marketplace"
+          href="/dashboard/requests/find-talent"
           onClick={onNavigate}
           className="border-border hover:border-brand/40 text-ink flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors"
         >

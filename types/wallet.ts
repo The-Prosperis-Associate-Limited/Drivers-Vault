@@ -33,6 +33,7 @@ export interface WalletTransaction {
   booking: {
     reference: string;
     title: string;
+    driver_type: string | null;
     driver: { first_name: string | null; last_name: string | null } | null;
   } | null;
 }

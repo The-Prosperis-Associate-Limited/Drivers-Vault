@@ -18,6 +18,9 @@ interface Props {
   defaults?: SearchFilters;
   buttonLabel?: string;
   className?: string;
+  // When set, the panel stays put and hands the filters over instead of
+  // navigating to the marketplace results page.
+  onSearch?: (filters: SearchFilters) => void;
 }
 
 // The marketplace is Nigeria-only for now — "Verified hiring for Nigeria".
@@ -27,6 +30,7 @@ export const SearchPanel = function ({
   defaults,
   buttonLabel = "Search",
   className,
+  onSearch,
 }: Props) {
   const router = useRouter();
 
@@ -56,12 +60,17 @@ export const SearchPanel = function ({
     }));
   }, [state]);
 
-  const onSearch = () => {
-    const params = new URLSearchParams();
-    if (driverType) params.set("driver_type", driverType);
-    if (state) params.set("state", state);
-    if (city) params.set("city", city);
-    if (budget) params.set("budget", budget);
+  const submit = () => {
+    const filters: SearchFilters = {
+      ...(driverType && { driver_type: driverType }),
+      ...(state && { state }),
+      ...(city && { city }),
+      ...(budget && { budget }),
+    };
+
+    if (onSearch) return onSearch(filters);
+
+    const params = new URLSearchParams(filters as Record<string, string>);
 
     router.push(`/marketplace/search?${params.toString()}`);
   };
@@ -109,7 +118,7 @@ export const SearchPanel = function ({
         onValueChange={(value) => setBudget(value ?? "")}
       />
 
-      <Button onClick={onSearch} className="h-12 rounded-xl px-8 text-sm">
+      <Button onClick={submit} className="h-12 rounded-xl px-8 text-sm">
         {buttonLabel}
       </Button>
     </div>

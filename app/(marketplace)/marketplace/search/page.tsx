@@ -13,8 +13,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
-import { SearchPanel } from "../../_components/search-panel";
-import { useDriverSearch } from "../../_hooks/use-driver-search";
+import { SearchPanel } from "@/components/drivers/search-panel";
+import { useDriverSearch } from "@/hooks/use-driver-search";
 
 const PAGE_SIZE = 6;
 

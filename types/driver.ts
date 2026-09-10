@@ -37,6 +37,7 @@ export interface DriverSearchResult {
   rate_currency: string;
   rating: number;
   review_count: number;
+  certification_titles: string[];
   user: DriverPublicUser;
 }
 
