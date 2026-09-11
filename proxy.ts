@@ -5,24 +5,31 @@ import type { UserRole } from "./types/auth";
 // ── Route constants ──
 const ROUTES = {
   LOGIN: "/auth/signin",
+  DRIVER_LOGIN: "/driver/auth/signin",
   AUTH: "/auth",
+  DRIVER_AUTH: "/driver/auth",
   DASHBOARD: "/dashboard",
   ONBOARDING: "/onboarding",
   MARKETPLACE: "/marketplace",
+  DRIVER: "/driver",
 } as const;
 
 // The emailed verification link lands here with a token, and the Google
 // redirect lands on signin with one. Both have to reach the page while a stale
 // session cookie is still sitting in the browser, so they bypass the
 // already-signed-in bounce.
-const AUTH_BYPASS_PATHS = ["/auth/email-verified", "/auth/reset-password"];
+const AUTH_BYPASS_PATHS = [
+  "/auth/email-verified",
+  "/auth/reset-password",
+  "/driver/auth/email-verified",
+  "/driver/auth/reset-password",
+];
 
-// This app is the client surface. A driver or admin signing in here has an
-// account but no screens, so they are sent to their own surface rather than
-// dropped into a dashboard built for clients.
+// One codebase, three surfaces — the session type decides which one a
+// signed-in visitor belongs to. UX only; every endpoint checks the role itself.
 const SURFACE_FOR_ROLE: Record<UserRole, string> = {
   CLIENT: ROUTES.DASHBOARD,
-  DRIVER: process.env.NEXT_PUBLIC_DRIVER_APP_URL ?? ROUTES.LOGIN,
+  DRIVER: "/driver/dashboard",
   ADMIN: process.env.NEXT_PUBLIC_ADMIN_APP_URL ?? ROUTES.LOGIN,
 };
 
@@ -46,10 +53,13 @@ export default function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(path, request.url));
   };
 
-  // Carries the originally-requested path so the client lands where they were
-  // going rather than on the dashboard.
+  // Carries the originally-requested path so the visitor lands where they were
+  // going rather than on the dashboard. Driver paths get the driver signin.
   const redirectToLogin = () => {
-    const loginUrl = new URL(ROUTES.LOGIN, request.url);
+    const login = pathname.startsWith(ROUTES.DRIVER)
+      ? ROUTES.DRIVER_LOGIN
+      : ROUTES.LOGIN;
+    const loginUrl = new URL(login, request.url);
     loginUrl.searchParams.set("callbackUrl", pathname + request.nextUrl.search);
     return NextResponse.redirect(loginUrl);
   };
@@ -61,8 +71,18 @@ export default function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (pathname.startsWith(ROUTES.AUTH)) {
+  if (
+    pathname.startsWith(ROUTES.DRIVER_AUTH) ||
+    pathname.startsWith(ROUTES.AUTH)
+  ) {
     return hasValidSession ? redirectTo(homeForSession()) : NextResponse.next();
+  }
+
+  // The driver area: everything except its auth pages needs a driver session.
+  if (pathname.startsWith(ROUTES.DRIVER)) {
+    if (!hasValidSession) return redirectToLogin();
+    if (sessionType !== "DRIVER") return redirectTo(homeForSession());
+    return NextResponse.next();
   }
 
   if (
@@ -79,12 +99,13 @@ export default function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
-// "/" is the public landing page, so unlike the driver app it is not matched.
+// "/" is the public landing page, so it is not matched.
 export const config = {
   matcher: [
     "/auth/:path*",
     "/dashboard/:path*",
     "/onboarding/:path*",
     "/marketplace/:path*",
+    "/driver/:path*",
   ],
 };

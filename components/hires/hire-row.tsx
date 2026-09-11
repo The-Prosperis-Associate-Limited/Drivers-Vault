@@ -4,7 +4,7 @@ import { AppText } from "@/components/shared/app-text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   driverTypeLabel,
-  ENGAGEMENT_TYPE_LABELS,
+  HIRE_ENGAGEMENT_LABELS,
   formatDate,
   formatMoney,
   getInitials,
@@ -50,7 +50,7 @@ export const HireRow = function ({ hire }: Props) {
             className="text-muted-foreground mt-0.5 block truncate"
           >
             {driverTypeLabel(hire.driver_type)} ·{" "}
-            {ENGAGEMENT_TYPE_LABELS[hire.engagement_type]} · since{" "}
+            {HIRE_ENGAGEMENT_LABELS[hire.engagement_type]} · since{" "}
             {formatDate(hire.starts_at)}
           </AppText>
           {route && (

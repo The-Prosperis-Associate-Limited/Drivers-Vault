@@ -20,11 +20,19 @@ const CONFIG = {
   },
   ROUTES: {
     LOGIN: "/auth/signin",
+    DRIVER_LOGIN: "/driver/auth/signin",
   },
   REQUESTS: {
     TIMEOUT: 120000, // 2 MINUTE
   },
 } as const;
+
+// Read before clearAuthCookies wipes it — a signed-out driver belongs on the
+// driver signin, everyone else on the client one.
+const loginRouteForSession = () =>
+  Cookies.get("session_type") === "DRIVER"
+    ? CONFIG.ROUTES.DRIVER_LOGIN
+    : CONFIG.ROUTES.LOGIN;
 
 // Types
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -134,10 +142,11 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       if (globalRetryCount >= CONFIG.MAX_RETRY_ATTEMPTS) {
+        const login = loginRouteForSession();
         clearAuthCookies();
         setTimeout(() => {
           if (typeof window !== "undefined") {
-            window.location.href = CONFIG.ROUTES.LOGIN;
+            window.location.href = login;
           }
         }, 2000);
         return Promise.reject(
@@ -182,13 +191,14 @@ api.interceptors.response.use(
       } catch (refreshError) {
         onRefreshed(null);
         isRefreshing = false;
+        const login = loginRouteForSession();
         clearAuthCookies();
         setTimeout(() => {
           if (
             typeof window !== "undefined" &&
-            !window.location.pathname.startsWith("/auth")
+            !window.location.pathname.includes("/auth")
           ) {
-            window.location.href = CONFIG.ROUTES.LOGIN;
+            window.location.href = login;
           }
         }, 2000);
         return Promise.reject(refreshError);

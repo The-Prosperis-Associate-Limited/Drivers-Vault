@@ -2,6 +2,25 @@ import { QueryClient } from "@tanstack/react-query";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { format } from "date-fns";
+import {
+  AlertTriangle,
+  BadgeCheck,
+  Banknote,
+  Briefcase,
+  CheckCircle2,
+  FileText,
+  GraduationCap,
+  Info,
+  LucideIcon,
+  MessageSquare,
+  XCircle,
+} from "lucide-react";
+import type { DriverVerificationStatus, OnboardingStep } from "@/types/driver";
+import type {
+  BookingParty,
+  BookingStatus,
+  EngagementType,
+} from "@/types/booking";
 import type {
   AssignmentType,
   BudgetRange,
@@ -30,13 +49,125 @@ export const isSafeCallback = function (url: string | null): url is string {
   return !!url && url.startsWith("/") && !url.startsWith("//");
 };
 
-// This app is the client surface. A driver signing in here has an account but
-// no screens, so they are sent to their own surface rather than dropped into a
-// dashboard built for clients. A client lands on the wizard, which forwards
-// anyone already onboarded to the dashboard.
+// One codebase, three surfaces: a client lands on their wizard (which forwards
+// once completed), a driver on the driver dashboard. Admin screens are unbuilt.
 export const handleSigninRedirect = function (role: string) {
+  if (role === "DRIVER") return "/driver/dashboard";
   if (role === "CLIENT") return "/onboarding";
   return "/";
+};
+
+/*
+================= NOTE: onboarding — the step order the wizard runs in. The
+server returns onboarding_step and never moves it backwards, so this is only
+used to turn that value into a route.
+*/
+
+export const ONBOARDING_STEPS: {
+  step: OnboardingStep;
+  path: string;
+  label: string;
+}[] = [
+  {
+    step: "PERSONAL_INFORMATION",
+    path: "/driver/onboarding/personal-information",
+    label: "Personal Information",
+  },
+  {
+    step: "EXPERIENCE",
+    path: "/driver/onboarding/experience",
+    label: "Years of Experience",
+  },
+  {
+    step: "ACADEMIC_QUALIFICATION",
+    path: "/driver/onboarding/academic-qualification",
+    label: "Academic Qualification",
+  },
+  {
+    step: "WORK_EXPERIENCE",
+    path: "/driver/onboarding/work-experience",
+    label: "Your Work Experience",
+  },
+  {
+    step: "GUARANTORS",
+    path: "/driver/onboarding/guarantors",
+    label: "Your Guarantor Information",
+  },
+  {
+    step: "ADDITIONAL_INFORMATION",
+    path: "/driver/onboarding/additional-information",
+    label: "Additional Information (Optional)",
+  },
+  {
+    step: "DOCUMENTS",
+    path: "/driver/onboarding/documents",
+    label: "Upload Documents",
+  },
+  {
+    step: "REVIEW",
+    path: "/driver/onboarding/review",
+    label: "Review before you submit",
+  },
+];
+
+/*
+  One set per step, rotated under the card. They are step-specific on purpose —
+  a single global tip ends up wrong on most screens, which is how the wizard
+  came to advertise a role question it never asks. Every line here has to be
+  true of what the server actually does; nothing invented to fill a slot.
+*/
+export const ONBOARDING_TIPS: Record<OnboardingStep, string[]> = {
+  PERSONAL_INFORMATION: [
+    "Each step is saved as you finish it, so you can stop here and pick up where you left off.",
+    "Enter your name exactly as it appears on your ID — a reviewer checks it against your documents.",
+    "The state you pick is where clients will find you once you're verified.",
+  ],
+  EXPERIENCE: [
+    "Your driver type is one of the filters clients search by.",
+    "Add every vehicle class you can handle — each one widens the jobs you match.",
+    "Check your licence expiry date. We'll remind you before it lapses.",
+  ],
+  ACADEMIC_QUALIFICATION: [
+    "Nothing on this step blocks your verification. Fill in what you have.",
+    "This is context for a reviewer, not a cut-off.",
+  ],
+  WORK_EXPERIENCE: [
+    "Still in a role? Mark it as ongoing instead of setting an end date.",
+    "Add as many roles as you like — you can remove any of them later.",
+  ],
+  GUARANTORS: [
+    "A guarantor needs their own passport photo and NIN slip, so pick someone who can send you both.",
+    "You can add more than one guarantor, and edit them right up until you submit.",
+  ],
+  ADDITIONAL_INFORMATION: [
+    "Every field here is optional — skip it and your submission still goes through.",
+    "You can come back and fill this in at any time.",
+  ],
+  DOCUMENTS: [
+    "Three documents are required: your NIN slip, a passport photo and your driver's licence.",
+    "Photograph documents flat and in good light — a reviewer has to read every detail.",
+    "If one is turned down you'll get the reviewer's reason, and you only replace that one.",
+  ],
+  REVIEW: [
+    "You can edit any section from here — it won't send you back to the start.",
+    "Verification takes 24-48 hours once you submit.",
+    "Resubmitting sends every document back to the queue, including ones already approved.",
+  ],
+};
+
+export const getOnboardingPath = function (step: OnboardingStep | undefined) {
+  return (
+    ONBOARDING_STEPS.find((entry) => entry.step === step)?.path ??
+    ONBOARDING_STEPS[0].path
+  );
+};
+
+export const getOnboardingProgress = function (
+  step: OnboardingStep | undefined,
+) {
+  const index = ONBOARDING_STEPS.findIndex((entry) => entry.step === step);
+  if (index < 0) return 0;
+  return Math.round(((index + 1) / ONBOARDING_STEPS.length) * 100);
 };
 
 /*
@@ -73,29 +204,143 @@ export const toMinorUnits = (amount: number) => Math.round(amount * 100);
 
 export const toMajorUnits = (minor: number) => minor / 100;
 
-// ₦405k — the overview stat card format. Falls back to the full figure below
-// four digits, where compacting saves nothing.
-export const formatMoneyCompact = function (
-  minor: number | undefined,
-  currency = "NGN",
-) {
-  const major = (minor ?? 0) / 100;
-  const symbol =
-    currencyMapper[currency as keyof typeof currencyMapper] ?? `${currency} `;
+/*
+================= NOTE: verification — three of the four statuses render a
+different dashboard, so the copy lives here rather than inside each screen.
+*/
 
-  if (major >= 1_000_000)
-    return `${symbol}${(major / 1_000_000).toFixed(major % 1_000_000 === 0 ? 0 : 1)}M`;
-  if (major >= 1_000) return `${symbol}${Math.round(major / 1_000)}k`;
-
-  return formatMoney(minor, currency);
+export const VERIFICATION_COPY: Record<
+  DriverVerificationStatus,
+  { label: string; tone: string; headline: string }
+> = {
+  UNSUBMITTED: {
+    label: "Not submitted",
+    tone: "bg-amber-50 text-amber-700 border-amber-200",
+    headline: "Finish your profile to start receiving job requests.",
+  },
+  PENDING: {
+    label: "Under review",
+    tone: "bg-blue-50 text-blue-700 border-blue-200",
+    headline: "Our team is reviewing your documents, this takes 24-48 hours.",
+  },
+  APPROVED: {
+    label: "Verified",
+    tone: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    headline: "You're verified and visible to clients",
+  },
+  REJECTED: {
+    label: "Action needed",
+    tone: "bg-red-50 text-red-700 border-red-200",
+    headline: "Some documents could not be verified.",
+  },
 };
 
-export const ENGAGEMENT_TYPE_LABELS: Record<string, string> = {
+/*
+================= NOTE: bookings — the status machine lives on the server, this
+is only how each status is shown.
+*/
+
+export const BOOKING_STATUS_STYLES: Record<BookingStatus, string> = {
+  REQUESTED: "bg-amber-50 text-amber-700 border-amber-200",
+  ACCEPTED: "bg-blue-50 text-blue-700 border-blue-200",
+  IN_PROGRESS: "bg-indigo-50 text-indigo-700 border-indigo-200",
+  COMPLETED: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  DECLINED: "bg-gray-50 text-gray-600 border-gray-200",
+  CANCELLED: "bg-gray-50 text-gray-600 border-gray-200",
+  DISPUTED: "bg-red-50 text-red-700 border-red-200",
+};
+
+export const clientNameOf = function (client: BookingParty) {
+  return (
+    client.client_profile?.organisation_name ||
+    [client.first_name, client.last_name].filter(Boolean).join(" ") ||
+    "Client"
+  );
+};
+
+export const ENGAGEMENT_TYPE_LABELS: Record<EngagementType, string> = {
   ONE_OFF: "One-off",
   DAILY: "Daily",
   WEEKLY: "Weekly",
-  MONTHLY: "Full-time",
+  MONTHLY: "Monthly",
   CONTRACT: "Contract",
+};
+
+const PAY_PERIOD_LABELS: Record<EngagementType, string> = {
+  ONE_OFF: "Per job",
+  DAILY: "Per day",
+  WEEKLY: "Per week",
+  MONTHLY: "Per month",
+  CONTRACT: "Per contract",
+};
+
+export const formatPay = function (
+  minor: number,
+  currency: string,
+  engagement: EngagementType,
+) {
+  return `${formatMoney(minor, currency)} / ${PAY_PERIOD_LABELS[engagement]}`;
+};
+
+export const formatPosted = function (date: string | Date) {
+  const recency = groupByRecency(date);
+  if (recency === "Today" || recency === "Yesterday") return recency;
+
+  const days = Math.round(
+    (Date.now() - new Date(date).setHours(0, 0, 0, 0)) / 86400000,
+  );
+
+  return days < 7 ? `${days} days ago` : formatDate(date);
+};
+
+export const formatWorkingHours = function (
+  startsAt: string,
+  endsAt?: string | null,
+) {
+  const start = new Date(startsAt);
+  const day = format(start, "EEE");
+  const from = format(start, "HH:mm");
+
+  if (!endsAt) return `${day} · from ${from}`;
+
+  const end = new Date(endsAt);
+  const spansDays = format(end, "yyyy-MM-dd") !== format(start, "yyyy-MM-dd");
+
+  return spansDays
+    ? `${day} ${from} – ${format(end, "EEE HH:mm")}`
+    : `${day} · ${from} – ${format(end, "HH:mm")}`;
+};
+
+export const BOOKING_STATUS_LABELS: Record<BookingStatus, string> = {
+  REQUESTED: "Pending",
+  ACCEPTED: "Confirmed",
+  IN_PROGRESS: "In progress",
+  COMPLETED: "Completed",
+  DECLINED: "Declined",
+  CANCELLED: "Cancelled",
+  DISPUTED: "Disputed",
+};
+
+/*
+================= NOTE: notifications — icon and colour per server type
+*/
+
+export const TYPE_CONFIG: Record<
+  string,
+  { icon: LucideIcon; color: string; bg: string }
+> = {
+  INFO: { icon: Info, color: "#2563eb", bg: "#eff6ff" },
+  SUCCESS: { icon: CheckCircle2, color: "#059669", bg: "#ecfdf5" },
+  WARNING: { icon: AlertTriangle, color: "#d97706", bg: "#fffbeb" },
+  ERROR: { icon: XCircle, color: "#dc2626", bg: "#fef2f2" },
+  BOOKING_REQUEST: { icon: Briefcase, color: "#2f6bf6", bg: "#eef4ff" },
+  BOOKING_STATUS: { icon: Briefcase, color: "#2f6bf6", bg: "#eef4ff" },
+  PAYMENT: { icon: Banknote, color: "#059669", bg: "#ecfdf5" },
+  PAYOUT: { icon: Banknote, color: "#059669", bg: "#ecfdf5" },
+  VERIFICATION: { icon: BadgeCheck, color: "#2f6bf6", bg: "#eef4ff" },
+  DOCUMENT_REVIEW: { icon: FileText, color: "#ca8a04", bg: "#fefce8" },
+  TRAINING: { icon: GraduationCap, color: "#b45309", bg: "#fffbeb" },
+  MESSAGE: { icon: MessageSquare, color: "#2f6bf6", bg: "#eef4ff" },
 };
 
 export function formatRelativeTime(date: string | Date) {
@@ -140,6 +385,23 @@ export const formatDateTime = (date: string | Date) =>
 export const formatTime = (date: string | Date) =>
   format(new Date(date), "h:mm a");
 
+/*
+================= NOTE: course video. Modules hold whatever url the course was
+authored with. A recognised YouTube url yields an id, which the player hands to
+YouTube's IFrame API — that API is the only way to read playback position back
+out of an embed. Anything else is a direct file the browser decodes in a <video>.
+Both report position the same way, so a module moving from YouTube to Cloudinary
+needs no other change. Remove nothing here when the real uploads land.
+*/
+
+export const youTubeVideoId = function (url: string) {
+  const match = url.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/,
+  );
+
+  return match?.[1] ?? null;
+};
+
 export const greetingForNow = function () {
   const hour = new Date().getHours();
   if (hour < 12) return "Good morning";
@@ -155,9 +417,9 @@ export const getInitials = function (
 };
 
 /*
-================= NOTE: the option lists the search selects render. These
+================= NOTE: the option lists the onboarding selects render. These
 mirror the server enums exactly — a value that is not in the server enum is a
-400 the client cannot fix.
+400 the driver cannot fix.
 */
 
 export const DRIVER_TYPE_OPTIONS = [
@@ -168,13 +430,108 @@ export const DRIVER_TYPE_OPTIONS = [
   { value: "HEAVY_DUTY_DRIVER", label: "Heavy Duty Driver" },
 ];
 
+export const VEHICLE_CLASS_OPTIONS = [
+  { value: "SALOON", label: "Saloon" },
+  { value: "SUV", label: "SUV" },
+  { value: "BUS", label: "Bus" },
+  { value: "TRUCK", label: "Truck" },
+  { value: "TRAILER", label: "Trailer" },
+  { value: "MOTORCYCLE", label: "Motorcycle" },
+];
+
+export const MARITAL_STATUS_OPTIONS = [
+  { value: "SINGLE", label: "Single" },
+  { value: "MARRIED", label: "Married" },
+  { value: "DIVORCED", label: "Divorced" },
+  { value: "WIDOWED", label: "Widowed" },
+];
+
+export const ACADEMIC_LEVEL_OPTIONS = [
+  { value: "NONE", label: "No formal education" },
+  { value: "PRIMARY", label: "Primary School" },
+  { value: "SECONDARY", label: "Secondary School" },
+  { value: "OND", label: "OND" },
+  { value: "HND", label: "HND" },
+  { value: "BSC", label: "Bachelors Degree" },
+  { value: "MSC", label: "Masters Degree" },
+  { value: "PHD", label: "PhD" },
+];
+
+export const GUARANTOR_RELATIONSHIP_OPTIONS = [
+  { value: "FAMILY", label: "Family" },
+  { value: "FRIEND", label: "Friend" },
+  { value: "FORMER_EMPLOYER", label: "Former Employer" },
+  { value: "COLLEAGUE", label: "Colleague" },
+  { value: "RELIGIOUS_LEADER", label: "Religious Leader" },
+  { value: "COMMUNITY_LEADER", label: "Community Leader" },
+  { value: "OTHER", label: "Other" },
+];
+
+export const LANGUAGE_OPTIONS = [
+  "English",
+  "Hausa",
+  "Igbo",
+  "Yoruba",
+  "Pidgin",
+  "French",
+  "Arabic",
+  "Fulfulde",
+  "Kanuri",
+  "Tiv",
+  "Ibibio",
+  "Efik",
+].map((language) => ({ value: language, label: language }));
+
+export const RELIGION_OPTIONS = [
+  { value: "CHRISTIANITY", label: "Christianity" },
+  { value: "ISLAM", label: "Islam" },
+  { value: "TRADITIONAL", label: "Traditional" },
+  { value: "OTHER", label: "Other" },
+  { value: "PREFER_NOT_TO_SAY", label: "Prefer not to say" },
+];
+
+export const DOCUMENT_LABELS: Record<string, string> = {
+  NIN_SLIP: "NIN slip",
+  PASSPORT_PHOTO: "Your Passport Photo",
+  DRIVERS_LICENCE: "Driver's licence",
+  PROOF_OF_ADDRESS: "Proof of address",
+  GUARANTOR_PASSPORT: "Guarantor's Passport Photo",
+  GUARANTOR_NIN_SLIP: "Guarantor's NIN slip",
+};
+
+export const DEFAULT_WORK_EXPERIENCE = {
+  employer: "",
+  job_title: "",
+  started_at: "",
+  ended_at: "",
+  is_current: false,
+};
+
+export const DEFAULT_GUARANTOR = {
+  full_name: "",
+  relationship: "",
+  phone_no: "",
+  address: "",
+  nin: "",
+};
+
+export const TICKET_CATEGORIES = [
+  { value: "ACCOUNT", label: "Account" },
+  { value: "VERIFICATION", label: "Verification" },
+  { value: "BOOKING", label: "Booking" },
+  { value: "PAYMENT", label: "Payment" },
+  { value: "TRAINING", label: "Training" },
+  { value: "BUG_REPORT", label: "Report an issue" },
+  { value: "OTHER", label: "Other" },
+];
+
 /*
-================= NOTE: onboarding — the step order the wizard runs in, and the
-option lists its cards render. Values mirror the server enums exactly — a value
-that is not in the server enum is a 400 the client cannot fix.
+================= NOTE: the client surface — wizard steps, search options and
+display helpers. The option values mirror the server enums exactly; a value
+outside them is a 400 the client cannot fix.
 */
 
-export const ONBOARDING_STEPS = [
+export const CLIENT_ONBOARDING_STEPS = [
   { path: "/onboarding/hire-type", label: "How will you hire?" },
   { path: "/onboarding/category", label: "Category of drivers" },
   { path: "/onboarding/capacity", label: "How many, and for how long" },
@@ -266,12 +623,14 @@ export const BUDGET_RANGE_BOUNDS: Record<
   RANGE_301K_PLUS: { min: 30_100_000 },
 };
 
-export const driverTypeLabel = function (type?: string | null) {
-  if (!type) return "Driver";
-  return (
-    DRIVER_TYPE_OPTIONS.find((option) => option.value === type)?.label ??
-    prettifyEnum(type)
-  );
+// The hire screens say "Full-time" where the booking model says MONTHLY — the
+// driver screens keep the literal engagement labels above.
+export const HIRE_ENGAGEMENT_LABELS: Record<string, string> = {
+  ONE_OFF: "One-off",
+  DAILY: "Daily",
+  WEEKLY: "Weekly",
+  MONTHLY: "Full-time",
+  CONTRACT: "Contract",
 };
 
 export const prettifyEnum = (value: string) =>
@@ -281,10 +640,27 @@ export const prettifyEnum = (value: string) =>
     .map((word) => word[0]?.toUpperCase() + word.slice(1))
     .join(" ");
 
-export const TICKET_CATEGORIES = [
-  { value: "ACCOUNT", label: "Account" },
-  { value: "BOOKING", label: "Booking" },
-  { value: "PAYMENT", label: "Payment" },
-  { value: "BUG_REPORT", label: "Report an issue" },
-  { value: "OTHER", label: "Other" },
-];
+export const driverTypeLabel = function (type?: string | null) {
+  if (!type) return "Driver";
+  return (
+    DRIVER_TYPE_OPTIONS.find((option) => option.value === type)?.label ??
+    prettifyEnum(type)
+  );
+};
+
+// ₦405k — the overview stat card format. Falls back to the full figure below
+// four digits, where compacting saves nothing.
+export const formatMoneyCompact = function (
+  minor: number | undefined,
+  currency = "NGN",
+) {
+  const major = (minor ?? 0) / 100;
+  const symbol =
+    currencyMapper[currency as keyof typeof currencyMapper] ?? `${currency} `;
+
+  if (major >= 1_000_000)
+    return `${symbol}${(major / 1_000_000).toFixed(major % 1_000_000 === 0 ? 0 : 1)}M`;
+  if (major >= 1_000) return `${symbol}${Math.round(major / 1_000)}k`;
+
+  return formatMoney(minor, currency);
+};

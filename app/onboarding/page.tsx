@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ONBOARDING_STEPS } from "@/lib/utils";
+import { CLIENT_ONBOARDING_STEPS } from "@/lib/utils";
 import { usePreferences } from "./_hooks/use-preferences";
 
 // Sign-in lands every client here: anyone who has finished (or skipped) the
@@ -18,7 +18,7 @@ export default function OnboardingEntry() {
     router.replace(
       preferences.onboarding_completed_at
         ? "/dashboard"
-        : ONBOARDING_STEPS[0].path,
+        : CLIENT_ONBOARDING_STEPS[0].path,
     );
   }, [preferences, router]);
 

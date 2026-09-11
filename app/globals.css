@@ -3,7 +3,15 @@
   next/font/local once the woff2 files are in /public is a change to this line
   and the --font-general-sans value only.
 */
-@import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=zodiak@400&display=swap");
+
+/*
+  The driver's course certificate is the one surface that is not General Sans —
+  Zodiak for the title (same Fontshare request as above) and a formal script for
+  the name. Fontshare has no script face, which is the only reason a second
+  provider appears in this file. Nothing outside the certificate may use these.
+*/
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -15,6 +23,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-general-sans: "General Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-certificate-serif: "Zodiak", ui-serif, Georgia, serif;
+  --font-certificate-script: "Great Vibes", ui-serif, cursive;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -122,5 +132,35 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+}
+
+/*
+  Printing a certificate. The driver hits Download, the browser opens its print
+  dialog, and only the certificate reaches the page — the sidebar, the lesson
+  list and the dialog chrome are all hidden. `visibility` rather than `display`
+  so the sheet keeps the certificate's own layout intact.
+*/
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  [data-print-certificate],
+  [data-print-certificate] * {
+    visibility: visible;
+  }
+
+  [data-print-certificate] {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  @page {
+    size: landscape;
+    margin: 12mm;
   }
 }

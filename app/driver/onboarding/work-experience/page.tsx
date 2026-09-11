@@ -1,0 +1,189 @@
+"use client";
+
+import { FormInput } from "@/components/form/form-input";
+import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { OnboardingShell } from "@/components/shared/onboarding-shell";
+import { Button } from "@/components/ui/button";
+import { useOnboardingProfile } from "@/hooks/use-onboarding-profile";
+import { API_ENDPOINTS } from "@/lib/endpoints";
+import {
+  DEFAULT_WORK_EXPERIENCE,
+  ONBOARDING_TIPS,
+  getOnboardingProgress,
+} from "@/lib/utils";
+import {
+  workExperienceSchema,
+  type WorkExperienceFormValues,
+} from "@/schemas/onboarding/steps";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { StepHeader } from "../_components/step-header";
+import { useSaveOnboardingStep } from "../_hooks/use-save-onboarding-step";
+
+export default function WorkExperienceStep() {
+  const { profile } = useOnboardingProfile();
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<WorkExperienceFormValues>({
+    resolver: zodResolver(workExperienceSchema),
+    defaultValues: { experiences: [DEFAULT_WORK_EXPERIENCE] },
+  });
+
+  const [pendingRemoval, setPendingRemoval] = useState<number | null>(null);
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "experiences",
+  });
+
+  useEffect(() => {
+    if (!profile) return;
+
+    reset({
+      experiences: profile.work_experiences.length
+        ? profile.work_experiences.map((entry) => ({
+            employer: entry.employer,
+            job_title: entry.job_title,
+            started_at: entry.started_at.slice(0, 10),
+            ended_at: entry.ended_at?.slice(0, 10) ?? "",
+            is_current: entry.is_current,
+          }))
+        : [DEFAULT_WORK_EXPERIENCE],
+    });
+  }, [profile, reset]);
+
+  const { save, isPending } = useSaveOnboardingStep<WorkExperienceFormValues>({
+    url: API_ENDPOINTS.driverOnboarding.workExperience,
+    redirectTo: "/driver/onboarding/guarantors",
+    onSuccessMessage: "Work experience saved",
+  });
+
+  // Only a row that already exists on the server is worth stopping for — a
+  // freshly added one has nothing to lose.
+  const savedCount = profile?.work_experiences.length ?? 0;
+
+  const removeRow = (index: number) => {
+    if (index < savedCount) return setPendingRemoval(index);
+    remove(index);
+  };
+
+  const firstName = profile?.user.first_name ?? "there";
+
+  return (
+    <OnboardingShell
+      title={`Welcome ${firstName} 👋`}
+      subtitle="Let's get your account fully set up. A few quick steps stand between you and your first job."
+      tips={ONBOARDING_TIPS.WORK_EXPERIENCE}
+    >
+      <StepHeader
+        title="Your Work Experience"
+        description="Add your previous driving jobs so clients can see your track record"
+        progress={getOnboardingProgress("WORK_EXPERIENCE")}
+      />
+
+      <form onSubmit={handleSubmit((data) => save(data))} className="space-y-4">
+        {fields.map((field, index) => (
+          <div
+            key={field.id}
+            className="border-border space-y-4 rounded-xl border p-4"
+          >
+            <FormInput<WorkExperienceFormValues>
+              control={control}
+              name={`experiences.${index}.employer`}
+              errors={errors}
+              label="Employer"
+              placeholder="E.g Meridian Logistics"
+            />
+
+            <FormInput<WorkExperienceFormValues>
+              control={control}
+              name={`experiences.${index}.job_title`}
+              errors={errors}
+              label="Job title"
+              placeholder="E.g Corporate Driver"
+            />
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <FormInput<WorkExperienceFormValues>
+                control={control}
+                name={`experiences.${index}.started_at`}
+                errors={errors}
+                label="Started"
+                type="date"
+              />
+
+              <FormInput<WorkExperienceFormValues>
+                control={control}
+                name={`experiences.${index}.ended_at`}
+                errors={errors}
+                label="Ended"
+                type="date"
+              />
+            </div>
+
+            <FormInput<WorkExperienceFormValues>
+              control={control}
+              name={`experiences.${index}.is_current`}
+              errors={errors}
+              type="checkbox"
+              label="I currently work here"
+            />
+
+            <div className="flex items-center justify-between gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => removeRow(index)}
+                disabled={fields.length === 1}
+                className="text-destructive border-destructive/40 h-10 rounded-lg px-4"
+              >
+                <Trash2 className="h-4 w-4" />
+                Remove
+              </Button>
+
+              {index === fields.length - 1 && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => append(DEFAULT_WORK_EXPERIENCE)}
+                  className="text-brand h-10 rounded-lg px-4"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add New Role
+                </Button>
+              )}
+            </div>
+          </div>
+        ))}
+
+        <Button
+          isLoading={isPending}
+          className="h-12 w-full rounded-lg text-sm"
+        >
+          Continue
+        </Button>
+      </form>
+
+      <ConfirmDialog
+        isOpen={pendingRemoval !== null}
+        onOpenChange={(open) => !open && setPendingRemoval(null)}
+        icon={Trash2}
+        iconClassName="text-destructive"
+        title="Remove this role?"
+        description="It is removed from your application when you save this step."
+        confirmLabel="Remove"
+        confirmVariant="destructive"
+        onConfirm={() => {
+          if (pendingRemoval !== null) remove(pendingRemoval);
+          setPendingRemoval(null);
+        }}
+      />
+    </OnboardingShell>
+  );
+}

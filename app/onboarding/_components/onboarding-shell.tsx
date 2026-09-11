@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/shared/site-footer";
 import { AppText } from "@/components/shared/app-text";
 import { useGetProfile } from "@/hooks/use-get-profile";
-import { ONBOARDING_STEPS } from "@/lib/utils";
+import { CLIENT_ONBOARDING_STEPS } from "@/lib/utils";
 import { useCompleteOnboarding } from "../_hooks/use-save-preferences";
 
 interface Props {
@@ -38,14 +38,14 @@ export const OnboardingShell = function ({
     silent: true,
   });
 
-  const previousPath = ONBOARDING_STEPS[step - 2]?.path;
+  const previousPath = CLIENT_ONBOARDING_STEPS[step - 2]?.path;
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <main className="mx-auto w-full max-w-3xl flex-1 px-5 pt-8 pb-16">
         <div className="flex items-center justify-between gap-4">
           <span className="text-muted-foreground text-xs font-medium tracking-[0.25em] uppercase">
-            Step {step} of {ONBOARDING_STEPS.length}
+            Step {step} of {CLIENT_ONBOARDING_STEPS.length}
           </span>
           <span className="text-ink text-sm font-medium">
             {profile?.first_name ? `Hi ${profile.first_name} 👋` : "\u00a0"}
@@ -53,7 +53,7 @@ export const OnboardingShell = function ({
         </div>
 
         <Progress
-          value={(step / ONBOARDING_STEPS.length) * 100}
+          value={(step / CLIENT_ONBOARDING_STEPS.length) * 100}
           className="mt-2 h-1.5"
         />
 

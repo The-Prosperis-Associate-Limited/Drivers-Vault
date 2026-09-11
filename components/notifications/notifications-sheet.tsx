@@ -16,11 +16,18 @@ import type { PaginatedResponse } from "@/types/response";
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  // The server writes driver actionUrls as /dashboard/... — on the driver
+  // surface those live under /driver, so its top nav passes a prefix.
+  actionUrlPrefix?: string;
 }
 
 const listUrl = API_ENDPOINTS.notifications.list({ page: 1, limit: 30 });
 
-export const NotificationsSheet = function ({ open, onOpenChange }: Props) {
+export const NotificationsSheet = function ({
+  open,
+  onOpenChange,
+  actionUrlPrefix,
+}: Props) {
   const router = useRouter();
 
   const { data, isFetching } = useGetData<PaginatedResponse<AppNotification>>({
@@ -103,7 +110,9 @@ export const NotificationsSheet = function ({ open, onOpenChange }: Props) {
                       }
                       if (notification.actionUrl) {
                         onOpenChange(false);
-                        router.push(notification.actionUrl);
+                        router.push(
+                          `${actionUrlPrefix ?? ""}${notification.actionUrl}`,
+                        );
                       }
                     }}
                     className={cn(

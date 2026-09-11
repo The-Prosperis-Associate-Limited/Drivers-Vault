@@ -2,6 +2,10 @@ export type UserRole = "DRIVER" | "CLIENT" | "ADMIN";
 
 export type AccountStatus = "ACTIVE" | "SUSPENDED" | "DEACTIVATED";
 
+export type Gender = "MALE" | "FEMALE" | "OTHER";
+
+export type MaritalStatus = "SINGLE" | "MARRIED" | "DIVORCED" | "WIDOWED";
+
 export type ClientType = "INDIVIDUAL" | "ORGANISATION";
 
 export type ClientDriverCategory =
@@ -43,6 +47,9 @@ export interface User {
   profile_pic: string | null;
   bio: string | null;
   role: UserRole;
+  gender: Gender | null;
+  date_of_birth: string | null;
+  marital_status: MaritalStatus | null;
   country: string | null;
   state_of_residence: string | null;
   city: string | null;

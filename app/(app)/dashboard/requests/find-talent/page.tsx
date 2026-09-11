@@ -47,7 +47,8 @@ export default function FindTalent() {
       />
 
       <AppText type="caption" className="text-muted-foreground mt-6 block">
-        {total} profile{total === 1 ? "" : "s"} match your filters
+        {total} {total === 1 ? "profile matches" : "profiles match"} your
+        filters
       </AppText>
 
       {isFetching && !drivers.length ? (
