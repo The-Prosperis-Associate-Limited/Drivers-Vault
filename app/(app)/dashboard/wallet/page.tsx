@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import type { WalletTransaction } from "@/types/wallet";
 import { DepositDialog } from "./_components/deposit-dialog";
-import { useWallet, useWalletTransactions } from "./_hooks/use-wallet";
+import { useWallet, useWalletTransactions } from "@/hooks/use-wallet";
 
 const transactionTitle = (transaction: WalletTransaction) => {
   if (transaction.type === "FUNDING") return "Wallet top-up — bank transfer";

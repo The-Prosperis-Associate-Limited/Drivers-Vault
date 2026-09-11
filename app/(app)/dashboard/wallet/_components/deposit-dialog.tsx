@@ -9,7 +9,7 @@ import { cn, formatMoney, toMinorUnits } from "@/lib/utils";
 import { CircleCheck, Copy, Landmark } from "lucide-react";
 import { useState } from "react";
 import type { Wallet } from "@/types/wallet";
-import { useSyncFunding } from "../_hooks/use-wallet";
+import { useSyncFunding } from "@/hooks/use-wallet";
 
 interface Props {
   wallet: Wallet;

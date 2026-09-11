@@ -8,20 +8,11 @@ import { clearAuthCookies } from "@/lib/authService";
 import { LogOut } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { EarningsSettings } from "./_components/earnings/earnings-settings";
 import { NotificationSettings } from "./_components/notification-settings";
 import { ProfileSettings } from "./_components/profile-settings";
 import { SecuritySettings } from "./_components/security-settings";
-import { VerificationSettings } from "./_components/verification-settings";
-import { WorkPreferencesSettings } from "./_components/work-preferences-settings";
 
-const TAB_VALUES = [
-  "profile",
-  "notifications",
-  "verification",
-  "security",
-  "earnings",
-] as const;
+const TAB_VALUES = ["profile", "notifications", "security"] as const;
 
 type Tab = (typeof TAB_VALUES)[number];
 
@@ -37,14 +28,14 @@ function SettingsContent() {
 
   const signOut = () => {
     clearAuthCookies();
-    window.location.href = "/driver/auth/signin";
+    window.location.href = "/auth/signin";
   };
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <PageHeader
         title="Settings"
-        subtitle="Manage your profile, payments and how Tegat reaches you."
+        subtitle="Manage your profile, security and how TEGAT reaches you."
         action={
           <Button
             variant="outline"
@@ -65,12 +56,7 @@ function SettingsContent() {
           {
             value: "profile",
             label: "User profile",
-            content: (
-              <>
-                <ProfileSettings />
-                <WorkPreferencesSettings />
-              </>
-            ),
+            content: <ProfileSettings />,
           },
           {
             value: "notifications",
@@ -78,19 +64,9 @@ function SettingsContent() {
             content: <NotificationSettings />,
           },
           {
-            value: "verification",
-            label: "Verification centre",
-            content: <VerificationSettings />,
-          },
-          {
             value: "security",
             label: "Security",
             content: <SecuritySettings />,
-          },
-          {
-            value: "earnings",
-            label: "Earnings",
-            content: <EarningsSettings />,
           },
         ]}
       />

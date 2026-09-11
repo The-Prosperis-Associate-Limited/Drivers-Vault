@@ -107,7 +107,7 @@ export default function DashboardOverview() {
         </div>
 
         <Link
-          href="/dashboard/requests/find-talent"
+          href="/dashboard/requests"
           className="bg-brand hover:bg-brand-hover flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-colors"
         >
           <Plus className="h-4 w-4" />

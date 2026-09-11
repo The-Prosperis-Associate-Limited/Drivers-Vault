@@ -13,7 +13,7 @@ import { ReceiptText } from "lucide-react";
 import { useState } from "react";
 import type { APIResponse } from "@/types/response";
 import type { WalletSummary, WalletTransaction } from "@/types/wallet";
-import { useWalletTransactions } from "../wallet/_hooks/use-wallet";
+import { useWalletTransactions } from "@/hooks/use-wallet";
 import { ReceiptDialog } from "./_components/receipt-dialog";
 
 const PAGE_SIZE = 10;

@@ -149,6 +149,17 @@ export const API_ENDPOINTS = {
     detail: (reference: string) => `/client/hires/${reference}`,
   },
 
+  requests: {
+    list: ({ page, limit }: { page: number; limit: number }) =>
+      `/client/requests?page=${page}&limit=${limit}`,
+    create: "/client/requests",
+    close: (reference: string) => `/client/requests/${reference}/close`,
+    matches: (
+      reference: string,
+      { page, limit }: { page: number; limit: number },
+    ) => `/client/requests/${reference}/matches?page=${page}&limit=${limit}`,
+  },
+
   wallet: {
     get: "/client/wallet",
     transactions: ({
