@@ -109,6 +109,18 @@ export const MakePaymentDialog = function ({
     setStep("transfer");
   };
 
+  // A short balance lands the client on the funding path, not a dead radio.
+  const goToMethod = () => {
+    setMethod(
+      walletCovers || !wallet?.dva_account_number ? "wallet" : "transfer",
+    );
+    setStep("method");
+  };
+
+  const selectedDisabled =
+    (method === "wallet" && !walletCovers) ||
+    (method === "transfer" && !wallet?.dva_account_number);
+
   const copy = (label: string, value: string) => {
     navigator.clipboard.writeText(value);
     showToast("success", `${label} copied`);
@@ -239,7 +251,7 @@ export const MakePaymentDialog = function ({
           <Button
             className="h-12 w-full rounded-xl text-sm"
             disabled={amountMinor <= 0 || isQuoting || !quote}
-            onClick={() => setStep("method")}
+            onClick={goToMethod}
           >
             Continue
           </Button>
@@ -304,6 +316,7 @@ export const MakePaymentDialog = function ({
           <Button
             className="mt-5 h-12 w-full rounded-xl text-sm"
             isLoading={isPending}
+            disabled={selectedDisabled}
             onClick={confirmMethod}
           >
             Continue

@@ -15,6 +15,7 @@ interface Props {
     profile_pic: string | null;
     state_of_residence: string | null;
     country: string | null;
+    email: string | null;
   };
   onNavigate?: () => void;
 }
@@ -25,9 +26,12 @@ export const NavContent = function ({ user, onNavigate }: Props) {
   const isActive = (href: string) =>
     href === "/dashboard" ? pathname === href : pathname.startsWith(href);
 
+  // Clients never set a location anywhere, so the email stands in rather than
+  // a permanent "Location not set".
   const location = [user?.state_of_residence, user?.country]
     .filter(Boolean)
     .join(", ");
+  const subtitle = location || user?.email || "";
 
   const renderLink = (link: NavLink, footer = false) => {
     const Icon = link.icon;
@@ -95,7 +99,7 @@ export const NavContent = function ({ user, onNavigate }: Props) {
             type="caption"
             className="text-muted-foreground block truncate"
           >
-            {location || "Location not set"}
+            {subtitle}
           </AppText>
         </div>
       </div>

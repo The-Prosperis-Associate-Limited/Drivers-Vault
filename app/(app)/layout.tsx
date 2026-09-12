@@ -19,6 +19,7 @@ export default function DashboardLayout({
     profile_pic: profile.profile_pic,
     state_of_residence: profile.state_of_residence,
     country: profile.country,
+    email: profile.email,
   };
 
   return (

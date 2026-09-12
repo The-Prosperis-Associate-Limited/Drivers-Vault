@@ -48,6 +48,9 @@ function AvatarFallback({
   return (
     <AvatarPrimitive.Fallback
       data-slot="avatar-fallback"
+      // Initials come from client-cached profile data; under a late-hydrating
+      // Suspense boundary the server's empty-state text can't match.
+      suppressHydrationWarning
       className={cn(
         "bg-muted text-muted-foreground flex size-full items-center justify-center rounded-full text-sm group-data-[size=sm]/avatar:text-xs",
         className,
