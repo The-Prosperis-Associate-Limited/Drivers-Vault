@@ -205,4 +205,162 @@ export const API_ENDPOINTS = {
     get: (id: string) => `/tickets/${id}`,
     comment: (id: string) => `/tickets/${id}/comments`,
   },
+
+  // The admin surface — /api/admin/*, documented in ../tegat-server/docs/admin-api.md.
+  adminDashboard: {
+    stats: "/admin/dashboard/stats",
+    growth: (period: "7d" | "14d" | "30d") =>
+      `/admin/dashboard/growth?period=${period}`,
+    activities: ({ limit }: { limit: number }) =>
+      `/admin/dashboard/activities?limit=${limit}`,
+  },
+
+  adminUsers: {
+    list: ({
+      page,
+      limit,
+      role,
+      status,
+      search,
+    }: {
+      page: number;
+      limit: number;
+      role?: "DRIVER" | "CLIENT";
+      status?: string;
+      search?: string;
+    }) =>
+      `/admin/users?page=${page}&limit=${limit}${role ? `&role=${role}` : ""}${status ? `&status=${status}` : ""}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
+    stats: (role: "DRIVER" | "CLIENT") => `/admin/users/stats?role=${role}`,
+    detail: (id: string) => `/admin/users/${id}`,
+    wallet: (id: string, { page, limit }: { page: number; limit: number }) =>
+      `/admin/users/${id}/wallet?page=${page}&limit=${limit}`,
+    activities: (
+      id: string,
+      { page, limit }: { page: number; limit: number },
+    ) => `/admin/users/${id}/activities?page=${page}&limit=${limit}`,
+    suspend: (id: string) => `/admin/users/${id}/suspend`,
+    reactivate: (id: string) => `/admin/users/${id}/reactivate`,
+    remove: (id: string) => `/admin/users/${id}`,
+  },
+
+  adminVerifications: {
+    queue: ({
+      page,
+      limit,
+      status,
+      search,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+      search?: string;
+    }) =>
+      `/admin/verifications?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
+    submission: (userId: string) => `/admin/verifications/${userId}`,
+    reviewDocument: (documentId: string) =>
+      `/admin/verifications/documents/${documentId}`,
+    reviewSubmission: (userId: string) => `/admin/verifications/${userId}`,
+  },
+
+  adminTransactions: {
+    stats: "/admin/transactions/stats",
+    wallets: ({
+      page,
+      limit,
+      search,
+    }: {
+      page: number;
+      limit: number;
+      search?: string;
+    }) =>
+      `/admin/transactions/wallets?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
+    serviceFees: ({
+      page,
+      limit,
+      search,
+    }: {
+      page: number;
+      limit: number;
+      search?: string;
+    }) =>
+      `/admin/transactions/service-fees?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
+    payouts: ({
+      page,
+      limit,
+      status,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+    }) =>
+      `/admin/payouts?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
+    payout: (reference: string) => `/admin/payouts/${reference}`,
+    settlePayout: (reference: string) => `/admin/payouts/${reference}`,
+  },
+
+  adminTraining: {
+    stats: "/admin/training/stats",
+    progress: ({
+      page,
+      limit,
+      status,
+      search,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+      search?: string;
+    }) =>
+      `/admin/training/progress?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
+    courses: ({
+      page,
+      limit,
+      status,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+    }) =>
+      `/admin/training/courses?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
+    createCourse: "/admin/training/courses",
+    course: (id: string) => `/admin/training/courses/${id}`,
+    publishCourse: (id: string) => `/admin/training/courses/${id}/publish`,
+    unpublishCourse: (id: string) => `/admin/training/courses/${id}/unpublish`,
+    addModule: (id: string) => `/admin/training/courses/${id}/modules`,
+    module: (moduleId: string) => `/admin/training/modules/${moduleId}`,
+  },
+
+  adminTeam: {
+    list: ({
+      page,
+      limit,
+      search,
+    }: {
+      page: number;
+      limit: number;
+      search?: string;
+    }) =>
+      `/admin/team?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
+    invite: "/admin/team/invite",
+    role: (id: string) => `/admin/team/${id}/role`,
+    suspend: (id: string) => `/admin/team/${id}/suspend`,
+    reactivate: (id: string) => `/admin/team/${id}/reactivate`,
+    remove: (id: string) => `/admin/team/${id}`,
+  },
+
+  adminTickets: {
+    list: ({
+      page,
+      limit,
+      status,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+    }) =>
+      `/admin/tickets?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
+    get: (id: string) => `/admin/tickets/${id}`,
+    comment: (id: string) => `/admin/tickets/${id}/comments`,
+    update: (id: string) => `/admin/tickets/${id}`,
+  },
 } as const;
