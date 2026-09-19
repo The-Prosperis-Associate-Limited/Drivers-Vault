@@ -34,7 +34,7 @@ function EmailVerified() {
       </AppText>
 
       <Button
-        onClick={() => router.push("/driver/onboarding")}
+        onClick={() => router.push("/driver/dashboard")}
         className="h-12 w-full rounded-lg text-sm"
       >
         Proceed to Dashboard

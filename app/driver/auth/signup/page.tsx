@@ -38,7 +38,9 @@ export default function SignUp() {
 
   const { signup, isPending } = useSignup({
     onSuccess: () =>
-      router.push(`/auth/verify-email?email=${encodeURIComponent(email)}`),
+      router.push(
+        `/driver/auth/verify-email?email=${encodeURIComponent(email)}`,
+      ),
   });
 
   const onSubmit = (data: SignupFormValues) =>
