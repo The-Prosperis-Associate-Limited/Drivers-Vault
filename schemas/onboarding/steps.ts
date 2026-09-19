@@ -15,6 +15,9 @@ const ninField = z
 
 export const personalInformationSchema = z.object({
   phone_no: phoneField,
+  gender: z.enum(["MALE", "FEMALE"], {
+    message: "Select your gender",
+  }),
   marital_status: z.enum(["SINGLE", "MARRIED", "DIVORCED", "WIDOWED"], {
     message: "Select your marital status",
   }),

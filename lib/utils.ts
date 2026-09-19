@@ -439,6 +439,11 @@ export const VEHICLE_CLASS_OPTIONS = [
   { value: "MOTORCYCLE", label: "Motorcycle" },
 ];
 
+export const GENDER_OPTIONS = [
+  { value: "MALE", label: "Male" },
+  { value: "FEMALE", label: "Female" },
+];
+
 export const MARITAL_STATUS_OPTIONS = [
   { value: "SINGLE", label: "Single" },
   { value: "MARRIED", label: "Married" },

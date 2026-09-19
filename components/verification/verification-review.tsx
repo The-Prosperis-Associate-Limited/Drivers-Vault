@@ -141,6 +141,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
         complete={hasPersonal}
       >
         <Row label="Phone Number" value={user?.phone_no} />
+        <Row label="Gender" value={user?.gender?.toLowerCase()} />
         <Row
           label="Marital Status"
           value={user?.marital_status?.toLowerCase()}

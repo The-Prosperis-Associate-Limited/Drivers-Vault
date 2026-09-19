@@ -8,6 +8,7 @@ import { useLocationOptions } from "@/hooks/use-location-options";
 import { useOnboardingProfile } from "@/hooks/use-onboarding-profile";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import {
+  GENDER_OPTIONS,
   MARITAL_STATUS_OPTIONS,
   ONBOARDING_TIPS,
   getOnboardingProgress,
@@ -42,6 +43,11 @@ export default function PersonalInformationStep() {
 
     reset({
       phone_no: profile.user.phone_no ?? "",
+      // OTHER predates this field being asked; treat it as unanswered.
+      gender:
+        profile.user.gender === "MALE" || profile.user.gender === "FEMALE"
+          ? profile.user.gender
+          : undefined,
       marital_status: profile.user.marital_status ?? undefined,
       date_of_birth: profile.user.date_of_birth?.slice(0, 10) ?? "",
       country: profile.user.country ?? "",
@@ -78,6 +84,15 @@ export default function PersonalInformationStep() {
           errors={errors}
           label="Phone Number"
           placeholder="E.g +234"
+        />
+
+        <FormSelect<PersonalInformationFormValues>
+          control={control}
+          name="gender"
+          errors={errors}
+          label="Gender"
+          placeholder="E.g Male"
+          options={GENDER_OPTIONS}
         />
 
         <FormSelect<PersonalInformationFormValues>
