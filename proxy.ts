@@ -6,12 +6,15 @@ import type { UserRole } from "./types/auth";
 const ROUTES = {
   LOGIN: "/auth/signin",
   DRIVER_LOGIN: "/driver/auth/signin",
+  ADMIN_LOGIN: "/admin/auth/signin",
   AUTH: "/auth",
   DRIVER_AUTH: "/driver/auth",
+  ADMIN_AUTH: "/admin/auth",
   DASHBOARD: "/dashboard",
   ONBOARDING: "/onboarding",
   MARKETPLACE: "/marketplace",
   DRIVER: "/driver",
+  ADMIN: "/admin",
 } as const;
 
 // The emailed verification link lands here with a token, and the Google
@@ -23,6 +26,10 @@ const AUTH_BYPASS_PATHS = [
   "/auth/reset-password",
   "/driver/auth/email-verified",
   "/driver/auth/reset-password",
+  "/admin/auth/reset-password",
+  // An invited admin is signed in but locked out of /api/admin until the
+  // temporary password is rotated — this screen must not bounce them.
+  "/admin/auth/change-password",
 ];
 
 // One codebase, three surfaces — the session type decides which one a
@@ -30,7 +37,7 @@ const AUTH_BYPASS_PATHS = [
 const SURFACE_FOR_ROLE: Record<UserRole, string> = {
   CLIENT: ROUTES.DASHBOARD,
   DRIVER: "/driver/dashboard",
-  ADMIN: process.env.NEXT_PUBLIC_ADMIN_APP_URL ?? ROUTES.LOGIN,
+  ADMIN: "/admin/dashboard",
 };
 
 export default function proxy(request: NextRequest) {
@@ -56,9 +63,11 @@ export default function proxy(request: NextRequest) {
   // Carries the originally-requested path so the visitor lands where they were
   // going rather than on the dashboard. Driver paths get the driver signin.
   const redirectToLogin = () => {
-    const login = pathname.startsWith(ROUTES.DRIVER)
-      ? ROUTES.DRIVER_LOGIN
-      : ROUTES.LOGIN;
+    const login = pathname.startsWith(ROUTES.ADMIN)
+      ? ROUTES.ADMIN_LOGIN
+      : pathname.startsWith(ROUTES.DRIVER)
+        ? ROUTES.DRIVER_LOGIN
+        : ROUTES.LOGIN;
     const loginUrl = new URL(login, request.url);
     loginUrl.searchParams.set("callbackUrl", pathname + request.nextUrl.search);
     return NextResponse.redirect(loginUrl);
@@ -72,10 +81,18 @@ export default function proxy(request: NextRequest) {
   }
 
   if (
+    pathname.startsWith(ROUTES.ADMIN_AUTH) ||
     pathname.startsWith(ROUTES.DRIVER_AUTH) ||
     pathname.startsWith(ROUTES.AUTH)
   ) {
     return hasValidSession ? redirectTo(homeForSession()) : NextResponse.next();
+  }
+
+  // The admin area: everything except its auth pages needs an admin session.
+  if (pathname.startsWith(ROUTES.ADMIN)) {
+    if (!hasValidSession) return redirectToLogin();
+    if (sessionType !== "ADMIN") return redirectTo(homeForSession());
+    return NextResponse.next();
   }
 
   // The driver area: everything except its auth pages needs a driver session.
@@ -107,5 +124,6 @@ export const config = {
     "/onboarding/:path*",
     "/marketplace/:path*",
     "/driver/:path*",
+    "/admin/:path*",
   ],
 };

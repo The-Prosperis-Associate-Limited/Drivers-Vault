@@ -50,10 +50,11 @@ export const isSafeCallback = function (url: string | null): url is string {
 };
 
 // One codebase, three surfaces: a client lands on their wizard (which forwards
-// once completed), a driver on the driver dashboard. Admin screens are unbuilt.
+// once completed), a driver on the driver dashboard, an admin on the console.
 export const handleSigninRedirect = function (role: string) {
   if (role === "DRIVER") return "/driver/dashboard";
   if (role === "CLIENT") return "/onboarding";
+  if (role === "ADMIN") return "/admin/dashboard";
   return "/";
 };
 

@@ -57,6 +57,7 @@ export interface User {
   has_validated_email: boolean;
   account_status: AccountStatus;
   client_profile?: ClientProfile | null;
+  admin_profile?: import("./admin").AdminProfile | null;
   createdAt: string;
 }
 

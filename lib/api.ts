@@ -21,18 +21,21 @@ const CONFIG = {
   ROUTES: {
     LOGIN: "/auth/signin",
     DRIVER_LOGIN: "/driver/auth/signin",
+    ADMIN_LOGIN: "/admin/auth/signin",
   },
   REQUESTS: {
     TIMEOUT: 120000, // 2 MINUTE
   },
 } as const;
 
-// Read before clearAuthCookies wipes it — a signed-out driver belongs on the
-// driver signin, everyone else on the client one.
-const loginRouteForSession = () =>
-  Cookies.get("session_type") === "DRIVER"
-    ? CONFIG.ROUTES.DRIVER_LOGIN
-    : CONFIG.ROUTES.LOGIN;
+// Read before clearAuthCookies wipes it — a signed-out driver or admin belongs
+// on their own signin, everyone else on the client one.
+const loginRouteForSession = () => {
+  const sessionType = Cookies.get("session_type");
+  if (sessionType === "DRIVER") return CONFIG.ROUTES.DRIVER_LOGIN;
+  if (sessionType === "ADMIN") return CONFIG.ROUTES.ADMIN_LOGIN;
+  return CONFIG.ROUTES.LOGIN;
+};
 
 // Types
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
