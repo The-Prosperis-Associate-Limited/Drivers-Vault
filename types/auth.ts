@@ -1,3 +1,5 @@
+import type { AdminProfile } from "./admin";
+
 export type UserRole = "DRIVER" | "CLIENT" | "ADMIN";
 
 export type AccountStatus = "ACTIVE" | "SUSPENDED" | "DEACTIVATED";
@@ -57,7 +59,7 @@ export interface User {
   has_validated_email: boolean;
   account_status: AccountStatus;
   client_profile?: ClientProfile | null;
-  admin_profile?: import("./admin").AdminProfile | null;
+  admin_profile?: AdminProfile | null;
   createdAt: string;
 }
 

@@ -1,5 +1,12 @@
 import type { AccountStatus, ClientType, User } from "./auth";
-import type { DriverType, DriverVerificationStatus } from "./driver";
+import type {
+  DriverDocument,
+  DriverProfile,
+  DriverType,
+  DriverVerificationStatus,
+  Guarantor,
+  WorkExperience,
+} from "./driver";
 import type { Course } from "./training";
 
 export type AdminRole =
@@ -301,9 +308,9 @@ export interface AdminActivityRow {
 export interface AdminUserDetail extends User {
   lastLogin: string;
   driver_profile:
-    | (import("./driver").DriverProfile & {
-        work_experiences: import("./driver").WorkExperience[];
-        guarantors: import("./driver").Guarantor[];
+    | (DriverProfile & {
+        work_experiences: WorkExperience[];
+        guarantors: Guarantor[];
       })
     | null;
   driver_verification: {
@@ -318,12 +325,12 @@ export interface AdminUserDetail extends User {
 
 export interface AdminVerificationSubmission {
   verification: AdminUserDetail["driver_verification"];
-  profile: import("./driver").DriverProfile & {
+  profile: DriverProfile & {
     user: User;
-    work_experiences: import("./driver").WorkExperience[];
-    guarantors: import("./driver").Guarantor[];
+    work_experiences: WorkExperience[];
+    guarantors: Guarantor[];
   };
-  documents: import("./driver").DriverDocument[];
+  documents: DriverDocument[];
 }
 
 export interface AdminUserWalletData {
