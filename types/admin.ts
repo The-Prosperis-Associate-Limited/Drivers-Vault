@@ -1,5 +1,6 @@
 import type { AccountStatus, ClientType, User } from "./auth";
 import type { DriverType, DriverVerificationStatus } from "./driver";
+import type { Course } from "./training";
 
 export type AdminRole =
   | "SUPER_ADMIN"
@@ -201,6 +202,14 @@ export interface AdminTrainingStats {
   drafts: number;
   archived: number;
   required: number;
+}
+
+export type CourseStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
+
+export interface AdminCourse extends Course {
+  status: CourseStatus;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type EnrollmentStatus = "IN_PROGRESS" | "COMPLETED" | "ABANDONED";
