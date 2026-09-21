@@ -71,6 +71,11 @@ export default function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // The driver landing page is public; only its nested app routes are gated.
+  if (pathname === ROUTES.DRIVER) {
+    return NextResponse.next();
+  }
+
   if (
     pathname.startsWith(ROUTES.DRIVER_AUTH) ||
     pathname.startsWith(ROUTES.AUTH)
