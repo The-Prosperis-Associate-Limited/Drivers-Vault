@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 export const Hero = function () {
   return (
     <section className="px-4 pt-6 md:px-8">
-      <div className="bg-brand relative mx-auto max-w-7xl overflow-hidden rounded-3xl">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-[#0039AC]">
         <Image
           src="/cloud-top-left.svg"
           alt=""

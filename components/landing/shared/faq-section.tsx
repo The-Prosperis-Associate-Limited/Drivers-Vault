@@ -35,7 +35,7 @@ export function FaqSection({
     <section
       id="faqs"
       className={cn(
-        "scroll-mt-8 sm:px-6 lg:px-8 lg:py-28",
+        "scroll-mt-28 sm:scroll-mt-32 sm:px-6 lg:px-8 lg:py-28",
         isClient ? "px-2 py-12 sm:py-20" : "px-4 py-20",
       )}
     >

@@ -11,15 +11,15 @@ function ProfilePreview() {
     <div className="relative mx-auto w-full max-w-md py-8">
       <RatingBadge className="absolute -top-1 left-0 z-10" />
       <div className="ml-auto w-[86%] rounded-[28px] border-[10px] border-slate-50 bg-white px-6 py-8 text-center shadow-[0_18px_45px_rgba(15,23,42,.08)]">
-        <div className="relative mx-auto size-28 overflow-hidden rounded-full border-4 border-white bg-[#d7c6af] shadow-lg">
+        <div className="relative mx-auto size-28">
           <Image
-            src="/driver-hero.svg"
-            alt="Driver profile illustration"
-            width={638}
-            height={691}
-            className="h-full w-full object-cover object-top"
+            src="/landing-page/Emmanuel.svg"
+            alt="Emmanuel Adewale, corporate driver"
+            width={192}
+            height={192}
+            className="size-full object-contain"
           />
-          <BadgeCheck className="absolute right-0 bottom-1 size-6 fill-blue-600 text-white" />
+          <BadgeCheck className="absolute right-1 bottom-2 size-6 fill-blue-600 text-white" />
         </div>
         <p className="mt-5 text-base font-semibold text-slate-950">
           Emmanuel Adewale
@@ -45,17 +45,29 @@ export function DriverIntroSection() {
     <section className="bg-[#f2f5fb] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
       <div className="mx-auto grid max-w-7xl overflow-hidden rounded-3xl border border-slate-200 bg-white lg:grid-cols-2">
         <div className="flex flex-col justify-center px-7 py-12 sm:px-12 lg:px-16 lg:py-16">
-          <p className="w-fit rounded-full bg-slate-50 px-4 py-2 text-[11px] font-semibold tracking-wide text-slate-700">
+          <p
+            className="w-fit rounded-[50px] bg-slate-50 px-6 py-3 text-xs font-semibold tracking-wide text-[#344054]"
+            style={{ fontWeight: 600 }}
+          >
             FOR DRIVERS
           </p>
-          <h2 className="mt-6 text-3xl font-semibold tracking-[-0.035em] text-slate-800 sm:text-4xl">
+          <h2
+            className="mt-6 text-3xl font-bold tracking-[-0.035em] text-[#344054] sm:text-[32px]"
+            style={{ fontWeight: 700 }}
+          >
             Get steady, Fair work.
           </h2>
-          <p className="mt-4 max-w-lg text-sm leading-6 text-slate-600 sm:text-base">
+          <p
+            className="mt-4 max-w-lg text-sm leading-6 font-medium text-[#475467] sm:text-[20px]"
+            style={{ fontWeight: 500 }}
+          >
             Build your reputation, choose suitable jobs, and earn through a
             network that values professionals.
           </p>
-          <ul className="mt-6 space-y-3 text-sm text-slate-700">
+          <ul
+            className="mt-6 space-y-3 text-sm leading-6 font-medium text-[#475467] sm:text-[20px]"
+            style={{ fontWeight: 500 }}
+          >
             {DRIVER_BENEFITS.map((benefit) => (
               <li key={benefit} className="flex items-center gap-3">
                 <span className="size-1.5 rounded-full bg-blue-700" />
@@ -65,7 +77,7 @@ export function DriverIntroSection() {
           </ul>
           <Link
             href="/driver/auth/signup"
-            className="mt-8 inline-flex w-fit items-center gap-3 rounded-xl bg-[#073fa7] px-6 py-4 text-sm font-semibold text-white transition-colors hover:bg-[#06368f]"
+            className="mt-8 inline-flex h-[60px] w-[155px] items-center justify-center gap-3 rounded-[12px] bg-[#00359E] px-7 py-4 text-lg leading-7 font-medium tracking-normal text-white shadow-[0_1px_2px_0_rgba(16,24,40,0.05)] transition-colors hover:bg-[#07368f]"
           >
             Sign up
             <ArrowRight className="size-4" />

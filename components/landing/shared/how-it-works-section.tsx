@@ -23,7 +23,7 @@ export function HowItWorksSection({
     <section
       id="how-it-works"
       className={cn(
-        "scroll-mt-8 bg-[#f7f8fa] sm:px-6 lg:px-8",
+        "scroll-mt-28 bg-[#f7f8fa] sm:scroll-mt-32 sm:px-6 lg:px-8",
         isClient ? "px-2 py-12 sm:py-20" : "px-4 py-20",
       )}
     >
@@ -60,12 +60,7 @@ export function HowItWorksSection({
                 isClient ? "min-h-52 p-5" : "min-h-64 p-6",
               )}
             >
-              <p
-                className={cn(
-                  "font-medium tracking-tight text-[#073fa7] sm:text-3xl",
-                  isClient ? "text-2xl" : "text-3xl",
-                )}
-              >
+              <p className="font-grand-hotel text-5xl leading-[54px] font-normal tracking-[-0.02em] text-[#00359E]">
                 {step.number}
               </p>
               <div
