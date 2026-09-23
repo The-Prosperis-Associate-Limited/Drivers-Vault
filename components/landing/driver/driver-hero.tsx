@@ -8,7 +8,7 @@ type TrustCardProps = {
   image: string;
   name: string;
   role: string;
-  score: string;
+  score: number;
 };
 
 const DRIVERS: readonly TrustCardProps[] = [
@@ -16,15 +16,52 @@ const DRIVERS: readonly TrustCardProps[] = [
     image: "/landing-page/driver-1.svg",
     name: "Mike Thomas",
     role: "Executive Driver",
-    score: "91",
+    score: 91,
   },
   {
     image: "/landing-page/driver-2.svg",
     name: "Emmanuel Adewale",
     role: "Corporate Driver",
-    score: "100",
+    score: 100,
   },
 ];
+
+function TrustScore({ score }: { score: number }) {
+  const value = Math.min(Math.max(score, 0), 100);
+
+  return (
+    <div
+      className="flex shrink-0 flex-col items-center gap-1"
+      aria-label={`Trust score ${value} out of 100`}
+    >
+      <div className="relative grid size-16 place-items-center">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 64 64"
+          className="absolute inset-0 size-full -rotate-90 overflow-visible"
+        >
+          <circle
+            cx="32"
+            cy="32"
+            r="29"
+            fill="none"
+            stroke="#004EEB"
+            strokeWidth="4"
+            strokeLinecap="round"
+            pathLength="100"
+            strokeDasharray={`${value} ${100 - value}`}
+          />
+        </svg>
+        <span className="relative text-[21.6px] leading-[28.8px] font-semibold tracking-normal text-[#1C1A17]">
+          {value}
+        </span>
+      </div>
+      <span className="text-center text-xs leading-4 font-medium tracking-[-0.01em] whitespace-nowrap text-[#6B7280]">
+        Trust Score
+      </span>
+    </div>
+  );
+}
 
 function TrustCard({ image, name, role, score }: TrustCardProps) {
   return (
@@ -37,7 +74,7 @@ function TrustCard({ image, name, role, score }: TrustCardProps) {
           height={90}
           className="size-full object-contain"
         />
-        <BadgeCheck className="absolute right-0 bottom-0 size-4 fill-blue-500 text-white" />
+        <BadgeCheck className="absolute right-1.5 bottom-1.5 size-6 fill-blue-600 text-white drop-shadow-sm" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="truncate text-[20px] font-medium text-[#111827]">
@@ -45,9 +82,7 @@ function TrustCard({ image, name, role, score }: TrustCardProps) {
         </p>
         <p className="mt-0.5 text-base text-[#6B7280]">{role}</p>
       </div>
-      <div className="grid size-13 shrink-0 place-items-center rounded-full border-[3px] border-blue-600 text-sm font-semibold text-slate-900">
-        {score}
-      </div>
+      <TrustScore score={score} />
     </div>
   );
 }

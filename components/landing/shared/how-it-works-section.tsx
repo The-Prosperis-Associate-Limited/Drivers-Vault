@@ -23,7 +23,7 @@ export function HowItWorksSection({
     <section
       id="how-it-works"
       className={cn(
-        "scroll-mt-8 bg-[#f7f8fa] sm:px-6 lg:px-8",
+        "scroll-mt-28 bg-[#f7f8fa] sm:scroll-mt-32 sm:px-6 lg:px-8",
         isClient ? "px-2 py-12 sm:py-20" : "px-4 py-20",
       )}
     >

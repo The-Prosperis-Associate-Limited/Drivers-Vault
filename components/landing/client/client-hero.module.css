@@ -1,0 +1,41 @@
+.orbit {
+  position: absolute;
+  inset: -12px;
+  z-index: 10;
+  pointer-events: none;
+  animation: orbit-ratings 14s linear infinite;
+}
+
+.rating {
+  position: absolute;
+  animation: keep-rating-upright 14s linear infinite;
+}
+
+.rating:first-child {
+  top: 0;
+  left: 0;
+}
+
+.rating:last-child {
+  right: 0;
+  bottom: 0;
+}
+
+@keyframes orbit-ratings {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes keep-rating-upright {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit,
+  .rating {
+    animation-play-state: paused;
+  }
+}
