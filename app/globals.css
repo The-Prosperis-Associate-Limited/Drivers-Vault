@@ -6,12 +6,11 @@
 @import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=zodiak@400&display=swap");
 
 /*
-  The driver's course certificate is the one surface that is not General Sans —
-  Zodiak for the title (same Fontshare request as above) and a formal script for
-  the name. Fontshare has no script face, which is the only reason a second
-  provider appears in this file. Nothing outside the certificate may use these.
+  The course certificate uses Great Vibes for its formal script, while landing
+  page step numbers use Grand Hotel. Fontshare has neither face, which is why a
+  second provider appears here.
 */
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Great+Vibes&display=swap");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -23,6 +22,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-general-sans: "General Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-grand-hotel: "Grand Hotel", cursive;
   --font-certificate-serif: "Zodiak", ui-serif, Georgia, serif;
   --font-certificate-script: "Great Vibes", ui-serif, cursive;
   --color-ring: var(--ring);

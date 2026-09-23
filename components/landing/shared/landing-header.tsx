@@ -22,8 +22,8 @@ const NAV_LINKS: ReadonlyArray<{
 
 export function LandingHeader({ audience, signupHref }: LandingHeaderProps) {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 mx-auto w-full max-w-7xl px-2 pt-3 sm:px-6 sm:pt-5 lg:px-8">
-      <div className="flex h-14 items-center justify-between rounded-full bg-white px-3 shadow-sm sm:h-[88px] sm:py-5">
+    <header className="fixed inset-x-0 top-0 z-50 mx-auto w-full max-w-[1280px] px-2 pt-3 sm:px-6 sm:pt-5 lg:px-0">
+      <div className="flex h-14 items-center justify-between rounded-full bg-white px-3 shadow-sm sm:h-[88px] sm:rounded-[40px] sm:py-5 lg:px-10">
         <Link href="/" aria-label="DriverVault home">
           <TegatLogo size={43} />
         </Link>

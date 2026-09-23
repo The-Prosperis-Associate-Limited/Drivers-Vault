@@ -52,7 +52,7 @@ function TrustScore({ score }: { score: number }) {
             strokeDasharray={`${value} ${100 - value}`}
           />
         </svg>
-        <span className="relative text-[21.6px] leading-[28.8px] font-semibold tracking-normal text-[#1C1A17]">
+        <span className="font-grand-hotel relative text-[21.6px] leading-[28.8px] font-semibold tracking-normal text-[#1C1A17]">
           {value}
         </span>
       </div>

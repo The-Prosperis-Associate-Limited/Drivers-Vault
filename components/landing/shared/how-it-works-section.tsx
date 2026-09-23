@@ -60,12 +60,7 @@ export function HowItWorksSection({
                 isClient ? "min-h-52 p-5" : "min-h-64 p-6",
               )}
             >
-              <p
-                className={cn(
-                  "font-medium tracking-tight text-[#073fa7] sm:text-3xl",
-                  isClient ? "text-2xl" : "text-3xl",
-                )}
-              >
+              <p className="font-grand-hotel text-5xl leading-[54px] font-normal tracking-[-0.02em] text-[#00359E]">
                 {step.number}
               </p>
               <div

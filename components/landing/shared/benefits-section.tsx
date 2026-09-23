@@ -46,7 +46,7 @@ export function BenefitsSection({
               "w-fit rounded-full bg-slate-50 font-semibold tracking-wide text-slate-600",
               isClient
                 ? "px-3 py-2 text-[9px] sm:px-4 sm:text-[11px]"
-                : "px-4 py-2 text-[11px]",
+                : "rounded-[50px] px-6 py-3 text-xs text-[#344054]",
             )}
           >
             {eyebrow}
@@ -56,7 +56,7 @@ export function BenefitsSection({
               "max-w-md font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl",
               isClient
                 ? "mt-7 text-[1.4rem] leading-tight sm:mt-12"
-                : "mt-12 text-3xl",
+                : "mt-6 text-3xl font-bold text-[#344054] sm:text-[32px]",
             )}
           >
             {title}
@@ -84,7 +84,9 @@ export function BenefitsSection({
                   <h3
                     className={cn(
                       "font-semibold text-slate-950",
-                      isClient ? "text-sm sm:text-base" : "text-base",
+                      isClient
+                        ? "text-sm sm:text-base"
+                        : "text-sm leading-6 font-medium text-[#475467] sm:text-[20px]",
                     )}
                   >
                     {itemTitle}
@@ -94,7 +96,7 @@ export function BenefitsSection({
                       "mt-1 text-slate-600",
                       isClient
                         ? "max-w-md text-xs leading-5 sm:text-sm sm:leading-6"
-                        : "text-sm leading-6",
+                        : "text-sm leading-6 font-medium text-[#475467] sm:text-[20px]",
                     )}
                   >
                     {description}
