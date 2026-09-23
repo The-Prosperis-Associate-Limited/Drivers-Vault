@@ -21,11 +21,7 @@ const LINKS = [
   { label: "FAQs", href: "#faqs" },
 ];
 
-export function ClientMobileNav({
-  signupHref = "/auth/signup",
-}: {
-  signupHref?: string;
-}) {
+export function LandingMobileNav({ signupHref }: { signupHref: string }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -57,7 +53,7 @@ export function ClientMobileNav({
             <SheetClose key={link.label} asChild>
               <Link
                 href={link.href}
-                className="px-3 py-1.5 text-[11px] font-medium uppercase text-slate-800 transition-colors hover:text-blue-700"
+                className="px-3 py-1.5 text-[11px] font-medium text-slate-800 uppercase transition-colors hover:text-blue-700"
               >
                 {link.label}
               </Link>
