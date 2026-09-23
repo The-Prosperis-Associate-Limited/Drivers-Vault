@@ -28,15 +28,15 @@ export const metadata: Metadata = {
 
 function DriverHeader() {
   return (
-    <header className="relative z-20 mx-auto w-full max-w-7xl px-2 pt-3 sm:px-6 sm:pt-5 lg:px-8">
-      <div className="flex h-14 items-center justify-between rounded-full bg-white px-3 shadow-sm sm:h-16 sm:px-7">
+    <header className="lg: relative z-20 mx-auto w-full max-w-7xl px-2 pt-3 sm:h-[88px] sm:px-6 sm:pt-5 lg:px-8">
+      <div className="flex h-14 items-center justify-between rounded-[40px] bg-white px-3 shadow-sm sm:h-[88px] sm:py-5">
         <Link href="/" aria-label="DriverVault home">
-          <TegatLogo size={35} />
+          <TegatLogo size={43} />
         </Link>
 
         <nav
           aria-label="Driver landing page navigation"
-          className="hidden items-center gap-8 text-[11px] font-semibold tracking-wide text-slate-700 md:flex"
+          className="hidden items-center gap-8 text-[14px] font-semibold tracking-wide text-slate-700 md:flex"
         >
           <Link href="/" className="transition-colors hover:text-blue-700">
             FOR CLIENTS
@@ -50,10 +50,7 @@ function DriverHeader() {
           >
             HOW IT WORKS
           </Link>
-          <Link
-            href="#faqs"
-            className="transition-colors hover:text-blue-700"
-          >
+          <Link href="#faqs" className="transition-colors hover:text-blue-700">
             FAQS
           </Link>
         </nav>
@@ -61,7 +58,7 @@ function DriverHeader() {
         <ClientMobileNav signupHref="/driver/auth/signup" />
         <Link
           href="/driver/auth/signup"
-          className="hidden rounded-xl bg-[#0a3fa8] px-5 py-3 text-xs font-semibold text-white transition-colors hover:bg-[#07368f] md:inline-flex"
+          className="hidden rounded-[12px] bg-[#00359E] px-5 py-3 text-base font-medium text-white transition-colors hover:bg-[#07368f] md:inline-flex"
         >
           Get started
         </Link>
@@ -82,7 +79,7 @@ function TrustCard({
   accent: string;
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-[22px] border border-white/40 bg-white/95 p-4 shadow-[0_10px_30px_rgba(7,32,84,0.14)] sm:min-w-90">
+    <div className="sm:h-[] flex items-center gap-4 rounded-[32px] border border-white/40 bg-white/95 p-4 shadow-[0_10px_30px_rgba(7,32,84,0.14)] sm:h-[170px] sm:w-[450px]">
       <div
         className="relative grid size-12 shrink-0 place-items-center overflow-hidden rounded-full text-sm font-semibold text-white"
         style={{ backgroundColor: accent }}
@@ -94,8 +91,10 @@ function TrustCard({
         <BadgeCheck className="absolute right-0 bottom-0 size-4 fill-blue-500 text-white" />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-slate-900">{name}</p>
-        <p className="mt-0.5 text-xs text-slate-500">{role}</p>
+        <p className="truncate text-[20px] font-medium text-[#111827]">
+          {name}
+        </p>
+        <p className="mt-0.5 text-base text-[#6B7280]">{role}</p>
       </div>
       <div className="grid size-13 shrink-0 place-items-center rounded-full border-[3px] border-blue-600 text-sm font-semibold text-slate-900">
         {score}
@@ -120,19 +119,19 @@ function DriverHero() {
 
       <div className="relative z-10 mx-auto grid min-h-[530px] max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-[1.1fr_.9fr] lg:px-8">
         <div className="max-w-2xl text-white">
-          <h1 className="text-4xl leading-[1.02] font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl leading-[1.02] font-semibold tracking-[-0.04em] sm:text-5xl lg:text-[64px]">
             Drive on your terms.
             <br />
             Earn what you&apos;re worth.
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-blue-50/90 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-7 text-[neutral/shade/White] sm:text-xl">
             DriverVault connects you with people and businesses that need
             dependable drivers, with clear pay, fair terms, and no agency
             guesswork.
           </p>
           <Link
             href="/driver/auth/signup"
-            className="mt-8 inline-flex items-center gap-3 rounded-xl bg-white px-6 py-4 text-sm font-semibold text-slate-900 shadow-sm transition-transform hover:-translate-y-0.5"
+            className="mt-8 inline-flex items-center gap-3 rounded-[12px] bg-white px-7 py-4 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5"
           >
             Join as a driver
             <ArrowRight className="size-4" />
@@ -140,7 +139,7 @@ function DriverHero() {
         </div>
 
         <div className="relative mx-auto flex w-full max-w-md flex-col gap-5 lg:ml-auto">
-          <div className="absolute -left-28 top-11 hidden size-28 overflow-hidden rounded-full border-[8px] border-slate-800/65 bg-slate-800 shadow-xl xl:block">
+          {/* <div className="absolute top-11 -left-28 hidden size-28 overflow-hidden rounded-full border-[8px] border-slate-800/65 bg-slate-800 shadow-xl xl:block">
             <Image
               src="/driver-hero.svg"
               alt=""
@@ -148,7 +147,7 @@ function DriverHero() {
               height={691}
               className="h-full w-full object-cover object-top"
             />
-          </div>
+          </div> */}
           <TrustCard
             name="Mike Thomas"
             role="Executive Driver"
@@ -183,13 +182,13 @@ const WORK_BENEFITS = [
   {
     icon: CalendarDays,
     title: "Your schedule.",
-    description: "Set your availability and choose only the jobs that suit you.",
+    description:
+      "Set your availability and choose only the jobs that suit you.",
   },
   {
     icon: ShieldCheck,
     title: "Verified clients",
-    description:
-      "Every request comes through a trusted, accountable network.",
+    description: "Every request comes through a trusted, accountable network.",
   },
 ];
 
@@ -255,8 +254,7 @@ const TESTIMONIALS = [
     location: "Kigali, Rwanda",
   },
   {
-    quote:
-      "When a schedule changed mid-job, support sorted it out in minutes.",
+    quote: "When a schedule changed mid-job, support sorted it out in minutes.",
     name: "Sarah Tarleton",
     location: "Kigali, Rwanda",
   },
@@ -433,7 +431,7 @@ function DashboardPreview() {
               ["Trust score", "0"],
             ].map(([label, value]) => (
               <div key={label} className="rounded-xl bg-white p-4 shadow-sm">
-                <p className="text-[8px] uppercase text-slate-400">{label}</p>
+                <p className="text-[8px] text-slate-400 uppercase">{label}</p>
                 <p className="mt-2 text-lg font-semibold text-slate-800">
                   {value}
                 </p>
@@ -497,12 +495,15 @@ function WhyDrive() {
 
 function HowItWorksSection() {
   return (
-    <section id="how-it-works" className="scroll-mt-8 bg-[#f7f8fa] px-4 py-20 sm:px-6 lg:px-8">
+    <section
+      id="how-it-works"
+      className="scroll-mt-8 bg-[#f7f8fa] px-4 py-20 sm:px-6 lg:px-8"
+    >
       <div className="mx-auto max-w-7xl">
         <p className="w-fit rounded-full bg-white px-4 py-2 text-[11px] font-semibold tracking-wide text-slate-600 shadow-sm">
           HOW IT WORKS
         </p>
-        <h2 className="mt-5 max-w-lg text-3xl font-semibold leading-tight tracking-[-0.035em] text-slate-950 sm:text-4xl">
+        <h2 className="mt-5 max-w-lg text-3xl leading-tight font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl">
           From application to First Payout In Three Steps.
         </h2>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -547,7 +548,7 @@ function JobTypes() {
           <BriefcaseBusiness className="size-4" />
           JOB TYPES
         </p>
-        <h2 className="mt-5 max-w-sm text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl">
+        <h2 className="mt-5 max-w-sm text-3xl leading-tight font-semibold tracking-[-0.035em] sm:text-4xl">
           Choose work that fits your skillset
         </h2>
         <div className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -586,7 +587,10 @@ function Testimonials() {
               key={`${testimonial.quote}-${index}`}
               className="rounded-2xl bg-white p-7 shadow-[0_10px_40px_rgba(15,23,42,.03)]"
             >
-              <div className="flex gap-1 text-amber-500" aria-label="5 out of 5 stars">
+              <div
+                className="flex gap-1 text-amber-500"
+                aria-label="5 out of 5 stars"
+              >
                 {Array.from({ length: 5 }).map((_, starIndex) => (
                   <Star key={starIndex} className="size-4 fill-current" />
                 ))}
@@ -617,7 +621,10 @@ function Testimonials() {
 
 function DriverFaqs() {
   return (
-    <section id="faqs" className="scroll-mt-8 px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    <section
+      id="faqs"
+      className="scroll-mt-8 px-4 py-20 sm:px-6 lg:px-8 lg:py-28"
+    >
       <div className="mx-auto max-w-4xl">
         <h2 className="text-center text-2xl font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl">
           DRIVER QUESTIONS, ANSWERED
