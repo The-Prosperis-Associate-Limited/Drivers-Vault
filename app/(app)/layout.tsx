@@ -20,6 +20,7 @@ export default function DashboardLayout({
     state_of_residence: profile.state_of_residence,
     country: profile.country,
     email: profile.email,
+    onboarding_pending: !profile.client_profile?.onboarding_completed_at,
   };
 
   return (

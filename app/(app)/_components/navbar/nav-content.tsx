@@ -4,7 +4,7 @@ import { AppText } from "@/components/shared/app-text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TegatLogo } from "@/components/svg/logo";
 import { cn, getInitials } from "@/lib/utils";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ListChecks } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FOOTER_LINKS, NAV_LINKS, type NavLink } from "./nav-links";
@@ -16,6 +16,7 @@ interface Props {
     state_of_residence: string | null;
     country: string | null;
     email: string | null;
+    onboarding_pending?: boolean;
   };
   onNavigate?: () => void;
 }
@@ -65,6 +66,26 @@ export const NavContent = function ({ user, onNavigate }: Props) {
           <TegatLogo size={40} />
         </Link>
       </div>
+
+      {user?.onboarding_pending && (
+        <>
+          <Link
+            href="/onboarding"
+            onClick={onNavigate}
+            className="text-muted-foreground hover:text-foreground flex items-center gap-3 px-6 pb-3 transition-colors"
+          >
+            <ListChecks className="h-5 w-5 shrink-0" />
+            <AppText
+              type="caption"
+              className="font-semibold tracking-wide uppercase"
+            >
+              Get started
+            </AppText>
+          </Link>
+
+          <div className="border-border mx-6 border-t" />
+        </>
+      )}
 
       <nav className="space-y-1 px-3 py-4">
         {NAV_LINKS.map((link) => renderLink(link))}

@@ -49,11 +49,11 @@ export const isSafeCallback = function (url: string | null): url is string {
   return !!url && url.startsWith("/") && !url.startsWith("//");
 };
 
-// One codebase, three surfaces: a client lands on their wizard (which forwards
-// once completed), a driver on the driver dashboard, an admin on the console.
+// One codebase, three surfaces — everyone lands on their dashboard. The
+// onboarding wizards are prompts reached from there, never a gate after auth.
 export const handleSigninRedirect = function (role: string) {
   if (role === "DRIVER") return "/driver/dashboard";
-  if (role === "CLIENT") return "/onboarding";
+  if (role === "CLIENT") return "/dashboard";
   if (role === "ADMIN") return "/admin/dashboard";
   return "/";
 };

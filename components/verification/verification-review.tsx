@@ -137,7 +137,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="personal"
         title="Personal information"
-        editHref="/onboarding/personal-information"
+        editHref="/driver/onboarding/personal-information"
         complete={hasPersonal}
       >
         <Row label="Phone Number" value={user?.phone_no} />
@@ -157,7 +157,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="experience"
         title="Years of Experience"
-        editHref="/onboarding/experience"
+        editHref="/driver/onboarding/experience"
         complete={hasExperience}
       >
         <Row
@@ -190,7 +190,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="academic"
         title="Academic Qualification"
-        editHref="/onboarding/academic-qualification"
+        editHref="/driver/onboarding/academic-qualification"
         complete={!!profile?.academic_level}
       >
         <Row
@@ -204,7 +204,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="work"
         title="Your Work Experience"
-        editHref="/onboarding/work-experience"
+        editHref="/driver/onboarding/work-experience"
         complete={!!profile?.work_experiences.length}
       >
         {profile?.work_experiences.length ? (
@@ -227,7 +227,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="guarantors"
         title="Your Guarantor Information"
-        editHref="/onboarding/guarantors"
+        editHref="/driver/onboarding/guarantors"
         complete={!!profile?.guarantors.length}
       >
         {profile?.guarantors.length ? (
@@ -246,7 +246,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="additional"
         title="Additional Information (Optional)"
-        editHref="/onboarding/additional-information"
+        editHref="/driver/onboarding/additional-information"
         complete
       >
         <Row label="Languages" value={profile?.languages.join(", ")} />
@@ -256,7 +256,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="documents"
         title="Uploaded Documents"
-        editHref="/onboarding/documents"
+        editHref="/driver/onboarding/documents"
         complete={
           hasDocuments && !documents.some((d) => d.status === "REJECTED")
         }
