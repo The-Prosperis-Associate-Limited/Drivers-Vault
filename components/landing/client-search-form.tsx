@@ -35,15 +35,15 @@ const FIELDS = [
 
 export function ClientSearchForm() {
   return (
-    <div className="rounded-2xl bg-white p-4 shadow-[0_16px_45px_rgba(2,24,76,.18)] sm:rounded-3xl sm:p-7">
-      <div className="space-y-3 sm:space-y-4">
+    <div className="min-h-[460px] rounded-3xl bg-white p-6 shadow-[0_16px_45px_rgba(2,24,76,.18)] sm:p-8">
+      <div className="space-y-4">
         {FIELDS.map((field) => (
           <div key={field.label}>
-            <label className="mb-1.5 block text-[11px] font-medium text-slate-600">
+            <label className="mb-2 block text-sm leading-5 font-medium text-[#344054]">
               {field.label}
             </label>
             <Select defaultValue={field.placeholder}>
-              <SelectTrigger className="h-10 w-full rounded-lg border-slate-200 bg-white px-3 text-[11px] text-slate-600 shadow-none sm:h-11 sm:text-xs">
+              <SelectTrigger className="h-10 w-full rounded-lg border-[#D0D5DD] bg-white px-3 text-base leading-6 text-[#667085] shadow-none">
                 <SelectValue placeholder={field.placeholder} />
               </SelectTrigger>
               <SelectContent>
@@ -60,7 +60,7 @@ export function ClientSearchForm() {
 
       <Link
         href="/marketplace/search"
-        className="mt-4 flex h-10 w-full items-center justify-center rounded-lg bg-[#073fa7] text-[11px] font-semibold text-white transition-colors hover:bg-[#06368f] sm:mt-5 sm:h-11 sm:text-xs"
+        className="mt-6 flex h-12 w-full items-center justify-center rounded-xl bg-[#00359E] text-base leading-6 font-semibold text-white transition-colors hover:bg-[#002f8d]"
       >
         Search
       </Link>

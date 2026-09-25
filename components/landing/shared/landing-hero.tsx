@@ -34,12 +34,12 @@ export function LandingHero({
             <h1 className="text-4xl leading-[1.02] font-semibold tracking-[-0.04em] sm:text-5xl lg:text-[64px]">
               {title}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-white sm:text-xl">
+            <p className="mt-6 max-w-xl text-base leading-7 font-medium text-white sm:text-xl">
               {description}
             </p>
             <Link
               href={signupHref}
-              className="mt-8 inline-flex items-center gap-3 rounded-[12px] bg-white px-7 py-4 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5"
+              className="mt-8 inline-flex h-[60px] min-w-[155px] items-center justify-center gap-3 rounded-[12px] bg-white px-7 py-4 text-lg leading-7 font-medium text-[#1C1A17] shadow-sm transition-transform hover:-translate-y-0.5"
             >
               {ctaLabel}
               <ArrowRight className="size-4" />

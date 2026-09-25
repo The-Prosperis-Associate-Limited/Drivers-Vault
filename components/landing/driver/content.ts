@@ -55,32 +55,32 @@ export const JOB_TYPES = [
   {
     title: "Contract Driver",
     description:
-      "Drive on a fixed-term contract for a company or individual, with a clear start and end date.",
+      "Drive on a fixed-term contract for a company or individual, a defined engagement with a clear start and end date, ideal if you want steady, committed work without a long-term, open-ended commitment.",
   },
   {
     title: "Private Driver",
     description:
-      "Drive for an individual or family’s daily needs — school runs, errands, and appointments.",
+      "Drive for an individual or family’s daily needs — school runs, errands, and personal appointments.",
   },
   {
     title: "Corporate Driver",
     description:
-      "Drive for a company’s staff or executives as part of their day-to-day operations.",
+      "Drive for a company’s staff or executives as part of their day-to-day operations, typically on a long-term assignment.",
   },
   {
     title: "Executive Driver",
     description:
-      "Drive senior executives with the discretion, punctuality, and polish expected for the role.",
+      "Drive senior executives and management, with an emphasis on discretion, punctuality, and a polished, professional manner.",
   },
   {
-    title: "Spy Driver",
+    title: "Spy Drivers",
     description:
-      "A specialised security-focused role for drivers trained in defensive and discreet driving.",
+      "A specialized security-focused track, separate from standard certification, for drivers trained in defensive and discreet driving, for clients who need an added layer of protection.",
   },
   {
-    title: "Expatriate Driver",
+    title: "Expatriate Drivers",
     description:
-      "Drive expatriate clients who need local knowledge, comfortable communication, and reliable service.",
+      "Drive expatriate clients who need someone familiar with the city, comfortable with cross-cultural communication, and reliable with schedules.",
   },
 ] as const;
 

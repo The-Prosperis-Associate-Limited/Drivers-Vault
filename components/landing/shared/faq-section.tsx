@@ -43,7 +43,9 @@ export function FaqSection({
         <h2
           className={cn(
             "text-center font-semibold tracking-[-0.03em] text-slate-950 sm:text-3xl",
-            isClient ? "text-[1.25rem]" : "text-2xl",
+            isClient
+              ? "text-[1.25rem]"
+              : "text-3xl leading-[42px] tracking-[-0.018em] text-[#1C1A17] sm:text-[36px]",
           )}
         >
           {title}
@@ -70,7 +72,7 @@ export function FaqSection({
                   "font-semibold text-slate-950 hover:no-underline",
                   isClient
                     ? "gap-3 py-4 text-xs sm:gap-4 sm:py-5 sm:text-sm"
-                    : "gap-4 py-4 text-sm [&_[data-slot=accordion-trigger-icon]]:hidden",
+                    : "gap-4 py-5 text-lg leading-7 tracking-[-0.01em] text-[#1C1A17] sm:text-xl [&_[data-slot=accordion-trigger-icon]]:hidden",
                 )}
               >
                 <span className="flex items-center gap-3 sm:gap-4">
@@ -92,7 +94,7 @@ export function FaqSection({
                   "text-slate-500",
                   isClient
                     ? "pr-5 pb-4 pl-8 text-xs leading-5 sm:pr-8 sm:pb-5 sm:pl-9 sm:text-sm sm:leading-6"
-                    : "pr-5 pb-4 pl-10 text-sm leading-6 sm:pr-8 sm:pb-5",
+                    : "pr-5 pb-5 pl-10 text-base leading-6 font-medium tracking-[-0.01em] text-[#344054] sm:pr-8",
                 )}
               >
                 {item.answer}
@@ -104,10 +106,10 @@ export function FaqSection({
         {supportPrompt ? (
           <div className="mx-auto mt-14 flex max-w-xl flex-col items-center rounded-3xl bg-blue-50 px-6 py-8 text-center">
             <Mail className="size-6 text-blue-700" />
-            <p className="mt-3 text-sm font-semibold text-slate-900">
+            <p className="mt-3 text-xl leading-7 font-semibold tracking-[-0.01em] text-[#1C1A17]">
               {supportPrompt.title}
             </p>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-base leading-6 font-medium text-[#344054]">
               {supportPrompt.description}
             </p>
           </div>

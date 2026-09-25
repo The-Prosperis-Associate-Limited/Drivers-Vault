@@ -48,7 +48,7 @@ export function ClientLandingPage() {
         <RevealSection>
           <TestimonialsSection
             audience="client"
-            title="What client say about us"
+            title="What clients say about us"
             testimonials={CLIENT_TESTIMONIALS}
           />
         </RevealSection>

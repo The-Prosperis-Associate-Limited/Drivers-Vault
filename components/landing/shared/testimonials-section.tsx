@@ -1,6 +1,10 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { Star } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import styles from "./testimonials-section.module.css";
 
 export type LandingTestimonial = {
   quote: string;
@@ -14,77 +18,77 @@ type TestimonialsSectionProps = {
   testimonials: readonly LandingTestimonial[];
 };
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("");
-}
-
 export function TestimonialsSection({
-  audience,
   title,
   testimonials,
 }: TestimonialsSectionProps) {
-  const isClient = audience === "client";
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const cards = cardsRef.current;
+    if (!cards || !("IntersectionObserver" in window)) return;
+
+    cards.classList.add(styles.animated);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio < 0.35) return;
+
+        cards.classList.add(styles.spread);
+        observer.disconnect();
+      },
+      { threshold: [0, 0.35] },
+    );
+
+    observer.observe(cards);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section
-      className={cn(
-        "bg-[#f7f8fa] sm:px-6 lg:px-8",
-        isClient ? "px-2 py-12 sm:py-20" : "px-4 py-20",
-      )}
-    >
+    <section className="w-full bg-[#F9FAFB] px-4 py-20 min-[1440px]:h-[560px] sm:px-6 lg:px-20">
       <div className="mx-auto max-w-7xl">
-        <h2
-          className={cn(
-            "text-center font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl",
-            isClient ? "text-[1.4rem]" : "text-3xl",
-          )}
-        >
+        <h2 className="text-center text-3xl leading-[42px] font-semibold tracking-[-0.018em] text-[#1C1A17] sm:text-[36px]">
           {title}
         </h2>
-        <div
-          className={cn(
-            "grid md:grid-cols-3",
-            isClient ? "mt-7 gap-3 sm:mt-10 sm:gap-4" : "mt-10 gap-4",
-          )}
-        >
+
+        <div ref={cardsRef} className="mt-10 grid gap-6 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <figure
               key={`${testimonial.quote}-${index}`}
-              className={cn(
-                "rounded-2xl bg-white shadow-[0_10px_40px_rgba(15,23,42,.03)]",
-                isClient ? "p-5 sm:p-7" : "p-7",
-              )}
+              className={`${styles.card} flex min-h-[328px] flex-col justify-center rounded-2xl bg-white px-6 py-8`}
             >
               <div
-                className="flex gap-1 text-amber-500"
+                className="flex gap-1 text-[#F59E0B]"
                 aria-label="5 out of 5 stars"
               >
                 {Array.from({ length: 5 }).map((_, starIndex) => (
-                  <Star key={starIndex} className="size-4 fill-current" />
+                  <Star key={starIndex} className="size-5 fill-current" />
                 ))}
               </div>
-              <blockquote
-                className={cn(
-                  "mt-4 text-slate-700",
-                  isClient
-                    ? "text-xs leading-5 sm:min-h-20 sm:text-sm sm:leading-6"
-                    : "min-h-20 text-sm leading-6",
-                )}
-              >
+
+              <blockquote className="mt-4 text-lg leading-[148%] font-medium tracking-[-0.01em] text-[#344054]">
                 “{testimonial.quote}”
               </blockquote>
-              <figcaption className="mt-5 flex items-center gap-3">
-                <div className="grid size-9 place-items-center rounded-full bg-[#50734a] text-[10px] font-semibold text-white">
-                  {getInitials(testimonial.name)}
+
+              <figcaption className="mt-4 flex items-center gap-3">
+                <div className="relative size-[43px] shrink-0">
+                  <Image
+                    src="/landing-page/sarah.svg"
+                    alt=""
+                    width={43}
+                    height={43}
+                    className="size-[43px] rounded-full"
+                  />
+                  <span
+                    aria-label="Online"
+                    className="absolute right-0 bottom-0 size-3 rounded-full border-2 border-white bg-[#16A34A]"
+                  />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-slate-900">
+                  <p className="text-base leading-6 font-medium text-[#1C1A17]">
                     {testimonial.name}
                   </p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">
+                  <p className="text-sm leading-5 text-[#667085]">
                     {testimonial.location}
                   </p>
                 </div>

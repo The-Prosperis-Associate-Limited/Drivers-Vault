@@ -45,29 +45,17 @@ export function DriverIntroSection() {
     <section className="bg-[#f2f5fb] px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
       <div className="mx-auto grid max-w-7xl overflow-hidden rounded-3xl border border-slate-200 bg-white lg:grid-cols-2">
         <div className="flex flex-col justify-center px-7 py-12 sm:px-12 lg:px-16 lg:py-16">
-          <p
-            className="w-fit rounded-[50px] bg-slate-50 px-6 py-3 text-xs font-semibold tracking-wide text-[#344054]"
-            style={{ fontWeight: 600 }}
-          >
+          <p className="flex h-12 w-fit items-center rounded-[50px] bg-slate-50 px-6 py-3 text-base leading-[148%] font-medium text-[#344054] uppercase">
             FOR DRIVERS
           </p>
-          <h2
-            className="mt-6 text-3xl font-bold tracking-[-0.035em] text-[#344054] sm:text-[32px]"
-            style={{ fontWeight: 700 }}
-          >
+          <h2 className="mt-6 text-3xl leading-[42px] font-semibold tracking-[-0.018em] text-[#344054] sm:text-[36px]">
             Get steady , Fair work.
           </h2>
-          <p
-            className="mt-4 max-w-lg text-sm leading-6 font-medium text-[#475467] sm:text-[20px]"
-            style={{ fontWeight: 500 }}
-          >
+          <p className="mt-4 max-w-lg text-base leading-[148%] font-medium text-[#344054] sm:text-lg">
             Build your reputation, choose suitable jobs, and earn through a
             network that values professionals.
           </p>
-          <ul
-            className="mt-6 space-y-3 text-sm leading-6 font-medium text-[#475467] sm:text-[20px]"
-            style={{ fontWeight: 500 }}
-          >
+          <ul className="mt-6 space-y-3 text-base leading-[148%] font-medium text-[#344054] sm:text-lg">
             {DRIVER_BENEFITS.map((benefit) => (
               <li key={benefit} className="flex items-center gap-3">
                 <span className="size-1.5 rounded-full bg-blue-700" />

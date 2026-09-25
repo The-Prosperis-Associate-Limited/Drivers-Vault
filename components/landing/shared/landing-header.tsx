@@ -49,7 +49,7 @@ export function LandingHeader({ audience, signupHref }: LandingHeaderProps) {
         <LandingMobileNav signupHref={signupHref} />
         <Link
           href={signupHref}
-          className="hidden rounded-[12px] bg-[#00359E] px-5 py-3 text-base font-medium text-white transition-colors hover:bg-[#07368f] md:inline-flex"
+          className="hidden h-12 w-[155px] items-center justify-center rounded-[12px] bg-[#00359E] px-6 py-3 text-base leading-6 font-medium text-white transition-colors hover:bg-[#07368f] md:inline-flex"
         >
           Get started
         </Link>

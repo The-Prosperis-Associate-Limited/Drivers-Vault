@@ -45,7 +45,7 @@ export function BenefitsSection({
             aria-hidden="true"
             className="absolute inset-x-0 top-0 h-0.5 bg-[repeating-linear-gradient(to_right,#E8E8E8_0_10px,transparent_10px_20px)]"
           />
-          <p className="w-fit rounded-[50px] bg-slate-50 px-6 py-3 text-xs font-semibold tracking-wide text-[#344054]">
+          <p className="flex h-12 w-fit items-center rounded-[50px] bg-slate-50 px-6 py-3 text-base leading-[148%] font-medium text-[#344054] uppercase">
             {eyebrow}
           </p>
         </>
@@ -55,13 +55,13 @@ export function BenefitsSection({
           "mx-auto grid max-w-7xl",
           isClient
             ? "items-center gap-10 sm:gap-14 lg:grid-cols-[.95fr_1.05fr] lg:gap-24"
-            : "mt-12 items-start gap-12 lg:grid-cols-[.95fr_1.05fr] lg:gap-12 min-[1440px]:grid-cols-[678px_554px]",
+            : "mt-12 items-start gap-12 min-[1440px]:grid-cols-[678px_554px] lg:grid-cols-[.95fr_1.05fr] lg:gap-12",
         )}
       >
         <div
           className={cn(
             !isClient &&
-              "flex w-full flex-col items-start gap-10 lg:h-[780px] lg:pt-10 min-[1440px]:w-[678px]",
+              "flex w-full flex-col items-start gap-10 min-[1440px]:w-[678px] lg:h-[780px] lg:pt-10",
           )}
         >
           {isClient && (
@@ -81,9 +81,7 @@ export function BenefitsSection({
           </h2>
           <div
             className={cn(
-              isClient
-                ? "mt-7 space-y-7 sm:mt-10 sm:space-y-9"
-                : "space-y-9",
+              isClient ? "mt-7 space-y-7 sm:mt-10 sm:space-y-9" : "space-y-9",
             )}
           >
             {benefits.map(({ icon: Icon, title: itemTitle, description }) => (
@@ -129,7 +127,7 @@ export function BenefitsSection({
               "inline-flex items-center rounded-xl bg-[#073fa7] font-semibold text-white transition-colors hover:bg-[#06368f]",
               isClient
                 ? "mt-8 gap-2 px-5 py-3 text-xs sm:mt-10 sm:px-6 sm:py-4 sm:text-sm"
-                : "gap-3 px-6 py-4 text-sm",
+                : "h-[60px] w-[155px] justify-center gap-3 px-7 py-4 text-lg leading-7 font-medium",
             )}
           >
             {ctaLabel}
