@@ -38,7 +38,9 @@ export default function Marketplace() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 pt-6 pb-16 md:px-8">
-      <section className="bg-brand relative overflow-hidden rounded-3xl">
+      {/* No overflow-hidden: the search panel's dropdowns open past the hero's
+          bottom edge; the clouds all sit inside the bounds anyway. */}
+      <section className="bg-brand relative rounded-3xl">
         <Image
           src="/cloud-top-left.svg"
           alt=""
