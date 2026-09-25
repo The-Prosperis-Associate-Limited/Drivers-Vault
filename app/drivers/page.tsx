@@ -1,0 +1,140 @@
+import { CalendarCheck, ShieldCheck, Wallet } from "lucide-react";
+import { SiteFooter } from "@/components/shared/site-footer";
+import { CtaSection } from "@/components/landing/cta-section";
+import { DriverHero } from "@/components/landing/driver/driver-hero";
+import { ForDriversSection } from "@/components/landing/driver/for-drivers-section";
+import { JobTypesSection } from "@/components/landing/driver/job-types-section";
+import { FaqSection } from "@/components/landing/faq-section";
+import { StepsSection } from "@/components/landing/steps-section";
+import { TestimonialsSection } from "@/components/landing/testimonials-section";
+import { WhySection } from "@/components/landing/why-section";
+
+export default function DriversLanding() {
+  return (
+    <div className="flex min-h-screen flex-col bg-white">
+      <main className="flex-1">
+        <DriverHero />
+
+        <ForDriversSection />
+
+        <WhySection
+          chip="Why drive with TEGAT"
+          heading="Work that respects your profession."
+          features={[
+            {
+              icon: Wallet,
+              title: "Clear earnings.",
+              body: "See what a job pays before you accept, no hidden deductions.",
+            },
+            {
+              icon: CalendarCheck,
+              title: "Your schedule.",
+              body: "Set your availability and choose only the jobs that suit you.",
+            },
+            {
+              icon: ShieldCheck,
+              title: "Verified clients",
+              body: "Every request comes through a trusted, accountable network.",
+            },
+          ]}
+          ctaLabel="Sign up"
+          ctaHref="/driver/auth/signup"
+          screenshot="/landing/driver-dash.png"
+          screenshotAlt="The TEGAT driver dashboard"
+        />
+
+        <StepsSection
+          heading="From application to First Payout In Three Steps."
+          steps={[
+            {
+              title: "Apply and get verified",
+              body: "Share your details and complete identity, licence, and insurance checks.",
+            },
+            {
+              title: "Pick the jobs you want",
+              body: "Browse opportunities with routes, schedules, and earnings shown upfront.",
+            },
+            {
+              title: "Drive and get paid",
+              body: "Complete trips with full support and receive reliable payouts.",
+            },
+          ]}
+        />
+
+        <JobTypesSection />
+
+        <TestimonialsSection
+          heading="What drivers say about us"
+          items={[
+            {
+              quote:
+                "I see the pay and route before I accept. That kind of clarity is rare in this work.",
+              name: "Musa Ibrahim",
+              place: "Lagos, Nigeria",
+              avatar: "/landing/avatar-mike.png",
+            },
+            {
+              quote:
+                "When a schedule changed mid-job, support sorted it out in minutes.",
+              name: "Emmanuel Adewale",
+              place: "Abuja, Nigeria",
+              avatar: "/landing/avatar-emmanuel.png",
+            },
+            {
+              quote:
+                "My trust score does the marketing for me — clients come to me now, not the other way round.",
+              name: "David Okon",
+              place: "Ibadan, Nigeria",
+              avatar: "/landing/avatar-mike.png",
+            },
+          ]}
+        />
+
+        <FaqSection
+          heading="Driver questions, answered"
+          items={[
+            {
+              question: "How do I join the network?",
+              answer:
+                "Create a free account, complete the onboarding steps — personal details, experience, guarantors and documents — then submit for verification. Once your identity, licence and record checks clear, your profile goes live to clients.",
+            },
+            {
+              question: "How do I get paid?",
+              answer:
+                "Earnings land in your TEGAT wallet when a job completes, and you withdraw to your own bank account whenever you choose. You always see the full pay for a job before you accept it.",
+            },
+            {
+              question: "Can I choose my own schedule?",
+              answer:
+                "Yes. You set your availability and only receive requests that fit it — accept the jobs that suit you and decline the ones that don't, without penalty.",
+            },
+            {
+              question: "What kinds of jobs are available?",
+              answer:
+                "Contract, private, corporate, executive, spy-driver and expatriate engagements — from one-off trips to full-time monthly placements.",
+            },
+            {
+              question: "What support do I get on a job?",
+              answer:
+                "Our support team is available throughout every engagement via live chat. If a schedule changes or an issue comes up mid-job, we step in and sort it out with the client.",
+            },
+          ]}
+        />
+
+        <CtaSection
+          title={
+            <>
+              Ready to drive
+              <br />
+              with us?
+            </>
+          }
+          body="Apply today and join a network built to connect your skills with dependable, fairly-paid opportunities."
+          ctaLabel="Join as a driver"
+          ctaHref="/driver/auth/signup"
+        />
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
