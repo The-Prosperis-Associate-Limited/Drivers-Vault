@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { MapPin, ReceiptText, ShieldCheck } from "lucide-react";
 import { SiteFooter } from "@/components/shared/site-footer";
 import { ClientHero } from "@/components/landing/client/client-hero";
@@ -8,6 +9,32 @@ import { FaqSection } from "@/components/landing/faq-section";
 import { StepsSection } from "@/components/landing/steps-section";
 import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { WhySection } from "@/components/landing/why-section";
+
+export const metadata: Metadata = {
+  title: "Hire verified drivers in Nigeria",
+  description:
+    "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business. Every TEGAT driver passes identity, licence and background checks before they reach you.",
+  keywords: [
+    "hire a driver",
+    "verified drivers",
+    "professional drivers Nigeria",
+    "corporate drivers",
+    "private driver Lagos",
+  ],
+  openGraph: {
+    title: "TEGAT — Drivers, verified before they reach you",
+    description:
+      "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business — without agencies or guesswork.",
+    type: "website",
+    siteName: "TEGAT — DriverVault",
+  },
+  twitter: {
+    card: "summary",
+    title: "TEGAT — Drivers, verified before they reach you",
+    description:
+      "Hire a verified professional driver without agencies or guesswork.",
+  },
+};
 
 export default function Home() {
   return (

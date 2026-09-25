@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { CalendarCheck, ShieldCheck, Wallet } from "lucide-react";
 import { SiteFooter } from "@/components/shared/site-footer";
 import { CtaSection } from "@/components/landing/cta-section";
@@ -8,6 +9,32 @@ import { FaqSection } from "@/components/landing/faq-section";
 import { StepsSection } from "@/components/landing/steps-section";
 import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { WhySection } from "@/components/landing/why-section";
+
+export const metadata: Metadata = {
+  title: "Drive with TEGAT — steady, fairly-paid work",
+  description:
+    "Join a network that values professional drivers: see pay upfront, set your own schedule, and work with verified clients. Contract, private, corporate, executive and expatriate engagements.",
+  keywords: [
+    "driver jobs Nigeria",
+    "professional driver work",
+    "corporate driver jobs",
+    "driving jobs Lagos",
+    "become a driver",
+  ],
+  openGraph: {
+    title: "Drive on your terms. Earn what you're worth — TEGAT",
+    description:
+      "Clear pay, fair terms, verified clients. Apply, get verified, and pick the driving jobs that suit you.",
+    type: "website",
+    siteName: "TEGAT — DriverVault",
+  },
+  twitter: {
+    card: "summary",
+    title: "Drive on your terms. Earn what you're worth — TEGAT",
+    description:
+      "Clear pay, fair terms, verified clients. Pick the driving jobs that suit you.",
+  },
+};
 
 export default function DriversLanding() {
   return (
