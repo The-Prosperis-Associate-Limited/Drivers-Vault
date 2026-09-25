@@ -1,6 +1,7 @@
 "use client";
 
 import { FormInput } from "@/components/form/form-input";
+import { FormDatePicker } from "@/components/form/form-date-picker";
 import { FormSelect } from "@/components/form/form-select";
 import { OnboardingShell } from "@/components/shared/onboarding-shell";
 import { Button } from "@/components/ui/button";
@@ -104,12 +105,17 @@ export default function PersonalInformationStep() {
           options={MARITAL_STATUS_OPTIONS}
         />
 
-        <FormInput<PersonalInformationFormValues>
+        {/* Eighteen years back — the schema refuses younger anyway. */}
+        <FormDatePicker<PersonalInformationFormValues>
           control={control}
+          mode="single"
           name="date_of_birth"
           errors={errors}
           label="Date of birth"
-          type="date"
+          captionLayout="dropdown"
+          maxDate={
+            new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+          }
         />
 
         <FormSelect<PersonalInformationFormValues>

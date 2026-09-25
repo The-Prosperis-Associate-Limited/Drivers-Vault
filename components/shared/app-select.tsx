@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export interface SelectOption {
   label: string;
@@ -37,6 +38,8 @@ export const AppSelect = function ({
   const [search, setSearch] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ top: 0, left: 0, width: 0 });
 
   const selectedOption = options.find((o) => o.value === value) ?? null;
 
@@ -44,10 +47,13 @@ export const AppSelect = function ({
     o.label.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // Close on outside click
+  // Close on outside click — the list is portalled, so check both nodes.
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (!containerRef.current?.contains(e.target as Node)) {
+      if (
+        !containerRef.current?.contains(e.target as Node) &&
+        !listRef.current?.contains(e.target as Node)
+      ) {
         setOpen(false);
         setSearch("");
       }
@@ -55,6 +61,35 @@ export const AppSelect = function ({
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  /*
+    The list renders in a body portal with a fixed position measured from the
+    trigger — an overflow container (a dialog body, the marketplace hero) can
+    therefore never clip it. Capture-phase scroll keeps it glued while any
+    ancestor scrolls.
+  */
+  useEffect(() => {
+    if (!open) return;
+
+    const measure = () => {
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (rect) {
+        setPosition({
+          top: rect.bottom + 6,
+          left: rect.left,
+          width: rect.width,
+        });
+      }
+    };
+
+    measure();
+    window.addEventListener("scroll", measure, true);
+    window.addEventListener("resize", measure);
+    return () => {
+      window.removeEventListener("scroll", measure, true);
+      window.removeEventListener("resize", measure);
+    };
+  }, [open]);
 
   const handleOpen = () => {
     if (disabled) return;
@@ -128,42 +163,52 @@ export const AppSelect = function ({
           </div>
         </div>
 
-        {/* Dropdown */}
-        {open && (
-          <div className="border-foreground/10 bg-popover text-popover-foreground absolute z-50 mt-1.5 w-full rounded-md border shadow-md">
-            <ul className="no-scrollbar max-h-72 overflow-y-auto overscroll-contain p-1">
-              {filtered.length === 0 ? (
-                <li className="text-muted-foreground py-2 text-center text-sm">
-                  No options found.
-                </li>
-              ) : (
-                filtered.map((option) => (
-                  <li
-                    key={option.value}
-                    onMouseDown={(e) => {
-                      // onMouseDown + preventDefault prevents input blur before click registers
-                      e.preventDefault();
-                      handleSelect(option);
-                    }}
-                    className={cn(
-                      "relative flex cursor-pointer items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
-                      "hover:bg-accent hover:text-accent-foreground",
-                      option.value === value &&
-                        "bg-accent/50 text-accent-foreground",
-                    )}
-                  >
-                    {option.label}
-                    {option.value === value && (
-                      <span className="absolute right-2 flex size-4 items-center justify-center">
-                        <Check className="size-3.5" />
-                      </span>
-                    )}
+        {/* Dropdown — body portal, above the dialog's z-50 */}
+        {open &&
+          createPortal(
+            <div
+              ref={listRef}
+              style={{
+                top: position.top,
+                left: position.left,
+                width: position.width,
+              }}
+              className="border-foreground/10 bg-popover text-popover-foreground fixed z-[60] rounded-md border shadow-md"
+            >
+              <ul className="no-scrollbar max-h-72 overflow-y-auto overscroll-contain p-1">
+                {filtered.length === 0 ? (
+                  <li className="text-muted-foreground py-2 text-center text-sm">
+                    No options found.
                   </li>
-                ))
-              )}
-            </ul>
-          </div>
-        )}
+                ) : (
+                  filtered.map((option) => (
+                    <li
+                      key={option.value}
+                      onMouseDown={(e) => {
+                        // onMouseDown + preventDefault prevents input blur before click registers
+                        e.preventDefault();
+                        handleSelect(option);
+                      }}
+                      className={cn(
+                        "relative flex cursor-pointer items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
+                        "hover:bg-accent hover:text-accent-foreground",
+                        option.value === value &&
+                          "bg-accent/50 text-accent-foreground",
+                      )}
+                    >
+                      {option.label}
+                      {option.value === value && (
+                        <span className="absolute right-2 flex size-4 items-center justify-center">
+                          <Check className="size-3.5" />
+                        </span>
+                      )}
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>,
+            document.body,
+          )}
       </div>
 
       {error && <p className="text-destructive text-xs">{error}</p>}

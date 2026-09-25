@@ -1,6 +1,7 @@
 "use client";
 
 import { FormInput } from "@/components/form/form-input";
+import { FormDatePicker } from "@/components/form/form-date-picker";
 import { FormMultiSelect } from "@/components/form/form-multi-select";
 import { FormSelect } from "@/components/form/form-select";
 import { OnboardingShell } from "@/components/shared/onboarding-shell";
@@ -106,12 +107,14 @@ export default function ExperienceStep() {
           placeholder="E.g ABC123456789"
         />
 
-        <FormInput<ExperienceFormValues>
+        <FormDatePicker<ExperienceFormValues>
           control={control}
+          mode="single"
           name="license_expires_at"
           errors={errors}
           label="License Expiry Date"
-          type="date"
+          captionLayout="dropdown"
+          minDate={new Date()}
         />
 
         <Button

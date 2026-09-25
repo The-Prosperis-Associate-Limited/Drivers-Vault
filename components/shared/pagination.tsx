@@ -105,7 +105,7 @@ export function Pagination({
     <div className={className}>
       {/* search — only rendered when the consumer opts in via onSearchChange */}
       {showSearch ? (
-        <div className="mb-4 ml-auto max-w-sm">
+        <div className="my-4 ml-auto max-w-sm">
           <AppInput
             type="search"
             value={search ?? ""}

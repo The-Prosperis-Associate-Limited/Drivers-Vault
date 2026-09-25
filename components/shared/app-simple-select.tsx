@@ -70,7 +70,7 @@ export const AppSimpleSelect = function ({
             disabled={disabled}
             aria-invalid={!!error}
             className={cn(
-              "border-input bg-background focus-visible:ring-ring flex h-11.75 w-full items-center justify-between rounded-md border px-3 py-2 text-sm whitespace-nowrap shadow-xs outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50",
+              "border-input bg-background focus-visible:ring-ring flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm whitespace-nowrap shadow-xs outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50",
               !!error && "border-destructive",
               !selectedLabel && "text-muted-foreground",
               className,

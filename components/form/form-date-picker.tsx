@@ -32,6 +32,8 @@ interface BaseProps<TFieldValues extends FieldValues> {
   minDate?: Date;
   /** Disable all dates strictly after this date */
   maxDate?: Date;
+  /** "dropdown" adds month/year selects — essential for dates decades away */
+  captionLayout?: "label" | "dropdown";
 }
 
 // ─── Single-date mode ─────────────────────────────────────────────────────────
@@ -99,6 +101,7 @@ function SingleDatePicker<TFieldValues extends FieldValues>({
   containerClassName,
   minDate,
   maxDate,
+  captionLayout,
 }: SingleProps<TFieldValues>) {
   const errorMessage = get(errors, name)?.message as string | undefined;
   const disabled = buildDisabled(minDate, maxDate);
@@ -141,6 +144,9 @@ function SingleDatePicker<TFieldValues extends FieldValues>({
                   }
                   disabled={disabled}
                   defaultMonth={selected}
+                  captionLayout={captionLayout}
+                  startMonth={minDate}
+                  endMonth={maxDate}
                 />
               </PopoverContent>
             </Popover>

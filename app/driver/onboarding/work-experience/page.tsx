@@ -1,6 +1,7 @@
 "use client";
 
 import { FormInput } from "@/components/form/form-input";
+import { FormDatePicker } from "@/components/form/form-date-picker";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { OnboardingShell } from "@/components/shared/onboarding-shell";
 import { Button } from "@/components/ui/button";
@@ -87,7 +88,22 @@ export default function WorkExperienceStep() {
         progress={getOnboardingProgress("WORK_EXPERIENCE")}
       />
 
-      <form onSubmit={handleSubmit((data) => save(data))} className="space-y-4">
+      {/* An empty or current-role end date must be omitted — the server
+          coerces "" into Invalid Date and rejects the whole step. */}
+      <form
+        onSubmit={handleSubmit((data) =>
+          save({
+            experiences: data.experiences.map((entry) => ({
+              ...entry,
+              ended_at:
+                entry.is_current || !entry.ended_at
+                  ? undefined
+                  : entry.ended_at,
+            })),
+          }),
+        )}
+        className="space-y-4"
+      >
         {fields.map((field, index) => (
           <div
             key={field.id}
@@ -110,20 +126,24 @@ export default function WorkExperienceStep() {
             />
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <FormInput<WorkExperienceFormValues>
+              <FormDatePicker<WorkExperienceFormValues>
                 control={control}
+                mode="single"
                 name={`experiences.${index}.started_at`}
                 errors={errors}
                 label="Started"
-                type="date"
+                captionLayout="dropdown"
+                maxDate={new Date()}
               />
 
-              <FormInput<WorkExperienceFormValues>
+              <FormDatePicker<WorkExperienceFormValues>
                 control={control}
+                mode="single"
                 name={`experiences.${index}.ended_at`}
                 errors={errors}
                 label="Ended"
-                type="date"
+                captionLayout="dropdown"
+                maxDate={new Date()}
               />
             </div>
 

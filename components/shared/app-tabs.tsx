@@ -50,11 +50,12 @@ export function AppTabs<T extends string>({
       onValueChange={(v) => onValueChange(v as T)}
       className={className}
     >
-      {/* Segmented fills its row, so the scroll shim would only add stray padding. */}
+      {/* Segmented fills its row, so the scroll shim would only add stray padding.
+          overflow-y-hidden: the x-scroll container must never grow a vertical bar. */}
       <div
         className={cn(
           variant !== "segmented" &&
-            "scrollbar-hide -mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0",
+            "scrollbar-hide -mx-4 overflow-x-auto overflow-y-hidden px-4 sm:mx-0 sm:px-0",
         )}
       >
         <TabsList className={listStyles[variant]}>
