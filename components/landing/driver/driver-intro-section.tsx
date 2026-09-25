@@ -55,7 +55,7 @@ export function DriverIntroSection() {
             className="mt-6 text-3xl font-bold tracking-[-0.035em] text-[#344054] sm:text-[32px]"
             style={{ fontWeight: 700 }}
           >
-            Get steady, Fair work.
+            Get steady , Fair work.
           </h2>
           <p
             className="mt-4 max-w-lg text-sm leading-6 font-medium text-[#475467] sm:text-[20px]"

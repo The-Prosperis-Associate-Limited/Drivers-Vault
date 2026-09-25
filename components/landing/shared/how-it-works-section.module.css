@@ -1,0 +1,32 @@
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    position: relative;
+    transform-origin: bottom center;
+    transition:
+      transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .animated:not(.spread) .card:first-child {
+    z-index: 1;
+    transform: translateX(calc(100% + 16px)) translateY(8px) rotate(-2deg);
+    box-shadow: 0 20px 48px rgb(16 24 40 / 8%);
+  }
+
+  .animated:not(.spread) .card:nth-child(2) {
+    z-index: 3;
+    box-shadow: 0 24px 56px rgb(16 24 40 / 12%);
+  }
+
+  .animated:not(.spread) .card:nth-child(3) {
+    z-index: 2;
+    transform: translateX(calc(-100% - 16px)) translateY(8px) rotate(2deg);
+    box-shadow: 0 20px 48px rgb(16 24 40 / 8%);
+  }
+
+  .spread .card {
+    transform: translateX(0) translateY(0) rotate(0);
+    box-shadow: none;
+  }
+}

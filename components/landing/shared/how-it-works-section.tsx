@@ -1,4 +1,8 @@
-import { cn } from "@/lib/utils";
+"use client";
+
+import { useEffect, useRef } from "react";
+
+import styles from "./how-it-works-section.module.css";
 
 export type LandingStep = {
   number: string;
@@ -12,76 +16,58 @@ type HowItWorksSectionProps = {
   steps: readonly LandingStep[];
 };
 
-export function HowItWorksSection({
-  audience,
-  title,
-  steps,
-}: HowItWorksSectionProps) {
-  const isClient = audience === "client";
+export function HowItWorksSection({ title, steps }: HowItWorksSectionProps) {
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const cards = cardsRef.current;
+    if (!cards || !("IntersectionObserver" in window)) return;
+
+    cards.classList.add(styles.animated);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio < 0.35) return;
+
+        cards.classList.add(styles.spread);
+        observer.disconnect();
+      },
+      { threshold: [0, 0.35] },
+    );
+
+    observer.observe(cards);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id="how-it-works"
-      className={cn(
-        "scroll-mt-28 bg-[#f7f8fa] sm:scroll-mt-32 sm:px-6 lg:px-8",
-        isClient ? "px-2 py-12 sm:py-20" : "px-4 py-20",
-      )}
+      className="w-full scroll-mt-28 bg-[#F9FAFB] px-4 py-20 min-[1440px]:h-[644px] sm:scroll-mt-32 sm:px-6 lg:px-20"
     >
-      <div className="mx-auto max-w-7xl">
-        <p
-          className={cn(
-            "w-fit rounded-full bg-white py-2 font-semibold tracking-wide text-slate-600 shadow-sm",
-            isClient
-              ? "px-3 text-[9px] sm:px-4 sm:text-[11px]"
-              : "px-4 text-[11px]",
-          )}
-        >
+      <div className="mx-auto flex max-w-7xl flex-col gap-6">
+        <p className="flex h-12 w-[167px] items-center justify-center rounded-[50px] bg-white px-6 py-3 text-base leading-[148%] font-medium text-[#344054] uppercase">
           HOW IT WORKS
         </p>
-        <h2
-          className={cn(
-            "mt-5 max-w-lg leading-tight font-semibold tracking-[-0.035em] text-slate-950 sm:text-4xl",
-            isClient ? "text-[1.4rem]" : "text-3xl",
-          )}
-        >
+        <h2 className="max-w-xl text-3xl leading-[42px] font-semibold tracking-[-0.018em] text-[#1C1A17] sm:text-[36px]">
           {title}
         </h2>
         <div
-          className={cn(
-            "grid md:grid-cols-3",
-            isClient ? "mt-6 gap-3 sm:mt-8 sm:gap-4" : "mt-8 gap-4",
-          )}
+          ref={cardsRef}
+          className="grid gap-4 min-[1440px]:grid-cols-[repeat(3,416px)] md:grid-cols-3"
         >
           {steps.map((step) => (
             <article
               key={step.number}
-              className={cn(
-                "flex flex-col rounded-2xl border border-slate-200 bg-white sm:min-h-64 sm:p-8",
-                isClient ? "min-h-52 p-5" : "min-h-64 p-6",
-              )}
+              className={`${styles.card} flex min-h-[316px] flex-col gap-3 rounded-2xl border border-[#EAECF0] bg-white px-6 py-8 min-[1440px]:h-[316px] min-[1440px]:w-[416px]`}
             >
               <p className="font-grand-hotel text-5xl leading-[54px] font-normal tracking-[-0.02em] text-[#00359E]">
                 {step.number}
               </p>
-              <div
-                className={cn("mt-auto", isClient ? "pt-8 sm:pt-12" : "pt-12")}
-              >
-                <h3
-                  className={cn(
-                    "font-semibold text-slate-950",
-                    isClient ? "text-sm sm:text-base" : "text-base",
-                  )}
-                >
+              <div className="mt-auto">
+                <h3 className="text-xl leading-8 font-semibold tracking-[-0.016em] text-[#1C1A17] sm:text-2xl">
                   {step.title}
                 </h3>
-                <p
-                  className={cn(
-                    "text-slate-600",
-                    isClient
-                      ? "mt-2 text-xs leading-5 sm:mt-3 sm:text-sm sm:leading-6"
-                      : "mt-3 text-sm leading-6",
-                  )}
-                >
+                <p className="mt-3 text-base leading-6 font-medium tracking-[-0.01em] text-[#344054]">
                   {step.description}
                 </p>
               </div>

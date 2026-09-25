@@ -15,8 +15,7 @@ export const WORK_BENEFITS = [
   {
     icon: WalletCards,
     title: "Clear earnings.",
-    description:
-      "See what a job pays before you accept, with no hidden deductions.",
+    description: "See what a job pays before you accept, no hidden deductions.",
   },
   {
     icon: CalendarDays,
