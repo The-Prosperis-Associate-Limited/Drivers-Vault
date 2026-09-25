@@ -4,8 +4,17 @@ import { accessTokenExpiration } from "./api";
 export const isProd = process.env.NODE_ENV === "production";
 export const COOKIE_DOMAIN = ".tegat.com";
 
+// A cookie whose Domain doesn't match the page's host is silently rejected —
+// on any other host (vercel.app previews) fall back to a host-only cookie.
+const cookieDomain = () =>
+  isProd &&
+  typeof window !== "undefined" &&
+  window.location.hostname.endsWith(COOKIE_DOMAIN.slice(1))
+    ? COOKIE_DOMAIN
+    : undefined;
+
 export const cookieOpts = (expires: Date) => ({
-  domain: isProd ? COOKIE_DOMAIN : undefined,
+  domain: cookieDomain(),
   secure: isProd,
   sameSite: "lax" as const,
   expires,
@@ -33,7 +42,7 @@ export const setAuthCookies = (data: {
 };
 
 export const clearAuthCookies = () => {
-  const domainOpt = { domain: isProd ? COOKIE_DOMAIN : undefined };
+  const domainOpt = { domain: cookieDomain() };
 
   Cookies.remove("session_id", domainOpt);
   Cookies.remove("session_id_ref", domainOpt);
