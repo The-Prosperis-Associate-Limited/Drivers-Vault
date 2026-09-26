@@ -1,6 +1,7 @@
 import { BadgeCheck, ArrowRight, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/components/shared/reveal";
 import { LandingNav } from "../landing-nav";
 import { blueGrid } from "../cta-section";
 
@@ -33,7 +34,7 @@ export const ClientHero = function () {
       <LandingNav ctaHref="/auth/signup" />
 
       <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-center gap-14 md:mt-20 lg:grid-cols-2">
-        <div>
+        <Reveal y={20}>
           <h1 className="text-4xl leading-tight font-bold text-white md:text-6xl">
             Drivers, verified before they reach you
           </h1>
@@ -49,9 +50,9 @@ export const ClientHero = function () {
             Hire a driver
             <ArrowRight className="h-4 w-4" />
           </Link>
-        </div>
+        </Reveal>
 
-        <div className="relative mx-auto w-full max-w-md">
+        <Reveal delay={0.15} className="relative mx-auto w-full max-w-md">
           <RatingChip className="-top-6 left-0 z-10" />
 
           <div className="rounded-3xl bg-white p-8 pt-12 text-center shadow-xl">
@@ -63,7 +64,7 @@ export const ClientHero = function () {
                 height={160}
                 className="h-40 w-40 rounded-full object-cover"
               />
-              <BadgeCheck className="fill-brand absolute right-2 bottom-2 h-8 w-8 text-white" />
+              <BadgeCheck className="fill-brand absolute right-2 bottom-4 h-8 w-8 text-white" />
             </div>
             <p className="text-ink mt-5 text-xl font-semibold">
               Emmanuel Adewale
@@ -72,7 +73,7 @@ export const ClientHero = function () {
           </div>
 
           <RatingChip className="-right-2 -bottom-6 z-10 md:-right-8" />
-        </div>
+        </Reveal>
       </div>
     </header>
   );

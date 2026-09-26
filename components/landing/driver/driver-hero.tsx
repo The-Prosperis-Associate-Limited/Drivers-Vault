@@ -1,6 +1,7 @@
 import { ArrowRight, BadgeCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Reveal } from "@/components/shared/reveal";
 import { TrustRing } from "@/components/drivers/trust-ring";
 import { LandingNav } from "../landing-nav";
 import { blueGrid } from "../cta-section";
@@ -26,7 +27,7 @@ export const DriverHero = function () {
       <LandingNav ctaHref="/driver/auth/signup" />
 
       <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-center gap-14 md:mt-20 lg:grid-cols-2">
-        <div>
+        <Reveal y={20}>
           <h1 className="text-4xl leading-tight font-bold text-white md:text-6xl">
             Drive on your terms. Earn what you're worth
           </h1>
@@ -43,9 +44,9 @@ export const DriverHero = function () {
             Join as a driver
             <ArrowRight className="h-4 w-4" />
           </Link>
-        </div>
+        </Reveal>
 
-        <div className="mx-auto w-full max-w-md space-y-5">
+        <Reveal delay={0.15} className="mx-auto w-full max-w-md space-y-5">
           {DRIVERS.map((driver) => (
             <div
               key={driver.name}
@@ -60,7 +61,7 @@ export const DriverHero = function () {
                     height={64}
                     className="h-16 w-16 rounded-full object-cover"
                   />
-                  <BadgeCheck className="fill-brand absolute -right-0.5 -bottom-0.5 h-5 w-5 text-white" />
+                  <BadgeCheck className="fill-brand absolute -right-0.5 bottom-1 h-5 w-5 text-white" />
                 </span>
                 <span>
                   <span className="text-ink block text-lg font-semibold">
@@ -75,7 +76,7 @@ export const DriverHero = function () {
               <TrustRing score={driver.score} size={56} className="shrink-0" />
             </div>
           ))}
-        </div>
+        </Reveal>
       </div>
     </header>
   );

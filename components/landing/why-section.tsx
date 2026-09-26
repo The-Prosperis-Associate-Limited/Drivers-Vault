@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, type LucideIcon } from "lucide-react";
+import { Reveal } from "@/components/shared/reveal";
 import { SectionChip } from "./section-chip";
 import { blueGrid } from "./cta-section";
 
@@ -33,17 +34,19 @@ export const WhySection = function ({
     <section className="bg-white px-4 py-16 md:py-24">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <div>
-          <SectionChip>{chip}</SectionChip>
+          <Reveal>
+            <SectionChip>{chip}</SectionChip>
 
-          <h2 className="text-ink mt-6 max-w-md text-3xl font-bold md:text-4xl">
-            {heading}
-          </h2>
+            <h2 className="text-ink mt-6 max-w-md text-3xl font-bold md:text-4xl">
+              {heading}
+            </h2>
+          </Reveal>
 
           <div className="mt-8 space-y-8">
-            {features.map((feature) => {
+            {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div key={feature.title}>
+                <Reveal key={feature.title} delay={index * 0.12}>
                   <span className="bg-brand-soft flex h-12 w-12 items-center justify-center rounded-full">
                     <Icon className="h-5 w-5 text-[#12309f]" />
                   </span>
@@ -53,7 +56,7 @@ export const WhySection = function ({
                   <p className="text-muted-foreground mt-1 max-w-md text-sm leading-relaxed">
                     {feature.body}
                   </p>
-                </div>
+                </Reveal>
               );
             })}
           </div>

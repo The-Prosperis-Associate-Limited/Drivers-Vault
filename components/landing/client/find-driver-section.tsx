@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { SearchPanel } from "@/components/drivers/search-panel";
+import { Reveal } from "@/components/shared/reveal";
 import { SectionChip } from "../section-chip";
 import { blueGrid } from "../cta-section";
 
@@ -16,7 +17,7 @@ export const FindDriverSection = function () {
       <div
         className={`mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 rounded-3xl bg-[#0d2fa5] p-6 md:p-12 lg:grid-cols-2 ${blueGrid}`}
       >
-        <div>
+        <Reveal>
           <SectionChip variant="dark">For Clients</SectionChip>
 
           <h2 className="mt-6 text-3xl font-bold text-white md:text-4xl">
@@ -41,7 +42,7 @@ export const FindDriverSection = function () {
             Start hiring
             <ArrowRight className="h-4 w-4" />
           </Link>
-        </div>
+        </Reveal>
 
         {/* The real marketplace search — submitting lands on the results page
             (through signin first for a visitor). */}

@@ -10,10 +10,10 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
-import { motion, useMotionValueEvent, useScroll } from "motion/react";
-import { useRef, useState } from "react";
+import { motion } from "motion/react";
 import { SectionChip } from "../section-chip";
 import { blueGrid } from "../cta-section";
+import { usePinnedSteps } from "../use-pinned-steps";
 
 const JOB_TYPES: { icon: LucideIcon; title: string; body: string }[] = [
   {
@@ -110,24 +110,7 @@ const SectionHeader = function ({ compact = false }: { compact?: boolean }) {
 // full height while scroll progress reveals one step at a time — and hides
 // them again in reverse on the way up.
 const PinnedJobTypes = function () {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [revealed, setRevealed] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start start", "end end"],
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (value) => {
-    const next = Math.max(
-      0,
-      Math.min(
-        JOB_TYPES.length,
-        Math.ceil((value / REVEAL_SPAN) * JOB_TYPES.length),
-      ),
-    );
-    setRevealed(next);
-  });
+  const { trackRef, revealed } = usePinnedSteps(JOB_TYPES.length, REVEAL_SPAN);
 
   return (
     <div ref={trackRef} className="relative hidden h-[280vh] lg:block">

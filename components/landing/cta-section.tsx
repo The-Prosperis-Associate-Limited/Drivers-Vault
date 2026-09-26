@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { Reveal } from "@/components/shared/reveal";
 
 interface Props {
   title: React.ReactNode;
@@ -15,7 +16,7 @@ export const blueGrid =
 export const CtaSection = function ({ title, body, ctaLabel, ctaHref }: Props) {
   return (
     <section className={`bg-[#0d2fa5] px-4 py-20 md:py-28 ${blueGrid}`}>
-      <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+      <Reveal className="mx-auto flex max-w-2xl flex-col items-center text-center">
         <h2 className="text-3xl font-bold text-white md:text-5xl">{title}</h2>
         <p className="mt-4 text-sm text-blue-100 md:text-base">{body}</p>
 
@@ -26,7 +27,7 @@ export const CtaSection = function ({ title, body, ctaLabel, ctaHref }: Props) {
           {ctaLabel}
           <ArrowRight className="h-4 w-4" />
         </Link>
-      </div>
+      </Reveal>
     </section>
   );
 };

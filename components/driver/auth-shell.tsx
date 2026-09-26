@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DriverIllustration } from "@/components/svg/driver-illustration";
 import { AppText } from "@/components/shared/app-text";
+import { Reveal } from "@/components/shared/reveal";
 
 interface Props {
   children: React.ReactNode;
@@ -29,7 +30,9 @@ export const AuthShell = function ({ children, backHref }: Props) {
       {/* Vertical padding stays tight so the 80vh panel plus the header still
           fits a laptop viewport without the page scrolling. */}
       <div className="mx-auto grid w-full max-w-6xl flex-1 grid-cols-1 items-center gap-10 px-5 py-8 md:px-10 lg:grid-cols-2 lg:gap-12 lg:py-6">
-        <div className="mx-auto w-full max-w-md lg:mx-0">{children}</div>
+        <Reveal y={16} className="mx-auto w-full max-w-md lg:mx-0">
+          {children}
+        </Reveal>
         <DriverIllustration />
       </div>
     </div>

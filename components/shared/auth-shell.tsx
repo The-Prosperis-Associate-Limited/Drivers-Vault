@@ -1,3 +1,4 @@
+import { Reveal } from "./reveal";
 import { SiteFooter } from "./site-footer";
 import { AppText } from "./app-text";
 
@@ -11,7 +12,7 @@ export const AuthShell = function ({ children }: Props) {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <main className="mx-auto w-full max-w-md flex-1 px-5 py-16 md:py-24">
-        {children}
+        <Reveal y={16}>{children}</Reveal>
       </main>
       <SiteFooter />
     </div>
