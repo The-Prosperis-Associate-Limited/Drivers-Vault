@@ -31,7 +31,7 @@ export const experienceSchema = z.object({
   years_of_experience: z.coerce
     .number<number>()
     .int()
-    .min(0, "Years of experience cannot be negative")
+    .min(0, "Select your years of experience")
     .max(60, "That looks too high"),
   driver_type: z.enum(
     [
@@ -43,9 +43,12 @@ export const experienceSchema = z.object({
     ],
     { message: "Select a driver type" },
   ),
-  vehicle_classes: z
+  transmission: z.enum(["AUTOMATIC", "MANUAL", "BOTH"], {
+    message: "Select what transmission you can drive",
+  }),
+  licence_classes: z
     .array(z.string())
-    .min(1, "Select at least one vehicle you can drive"),
+    .min(1, "Select at least one licence class"),
   license_number: z.string().trim().min(4, "Enter your driver licence number"),
   license_expires_at: z.string().min(1, "Select your licence expiry date"),
 });
@@ -84,15 +87,20 @@ export const workExperienceSchema = z.object({
     .min(1, "Add at least one role"),
 });
 
+// One previous-employer reference and exactly one guarantor — the guarantor
+// must be a working professional, never a family member or friend.
 export const guarantorSchema = z.object({
+  reference: z.object({
+    full_name: z.string().trim().min(2, "Enter your reference's name"),
+    company_name: z.string().trim().optional(),
+    phone_no: phoneField,
+  }),
   guarantors: z
     .array(
       z.object({
         full_name: z.string().trim().min(2, "Enter your guarantor's name"),
         relationship: z.enum(
           [
-            "FAMILY",
-            "FRIEND",
             "FORMER_EMPLOYER",
             "COLLEAGUE",
             "RELIGIOUS_LEADER",
@@ -106,7 +114,7 @@ export const guarantorSchema = z.object({
         nin: ninField,
       }),
     )
-    .min(1, "Add at least one guarantor"),
+    .length(1, "Provide exactly one guarantor"),
 });
 
 export const additionalInformationSchema = z.object({

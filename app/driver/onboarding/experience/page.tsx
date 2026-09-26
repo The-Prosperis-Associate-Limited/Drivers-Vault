@@ -10,8 +10,10 @@ import { useOnboardingProfile } from "@/hooks/use-onboarding-profile";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import {
   DRIVER_TYPE_OPTIONS,
+  EXPERIENCE_YEARS_OPTIONS,
+  LICENCE_CLASS_OPTIONS,
   ONBOARDING_TIPS,
-  VEHICLE_CLASS_OPTIONS,
+  TRANSMISSION_OPTIONS,
   getOnboardingProgress,
 } from "@/lib/utils";
 import {
@@ -34,16 +36,20 @@ export default function ExperienceStep() {
     formState: { errors },
   } = useForm<ExperienceFormValues>({
     resolver: zodResolver(experienceSchema),
-    defaultValues: { vehicle_classes: [] },
+    defaultValues: { licence_classes: [] },
   });
 
   useEffect(() => {
     if (!profile) return;
 
     reset({
-      years_of_experience: profile.years_of_experience ?? 0,
+      // The select's option values are strings; the schema coerces back to int.
+      years_of_experience: (profile.years_of_experience != null
+        ? String(Math.min(profile.years_of_experience, 30))
+        : undefined) as unknown as number,
       driver_type: profile.driver_type ?? undefined,
-      vehicle_classes: profile.vehicle_classes ?? [],
+      transmission: profile.transmission ?? undefined,
+      licence_classes: profile.licence_classes ?? [],
       license_number: profile.license_number ?? "",
       license_expires_at: profile.license_expires_at?.slice(0, 10) ?? "",
     });
@@ -64,57 +70,67 @@ export default function ExperienceStep() {
       tips={ONBOARDING_TIPS.EXPERIENCE}
     >
       <StepHeader
-        title="Years of Experience"
+        title="Your driving experience"
         description="Let clients know how much time you've spent behind the wheel, every stage of experience is valued here"
         progress={getOnboardingProgress("EXPERIENCE")}
       />
 
       <form onSubmit={handleSubmit((data) => save(data))} className="space-y-4">
-        <FormInput<ExperienceFormValues>
+        <FormSelect<ExperienceFormValues>
           control={control}
           name="years_of_experience"
           errors={errors}
-          label="Years of Experience"
-          placeholder="E.g 2"
-          type="number"
-          min={0}
-          suffix="yrs"
+          label="Years of experience"
+          placeholder="E.g 2 years"
+          options={EXPERIENCE_YEARS_OPTIONS}
         />
 
         <FormSelect<ExperienceFormValues>
           control={control}
           name="driver_type"
           errors={errors}
-          label="Select Driver type"
+          label="Driver type"
           placeholder="E.g Corporate Driver"
           options={DRIVER_TYPE_OPTIONS}
         />
 
+        <FormSelect<ExperienceFormValues>
+          control={control}
+          name="transmission"
+          errors={errors}
+          label="What can you drive?"
+          placeholder="E.g Automatic"
+          options={TRANSMISSION_OPTIONS}
+        />
+
         <FormMultiSelect<ExperienceFormValues>
           control={control}
-          name="vehicle_classes"
+          name="licence_classes"
           errors={errors}
-          label="What can you Drive"
-          placeholder="E.g Bus"
-          options={VEHICLE_CLASS_OPTIONS}
+          label="What class of vehicles can you drive?"
+          placeholder="E.g Class B"
+          options={LICENCE_CLASS_OPTIONS}
         />
 
         <FormInput<ExperienceFormValues>
           control={control}
           name="license_number"
           errors={errors}
-          label="Drivers license number"
+          label="Driver's licence number"
           placeholder="E.g ABC123456789"
         />
 
+        {/* The team requires a licence with at least a year left to run. */}
         <FormDatePicker<ExperienceFormValues>
           control={control}
           mode="single"
           name="license_expires_at"
           errors={errors}
-          label="License Expiry Date"
+          label="Licence expiry date"
           captionLayout="dropdown"
-          minDate={new Date()}
+          minDate={
+            new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+          }
         />
 
         <Button

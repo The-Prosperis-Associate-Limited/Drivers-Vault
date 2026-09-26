@@ -1,8 +1,8 @@
 "use client";
 
 import { FormInput } from "@/components/form/form-input";
+import { FormPhoneInput } from "@/components/form/form-phone-input";
 import { FormSelect } from "@/components/form/form-select";
-import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { OnboardingShell } from "@/components/shared/onboarding-shell";
 import { AppText } from "@/components/shared/app-text";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { useOnboardingProfile } from "@/hooks/use-onboarding-profile";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import {
   DEFAULT_GUARANTOR,
+  DEFAULT_REFERENCE,
   GUARANTOR_RELATIONSHIP_OPTIONS,
   ONBOARDING_TIPS,
   getOnboardingProgress,
@@ -19,9 +20,8 @@ import {
   type GuarantorFormValues,
 } from "@/schemas/onboarding/steps";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { StepHeader } from "../_components/step-header";
 import { useSaveOnboardingStep } from "../_hooks/use-save-onboarding-step";
 
@@ -35,45 +35,44 @@ export default function GuarantorsStep() {
     formState: { errors },
   } = useForm<GuarantorFormValues>({
     resolver: zodResolver(guarantorSchema),
-    defaultValues: { guarantors: [DEFAULT_GUARANTOR as never] },
-  });
-
-  const [pendingRemoval, setPendingRemoval] = useState<number | null>(null);
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "guarantors",
+    defaultValues: {
+      reference: DEFAULT_REFERENCE,
+      guarantors: [DEFAULT_GUARANTOR as never],
+    },
   });
 
   useEffect(() => {
-    if (!profile?.guarantors.length) return;
+    if (!profile) return;
+
+    // Only the first saved guarantor carries over — the step now takes exactly one.
+    const saved = profile.guarantors[0];
 
     reset({
-      guarantors: profile.guarantors.map((guarantor) => ({
-        full_name: guarantor.full_name,
-        relationship:
-          guarantor.relationship as GuarantorFormValues["guarantors"][number]["relationship"],
-        phone_no: guarantor.phone_no,
-        address: guarantor.address,
-        nin: guarantor.nin,
-      })),
+      reference: {
+        full_name: profile.reference?.full_name ?? "",
+        company_name: profile.reference?.company_name ?? "",
+        phone_no: profile.reference?.phone_no ?? "",
+      },
+      guarantors: [
+        saved
+          ? {
+              full_name: saved.full_name,
+              relationship:
+                saved.relationship as GuarantorFormValues["guarantors"][number]["relationship"],
+              phone_no: saved.phone_no,
+              address: saved.address,
+              nin: saved.nin,
+            }
+          : (DEFAULT_GUARANTOR as never),
+      ],
     });
   }, [profile, reset]);
 
   const { save, isPending } = useSaveOnboardingStep<GuarantorFormValues>({
     url: API_ENDPOINTS.driverOnboarding.guarantors,
     redirectTo: "/driver/onboarding/additional-information",
-    onSuccessMessage: "Guarantors saved",
+    onSuccessMessage: "Reference and guarantor saved",
   });
-
-  // Only a row that already exists on the server is worth stopping for — a
-  // freshly added one has nothing to lose.
-  const savedCount = profile?.guarantors.length ?? 0;
-
-  const removeRow = (index: number) => {
-    if (index < savedCount) return setPendingRemoval(index);
-    remove(index);
-  };
 
   const firstName = profile?.user.first_name ?? "there";
 
@@ -84,81 +83,104 @@ export default function GuarantorsStep() {
       tips={ONBOARDING_TIPS.GUARANTORS}
     >
       <StepHeader
-        title="Your Guarantor Information"
-        description="Add at least one guarantor to help verify your profile"
+        title="Reference and guarantor"
+        description="A previous employer who can vouch for your work, and one guarantor to help verify your profile"
         progress={getOnboardingProgress("GUARANTORS")}
       />
 
       <form onSubmit={handleSubmit((data) => save(data))} className="space-y-4">
-        {fields.map((field, index) => (
-          <div
-            key={field.id}
-            className="border-border space-y-4 rounded-xl border p-4"
-          >
-            <FormInput<GuarantorFormValues>
-              control={control}
-              name={`guarantors.${index}.full_name`}
-              errors={errors}
-              label="Your Guarantor's name"
-              placeholder="E.g John Levy"
-            />
-
-            <FormSelect<GuarantorFormValues>
-              control={control}
-              name={`guarantors.${index}.relationship`}
-              errors={errors}
-              label="Who is this person to you?"
-              placeholder="E.g Former Employer"
-              options={GUARANTOR_RELATIONSHIP_OPTIONS}
-            />
-
-            <FormInput<GuarantorFormValues>
-              control={control}
-              name={`guarantors.${index}.phone_no`}
-              errors={errors}
-              label="Guarantor's Phone Number"
-              placeholder="E.g +234"
-            />
-
-            <FormInput<GuarantorFormValues>
-              control={control}
-              name={`guarantors.${index}.address`}
-              errors={errors}
-              label="Guarantor's Address"
-              placeholder="E.g 12 Bode Thomas, Surulere"
-            />
-
-            <FormInput<GuarantorFormValues>
-              control={control}
-              name={`guarantors.${index}.nin`}
-              errors={errors}
-              label="Guarantor's NIN"
-              placeholder="E.g 12345678901"
-            />
-
-            {fields.length > 1 && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => removeRow(index)}
-                className="text-destructive border-destructive/40 h-10 rounded-lg px-4"
-              >
-                <Trash2 className="h-4 w-4" />
-                Remove
-              </Button>
-            )}
+        <div className="border-border space-y-4 rounded-xl border p-4">
+          <div>
+            <AppText type="label" className="block text-sm font-semibold">
+              Reference — previous employer
+            </AppText>
+            <AppText
+              type="caption"
+              className="text-muted-foreground mt-1 block text-xs"
+            >
+              Someone you have driven for before, who can speak to your work.
+            </AppText>
           </div>
-        ))}
 
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => append(DEFAULT_GUARANTOR as never)}
-          className="text-brand border-brand/40 h-11 w-full rounded-lg"
-        >
-          <Plus className="h-4 w-4" />
-          Add more Guarantor
-        </Button>
+          <FormInput<GuarantorFormValues>
+            control={control}
+            name="reference.full_name"
+            errors={errors}
+            label="Reference's full name"
+            placeholder="E.g Adaeze Nwosu"
+          />
+
+          <FormInput<GuarantorFormValues>
+            control={control}
+            name="reference.company_name"
+            errors={errors}
+            label="Company or household (optional)"
+            placeholder="E.g Meridian Logistics"
+          />
+
+          <FormPhoneInput<GuarantorFormValues>
+            control={control}
+            name="reference.phone_no"
+            errors={errors}
+            label="Reference's phone number"
+          />
+        </div>
+
+        <div className="border-border space-y-4 rounded-xl border p-4">
+          <div>
+            <AppText type="label" className="block text-sm font-semibold">
+              Your guarantor
+            </AppText>
+            <AppText
+              type="caption"
+              className="text-muted-foreground mt-1 block text-xs"
+            >
+              Must be a working professional — a civil servant (grade level 8 or
+              above) or a business owner. Family members and friends are not
+              accepted.
+            </AppText>
+          </div>
+
+          <FormInput<GuarantorFormValues>
+            control={control}
+            name="guarantors.0.full_name"
+            errors={errors}
+            label="Guarantor's full name"
+            placeholder="E.g John Levy"
+          />
+
+          <FormSelect<GuarantorFormValues>
+            control={control}
+            name="guarantors.0.relationship"
+            errors={errors}
+            label="Who is this person to you?"
+            placeholder="E.g Former Employer"
+            options={GUARANTOR_RELATIONSHIP_OPTIONS}
+          />
+
+          <FormPhoneInput<GuarantorFormValues>
+            control={control}
+            name="guarantors.0.phone_no"
+            errors={errors}
+            label="Guarantor's phone number"
+          />
+
+          <FormInput<GuarantorFormValues>
+            control={control}
+            name="guarantors.0.address"
+            errors={errors}
+            label="Guarantor's address"
+            placeholder="E.g 12 Bode Thomas, Surulere"
+          />
+
+          <FormInput<GuarantorFormValues>
+            control={control}
+            name="guarantors.0.nin"
+            errors={errors}
+            label="Guarantor's NIN"
+            placeholder="E.g 12345678901"
+          />
+        </div>
 
         {/* The guarantor's passport and NIN slip are uploaded on the documents
             step, once the guarantor row exists to attach them to. */}
@@ -174,21 +196,6 @@ export default function GuarantorsStep() {
           Continue
         </Button>
       </form>
-
-      <ConfirmDialog
-        isOpen={pendingRemoval !== null}
-        onOpenChange={(open) => !open && setPendingRemoval(null)}
-        icon={Trash2}
-        iconClassName="text-destructive"
-        title="Remove this guarantor?"
-        description="They are removed from your application when you save this step."
-        confirmLabel="Remove"
-        confirmVariant="destructive"
-        onConfirm={() => {
-          if (pendingRemoval !== null) remove(pendingRemoval);
-          setPendingRemoval(null);
-        }}
-      />
     </OnboardingShell>
   );
 }

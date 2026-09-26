@@ -121,7 +121,6 @@ export const AppMultiSelect = function ({
               setSearch(e.target.value);
               if (!open) setOpen(true);
             }}
-            onFocus={handleOpen}
             placeholder={selectedOptions.length === 0 ? placeholder : ""}
             disabled={disabled}
             autoComplete="off"
@@ -171,12 +170,17 @@ export const AppMultiSelect = function ({
                         toggle(option);
                       }}
                       className={cn(
-                        "relative flex cursor-pointer items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
+                        "relative flex cursor-pointer flex-col rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
                         "hover:bg-accent hover:text-accent-foreground",
                         isSelected && "bg-accent/50 text-accent-foreground",
                       )}
                     >
                       {option.label}
+                      {option.description && (
+                        <span className="text-muted-foreground text-xs">
+                          {option.description}
+                        </span>
+                      )}
                       {isSelected && (
                         <span className="absolute right-2 flex size-4 items-center justify-center">
                           <Check className="size-3.5" />

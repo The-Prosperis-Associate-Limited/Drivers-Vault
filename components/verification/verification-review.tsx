@@ -11,6 +11,7 @@ import {
   ACADEMIC_LEVEL_OPTIONS,
   DOCUMENT_LABELS,
   DRIVER_TYPE_OPTIONS,
+  TRANSMISSION_OPTIONS,
   formatDate,
 } from "@/lib/utils";
 import { CheckCircle2, CircleAlert, Pencil } from "lucide-react";
@@ -137,31 +138,31 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       <Section
         value="personal"
         title="Personal information"
-        editHref="/driver/onboarding/personal-information"
+        editHref="/driver/onboarding/personal-information?from=review"
         complete={hasPersonal}
       >
-        <Row label="Phone Number" value={user?.phone_no} />
+        <Row label="Phone number" value={user?.phone_no} />
         <Row label="Gender" value={user?.gender?.toLowerCase()} />
         <Row
-          label="Marital Status"
+          label="Marital status"
           value={user?.marital_status?.toLowerCase()}
         />
         <Row
           label="Date of birth"
           value={user?.date_of_birth ? formatDate(user.date_of_birth) : null}
         />
-        <Row label="Where do you reside" value={user?.state_of_residence} />
+        <Row label="Where do you reside?" value={user?.state_of_residence} />
         <Row label="State of origin" value={profile?.state_of_origin} />
       </Section>
 
       <Section
         value="experience"
-        title="Years of Experience"
-        editHref="/driver/onboarding/experience"
+        title="Driving experience"
+        editHref="/driver/onboarding/experience?from=review"
         complete={hasExperience}
       >
         <Row
-          label="Years of Experience"
+          label="Years of experience"
           value={
             profile?.years_of_experience != null
               ? `${profile.years_of_experience} yrs`
@@ -173,8 +174,14 @@ export const VerificationReview = function ({ profile, documents }: Props) {
           value={labelFor(DRIVER_TYPE_OPTIONS, profile?.driver_type)}
         />
         <Row
-          label="What can you Drive"
-          value={profile?.vehicle_classes.join(", ")}
+          label="What can you drive?"
+          value={labelFor(TRANSMISSION_OPTIONS, profile?.transmission)}
+        />
+        <Row
+          label="Licence classes"
+          value={profile?.licence_classes
+            .map((entry) => `Class ${entry}`)
+            .join(", ")}
         />
         <Row label="Licence number" value={profile?.license_number} />
         <Row
@@ -189,12 +196,12 @@ export const VerificationReview = function ({ profile, documents }: Props) {
 
       <Section
         value="academic"
-        title="Academic Qualification"
-        editHref="/driver/onboarding/academic-qualification"
+        title="Academic qualification"
+        editHref="/driver/onboarding/academic-qualification?from=review"
         complete={!!profile?.academic_level}
       >
         <Row
-          label="Academic Level"
+          label="Academic level"
           value={labelFor(ACADEMIC_LEVEL_OPTIONS, profile?.academic_level)}
         />
         <Row label="Institution" value={profile?.institution} />
@@ -203,8 +210,8 @@ export const VerificationReview = function ({ profile, documents }: Props) {
 
       <Section
         value="work"
-        title="Your Work Experience"
-        editHref="/driver/onboarding/work-experience"
+        title="Your work experience"
+        editHref="/driver/onboarding/work-experience?from=review"
         complete={!!profile?.work_experiences.length}
       >
         {profile?.work_experiences.length ? (
@@ -226,10 +233,24 @@ export const VerificationReview = function ({ profile, documents }: Props) {
 
       <Section
         value="guarantors"
-        title="Your Guarantor Information"
-        editHref="/driver/onboarding/guarantors"
-        complete={!!profile?.guarantors.length}
+        title="Reference and guarantor"
+        editHref="/driver/onboarding/guarantors?from=review"
+        complete={!!profile?.guarantors.length && !!profile?.reference}
       >
+        <Row
+          label="Reference (previous employer)"
+          value={
+            profile?.reference
+              ? [
+                  profile.reference.full_name,
+                  profile.reference.company_name,
+                  profile.reference.phone_no,
+                ]
+                  .filter(Boolean)
+                  .join(" · ")
+              : null
+          }
+        />
         {profile?.guarantors.length ? (
           profile.guarantors.map((guarantor) => (
             <Row
@@ -239,14 +260,14 @@ export const VerificationReview = function ({ profile, documents }: Props) {
             />
           ))
         ) : (
-          <Row label="No guarantors added" />
+          <Row label="No guarantor added" />
         )}
       </Section>
 
       <Section
         value="additional"
-        title="Additional Information (Optional)"
-        editHref="/driver/onboarding/additional-information"
+        title="Additional information (optional)"
+        editHref="/driver/onboarding/additional-information?from=review"
         complete
       >
         <Row label="Languages" value={profile?.languages.join(", ")} />
@@ -255,8 +276,8 @@ export const VerificationReview = function ({ profile, documents }: Props) {
 
       <Section
         value="documents"
-        title="Uploaded Documents"
-        editHref="/driver/onboarding/documents"
+        title="Uploaded documents"
+        editHref="/driver/onboarding/documents?from=review"
         complete={
           hasDocuments && !documents.some((d) => d.status === "REJECTED")
         }

@@ -143,10 +143,21 @@ function SingleDatePicker<TFieldValues extends FieldValues>({
                     field.onChange(date ? date.toISOString() : "")
                   }
                   disabled={disabled}
-                  defaultMonth={selected}
+                  // Nothing selected must still open inside the navigable
+                  // range, or the grid renders empty (e.g. min a year out).
+                  defaultMonth={selected ?? minDate}
                   captionLayout={captionLayout}
                   startMonth={minDate}
-                  endMonth={maxDate}
+                  endMonth={
+                    maxDate ??
+                    (minDate
+                      ? new Date(
+                          new Date(minDate).setFullYear(
+                            minDate.getFullYear() + 30,
+                          ),
+                        )
+                      : undefined)
+                  }
                 />
               </PopoverContent>
             </Popover>

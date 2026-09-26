@@ -23,7 +23,7 @@ export const DriverCard = function ({ driver, onRequest, className }: Props) {
   // The design's skill chips — the closest real data is what the driver can
   // drive and speak.
   const chips = [
-    ...driver.vehicle_classes.map(prettifyEnum),
+    ...driver.licence_classes.map((entry) => `Class ${entry}`),
     ...driver.languages,
   ];
   const visibleChips = chips.slice(0, 2);

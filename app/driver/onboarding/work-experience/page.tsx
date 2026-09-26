@@ -86,7 +86,7 @@ export default function WorkExperienceStep() {
       tips={ONBOARDING_TIPS.WORK_EXPERIENCE}
     >
       <StepHeader
-        title="Your Work Experience"
+        title="Your work experience"
         description="Add your previous driving jobs so clients can see your track record"
         progress={getOnboardingProgress("WORK_EXPERIENCE")}
       />

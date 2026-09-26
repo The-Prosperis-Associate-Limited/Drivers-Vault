@@ -59,7 +59,7 @@ export default function AcademicQualificationStep() {
       tips={ONBOARDING_TIPS.ACADEMIC_QUALIFICATION}
     >
       <StepHeader
-        title="Academic Qualification"
+        title="Academic qualification"
         description="Add your highest level of education. This isn't a strict requirement, but it helps build a fuller profile"
         progress={getOnboardingProgress("ACADEMIC_QUALIFICATION")}
       />
@@ -69,7 +69,7 @@ export default function AcademicQualificationStep() {
           control={control}
           name="academic_level"
           errors={errors}
-          label="Academic Level"
+          label="Academic level"
           placeholder="E.g Secondary School"
           options={ACADEMIC_LEVEL_OPTIONS}
         />
@@ -86,7 +86,7 @@ export default function AcademicQualificationStep() {
           control={control}
           name="course_of_study"
           errors={errors}
-          label="What Course did you Study?"
+          label="What course did you study?"
           placeholder="E.g Medicine"
         />
 

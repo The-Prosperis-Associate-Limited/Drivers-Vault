@@ -20,8 +20,10 @@ export type DriverType =
   | "RIDE_HAILING_DRIVER"
   | "HEAVY_DUTY_DRIVER";
 
-export type VehicleClass =
-  "SALOON" | "SUV" | "BUS" | "TRUCK" | "TRAILER" | "MOTORCYCLE";
+// FRSC licence classes — no class I exists.
+export type LicenceClass = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "J";
+
+export type Transmission = "AUTOMATIC" | "MANUAL" | "BOTH";
 
 export type AcademicLevel =
   "NONE" | "PRIMARY" | "SECONDARY" | "OND" | "HND" | "BSC" | "MSC" | "PHD";
@@ -56,6 +58,13 @@ export interface Guarantor {
   nin_slip_url: string | null;
 }
 
+export interface Reference {
+  id: string;
+  full_name: string;
+  company_name: string | null;
+  phone_no: string;
+}
+
 export interface DriverDocument {
   id: string;
   type: DocumentType;
@@ -80,7 +89,8 @@ export interface DriverProfile {
   state_of_origin: string | null;
   years_of_experience: number | null;
   driver_type: DriverType | null;
-  vehicle_classes: VehicleClass[];
+  transmission: Transmission | null;
+  licence_classes: LicenceClass[];
   license_number: string | null;
   license_expires_at: string | null;
   academic_level: AcademicLevel | null;
@@ -99,6 +109,7 @@ export interface DriverProfile {
   onboarding_completed_at: string | null;
   work_experiences: WorkExperience[];
   guarantors: Guarantor[];
+  reference: Reference | null;
   user: Pick<
     User,
     | "id"
@@ -194,7 +205,7 @@ export interface DriverSearchResult {
   id: string;
   userId: string;
   driver_type: DriverType | null;
-  vehicle_classes: VehicleClass[];
+  licence_classes: LicenceClass[];
   languages: string[];
   years_of_experience: number | null;
   trust_score: number;

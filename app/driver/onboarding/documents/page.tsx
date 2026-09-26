@@ -74,7 +74,7 @@ export default function DocumentsStep() {
       tips={ONBOARDING_TIPS.DOCUMENTS}
     >
       <StepHeader
-        title="Upload Documents"
+        title="Upload documents"
         description="Clear photos of all four corners, nothing cropped or blurry."
         progress={getOnboardingProgress("DOCUMENTS")}
       />

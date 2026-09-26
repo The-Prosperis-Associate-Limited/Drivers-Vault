@@ -62,7 +62,7 @@ export default function AdditionalInformationStep() {
       tips={ONBOARDING_TIPS.ADDITIONAL_INFORMATION}
     >
       <StepHeader
-        title="Additional Information (Optional)"
+        title="Additional information (optional)"
         description="Share any additional details — totally optional"
         progress={getOnboardingProgress("ADDITIONAL_INFORMATION")}
       />
@@ -72,7 +72,7 @@ export default function AdditionalInformationStep() {
           control={control}
           name="language_count"
           errors={errors}
-          label="How many languages can you speak"
+          label="How many languages can you speak?"
           placeholder="E.g 4"
           type="number"
           min={0}
@@ -82,7 +82,7 @@ export default function AdditionalInformationStep() {
           control={control}
           name="languages"
           errors={errors}
-          label="Please Select the languages"
+          label="Select the languages"
           placeholder="E.g Hausa"
           options={LANGUAGE_OPTIONS}
         />
@@ -91,7 +91,7 @@ export default function AdditionalInformationStep() {
           control={control}
           name="religion"
           errors={errors}
-          label="Your Religion"
+          label="Your religion"
           placeholder="E.g Christianity"
           options={RELIGION_OPTIONS}
         />

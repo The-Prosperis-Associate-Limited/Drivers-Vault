@@ -1,7 +1,7 @@
 "use client";
 
-import { FormInput } from "@/components/form/form-input";
 import { FormDatePicker } from "@/components/form/form-date-picker";
+import { FormPhoneInput } from "@/components/form/form-phone-input";
 import { FormSelect } from "@/components/form/form-select";
 import { OnboardingShell } from "@/components/shared/onboarding-shell";
 import { Button } from "@/components/ui/button";
@@ -73,18 +73,17 @@ export default function PersonalInformationStep() {
       tips={ONBOARDING_TIPS.PERSONAL_INFORMATION}
     >
       <StepHeader
-        title="Personal Information"
+        title="Personal information"
         description="Tell us a bit about yourself, this is the foundation of your driver profile."
         progress={getOnboardingProgress("PERSONAL_INFORMATION")}
       />
 
       <form onSubmit={handleSubmit((data) => save(data))} className="space-y-4">
-        <FormInput<PersonalInformationFormValues>
+        <FormPhoneInput<PersonalInformationFormValues>
           control={control}
           name="phone_no"
           errors={errors}
-          label="Phone Number"
-          placeholder="E.g +234"
+          label="Phone number"
         />
 
         <FormSelect<PersonalInformationFormValues>
@@ -100,7 +99,7 @@ export default function PersonalInformationStep() {
           control={control}
           name="marital_status"
           errors={errors}
-          label="Marital Status"
+          label="Marital status"
           placeholder="E.g Single"
           options={MARITAL_STATUS_OPTIONS}
         />
@@ -131,7 +130,7 @@ export default function PersonalInformationStep() {
           control={control}
           name="state_of_residence"
           errors={errors}
-          label="Where do you reside"
+          label="Where do you reside?"
           placeholder="E.g Lagos State"
           options={states}
           disabled={!country}

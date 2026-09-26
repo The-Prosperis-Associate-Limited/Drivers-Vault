@@ -125,8 +125,8 @@ export const ONBOARDING_TIPS: Record<OnboardingStep, string[]> = {
   ],
   EXPERIENCE: [
     "Your driver type is one of the filters clients search by.",
-    "Add every vehicle class you can handle — each one widens the jobs you match.",
-    "Check your licence expiry date. We'll remind you before it lapses.",
+    "Add every licence class you hold — each one widens the jobs you match.",
+    "Your licence needs at least a year left before it expires.",
   ],
   ACADEMIC_QUALIFICATION: [
     "Nothing on this step blocks your verification. Fill in what you have.",
@@ -137,8 +137,9 @@ export const ONBOARDING_TIPS: Record<OnboardingStep, string[]> = {
     "Add as many roles as you like — you can remove any of them later.",
   ],
   GUARANTORS: [
+    "Your reference should be a previous employer — someone you have actually driven for.",
+    "Your guarantor must be a working professional: a civil servant (grade level 8+) or a business owner. Family and friends are not accepted.",
     "A guarantor needs their own passport photo and NIN slip, so pick someone who can send you both.",
-    "You can add more than one guarantor, and edit them right up until you submit.",
   ],
   ADDITIONAL_INFORMATION: [
     "Every field here is optional — skip it and your submission still goes through.",
@@ -431,13 +432,58 @@ export const DRIVER_TYPE_OPTIONS = [
   { value: "HEAVY_DUTY_DRIVER", label: "Heavy Duty Driver" },
 ];
 
-export const VEHICLE_CLASS_OPTIONS = [
-  { value: "SALOON", label: "Saloon" },
-  { value: "SUV", label: "SUV" },
-  { value: "BUS", label: "Bus" },
-  { value: "TRUCK", label: "Truck" },
-  { value: "TRAILER", label: "Trailer" },
-  { value: "MOTORCYCLE", label: "Motorcycle" },
+// FRSC licence classes under Nigeria's National Road Traffic Regulations
+// (there is no class I). Values mirror the server's LicenceClass enum.
+export const LICENCE_CLASS_OPTIONS = [
+  { value: "A", label: "Class A", description: "Motorcycles and tricycles" },
+  { value: "B", label: "Class B", description: "Private cars under 3 tonnes" },
+  {
+    value: "C",
+    label: "Class C",
+    description:
+      "Commercial light vehicles under 3 tonnes — taxis, small buses",
+  },
+  {
+    value: "D",
+    label: "Class D",
+    description: "Trucks and lorries above 3 tonnes (non-articulated)",
+  },
+  { value: "E", label: "Class E", description: "Passenger buses (omnibus)" },
+  {
+    value: "F",
+    label: "Class F",
+    description: "Agricultural tractors and farm machinery",
+  },
+  {
+    value: "G",
+    label: "Class G",
+    description: "Articulated vehicles — trailers and tankers",
+  },
+  {
+    value: "H",
+    label: "Class H",
+    description: "Earth-moving and construction vehicles",
+  },
+  {
+    value: "J",
+    label: "Class J",
+    description: "Special vehicles adapted for physically disabled drivers",
+  },
+];
+
+export const TRANSMISSION_OPTIONS = [
+  { value: "AUTOMATIC", label: "Automatic" },
+  { value: "MANUAL", label: "Manual" },
+  { value: "BOTH", label: "Both — automatic and manual" },
+];
+
+export const EXPERIENCE_YEARS_OPTIONS = [
+  { value: "0", label: "Less than 1 year" },
+  ...Array.from({ length: 29 }, (_, i) => ({
+    value: String(i + 1),
+    label: `${i + 1} ${i === 0 ? "year" : "years"}`,
+  })),
+  { value: "30", label: "30+ years" },
 ];
 
 export const GENDER_OPTIONS = [
@@ -463,9 +509,9 @@ export const ACADEMIC_LEVEL_OPTIONS = [
   { value: "PHD", label: "PhD" },
 ];
 
+// Family and friends are not acceptable guarantors — the guarantor must be a
+// working professional (civil servant grade level 8+, or a business owner).
 export const GUARANTOR_RELATIONSHIP_OPTIONS = [
-  { value: "FAMILY", label: "Family" },
-  { value: "FRIEND", label: "Friend" },
   { value: "FORMER_EMPLOYER", label: "Former Employer" },
   { value: "COLLEAGUE", label: "Colleague" },
   { value: "RELIGIOUS_LEADER", label: "Religious Leader" },
@@ -498,10 +544,10 @@ export const RELIGION_OPTIONS = [
 
 export const DOCUMENT_LABELS: Record<string, string> = {
   NIN_SLIP: "NIN slip",
-  PASSPORT_PHOTO: "Your Passport Photo",
+  PASSPORT_PHOTO: "Your passport photo",
   DRIVERS_LICENCE: "Driver's licence",
-  PROOF_OF_ADDRESS: "Proof of address",
-  GUARANTOR_PASSPORT: "Guarantor's Passport Photo",
+  PROOF_OF_ADDRESS: "Proof of address (e.g. a utility bill)",
+  GUARANTOR_PASSPORT: "Guarantor's passport photo",
   GUARANTOR_NIN_SLIP: "Guarantor's NIN slip",
 };
 
@@ -519,6 +565,12 @@ export const DEFAULT_GUARANTOR = {
   phone_no: "",
   address: "",
   nin: "",
+};
+
+export const DEFAULT_REFERENCE = {
+  full_name: "",
+  company_name: "",
+  phone_no: "",
 };
 
 export const TICKET_CATEGORIES = [

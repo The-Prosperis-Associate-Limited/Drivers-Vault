@@ -10,6 +10,7 @@ import { createPortal } from "react-dom";
 export interface SelectOption {
   label: string;
   value: string;
+  description?: string;
 }
 
 interface Props {
@@ -93,8 +94,11 @@ export const AppSelect = function ({
 
   const handleOpen = () => {
     if (disabled) return;
-    setOpen(true);
-    setSearch("");
+    // Re-clicking while open must not wipe a half-typed search.
+    if (!open) {
+      setOpen(true);
+      setSearch("");
+    }
     setTimeout(() => inputRef.current?.focus(), 0);
   };
 
@@ -135,7 +139,6 @@ export const AppSelect = function ({
               setSearch(e.target.value);
               if (!open) setOpen(true);
             }}
-            onFocus={handleOpen}
             placeholder={!open && !selectedOption ? placeholder : ""}
             disabled={disabled}
             aria-invalid={!!error}
@@ -195,13 +198,18 @@ export const AppSelect = function ({
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => handleSelect(option)}
                       className={cn(
-                        "relative flex cursor-pointer items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
+                        "relative flex cursor-pointer flex-col rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
                         "hover:bg-accent hover:text-accent-foreground",
                         option.value === value &&
                           "bg-accent/50 text-accent-foreground",
                       )}
                     >
                       {option.label}
+                      {option.description && (
+                        <span className="text-muted-foreground text-xs">
+                          {option.description}
+                        </span>
+                      )}
                       {option.value === value && (
                         <span className="absolute right-2 flex size-4 items-center justify-center">
                           <Check className="size-3.5" />
