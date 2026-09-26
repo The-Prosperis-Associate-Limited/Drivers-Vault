@@ -163,17 +163,21 @@ export const AppSelect = function ({
           </div>
         </div>
 
-        {/* Dropdown — body portal, above the dialog's z-50 */}
+        {/* Dropdown — body portal, above the dialog's z-50. pointer-events-auto
+            undoes the pointer lock a modal dialog puts on everything outside
+            its subtree; stopping pointerdown propagation keeps the dialog from
+            reading an option click as an outside dismissal. */}
         {open &&
           createPortal(
             <div
               ref={listRef}
+              onPointerDown={(e) => e.stopPropagation()}
               style={{
                 top: position.top,
                 left: position.left,
                 width: position.width,
               }}
-              className="border-foreground/10 bg-popover text-popover-foreground fixed z-[60] rounded-md border shadow-md"
+              className="border-foreground/10 bg-popover text-popover-foreground pointer-events-auto fixed z-[60] rounded-md border shadow-md"
             >
               <ul className="no-scrollbar max-h-72 overflow-y-auto overscroll-contain p-1">
                 {filtered.length === 0 ? (
@@ -184,11 +188,12 @@ export const AppSelect = function ({
                   filtered.map((option) => (
                     <li
                       key={option.value}
-                      onMouseDown={(e) => {
-                        // onMouseDown + preventDefault prevents input blur before click registers
-                        e.preventDefault();
-                        handleSelect(option);
-                      }}
+                      // preventDefault stops the focus steal; selection waits
+                      // for click so the list is still mounted when the event
+                      // completes — unmounting on mousedown let the click land
+                      // on whatever input sat underneath and open it.
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => handleSelect(option)}
                       className={cn(
                         "relative flex cursor-pointer items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
                         "hover:bg-accent hover:text-accent-foreground",

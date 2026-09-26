@@ -91,7 +91,7 @@ export default function AdminChangePassword() {
           isLoading={isPending}
           className="h-12 w-full rounded-lg text-sm"
         >
-          Update Password
+          Update password
         </Button>
       </form>
     </AuthShell>

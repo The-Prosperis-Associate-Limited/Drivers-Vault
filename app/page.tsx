@@ -45,12 +45,12 @@ export default function Home() {
         <FindDriverSection />
 
         <WhySection
-          chip="Why clients choose DriversVault"
-          heading="Peace of mind on every trip."
+          chip="Why clients choose DriverVault"
+          heading="Peace of mind on every trip"
           features={[
             {
               icon: ShieldCheck,
-              title: "Verified professionals.",
+              title: "Verified professionals",
               body: "Every driver passes identity, licence, insurance, and background checks.",
             },
             {
@@ -71,7 +71,7 @@ export default function Home() {
         />
 
         <StepsSection
-          heading="From Request to Arrival in three steps."
+          heading="From request to arrival in three steps"
           steps={[
             {
               title: "Sign up",
@@ -156,7 +156,7 @@ export default function Home() {
               driver today
             </>
           }
-          body="Tell DriversVault what you need and get matched with a verified professional—usually within a day."
+          body="Tell DriverVault what you need and get matched with a verified professional—usually within a day."
           ctaLabel="Start hiring"
           ctaHref="/auth/signup"
         />

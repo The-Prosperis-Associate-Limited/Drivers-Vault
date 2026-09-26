@@ -19,7 +19,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { StepHeader } from "../_components/step-header";
 import { useSaveOnboardingStep } from "../_hooks/use-save-onboarding-step";
 
@@ -42,6 +42,9 @@ export default function WorkExperienceStep() {
     control,
     name: "experiences",
   });
+
+  // Watched so each row's Ended picker disappears while "currently work here" is on.
+  const watchedExperiences = useWatch({ control, name: "experiences" });
 
   useEffect(() => {
     if (!profile) return;
@@ -136,15 +139,17 @@ export default function WorkExperienceStep() {
                 maxDate={new Date()}
               />
 
-              <FormDatePicker<WorkExperienceFormValues>
-                control={control}
-                mode="single"
-                name={`experiences.${index}.ended_at`}
-                errors={errors}
-                label="Ended"
-                captionLayout="dropdown"
-                maxDate={new Date()}
-              />
+              {!watchedExperiences?.[index]?.is_current && (
+                <FormDatePicker<WorkExperienceFormValues>
+                  control={control}
+                  mode="single"
+                  name={`experiences.${index}.ended_at`}
+                  errors={errors}
+                  label="Ended"
+                  captionLayout="dropdown"
+                  maxDate={new Date()}
+                />
+              )}
             </div>
 
             <FormInput<WorkExperienceFormValues>

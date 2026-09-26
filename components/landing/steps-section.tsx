@@ -14,7 +14,7 @@ export const StepsSection = function ({ heading, steps }: Props) {
   return (
     <section id="how-it-works" className="bg-slate-50 px-4 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
-        <SectionChip>How it works</SectionChip>
+        <SectionChip>How It Works</SectionChip>
 
         <h2 className="text-ink mt-5 max-w-xl text-3xl font-bold md:text-4xl">
           {heading}

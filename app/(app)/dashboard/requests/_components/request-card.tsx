@@ -9,6 +9,7 @@ import {
   HIRE_ENGAGEMENT_LABELS,
 } from "@/lib/utils";
 import Link from "next/link";
+import { Banknote } from "lucide-react";
 import type { StaffingRequestListItem } from "@/types/request";
 
 interface Props {
@@ -27,15 +28,7 @@ export const RequestCard = function ({ request, onCloseRequest }: Props) {
     .filter(Boolean)
     .join(" · ");
 
-  const stats = [
-    { label: "Applicants", value: String(request.applicants) },
-    { label: "Shortlisted", value: String(request.shortlisted) },
-    {
-      label: "Budget",
-      value: `${formatMoney(request.budget, request.currency)} / month`,
-    },
-  ];
-
+  // Applicant/shortlist counts are hidden until the driver-apply design is resolved.
   return (
     <div className="border-border flex flex-col rounded-2xl border bg-white p-5 shadow-sm sm:p-6">
       <div className="flex items-start justify-between gap-3">
@@ -71,23 +64,19 @@ export const RequestCard = function ({ request, onCloseRequest }: Props) {
         </AppText>
       )}
 
-      <div className="bg-brand-soft/60 mt-4 grid grid-cols-3 gap-2 rounded-xl px-4 py-3">
-        {stats.map((stat) => (
-          <span key={stat.label} className="min-w-0 text-center">
-            <AppText type="caption" className="text-brand block text-xs">
-              {stat.label}
-            </AppText>
-            <AppText
-              type="label"
-              className="mt-1 block truncate text-sm font-bold"
-            >
-              {stat.value}
-            </AppText>
-          </span>
-        ))}
+      <div className="bg-brand-soft/60 mt-4 flex items-center justify-between gap-3 rounded-xl px-4 py-3">
+        <span className="flex items-center gap-2">
+          <Banknote className="text-brand h-4 w-4 shrink-0" />
+          <AppText type="caption" className="text-brand text-xs font-medium">
+            Monthly budget
+          </AppText>
+        </span>
+        <AppText type="label" className="truncate text-sm font-bold">
+          {formatMoney(request.budget, request.currency)}
+        </AppText>
       </div>
 
-      <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-end">
+      <div className="mt-auto flex flex-col gap-2 pt-4 sm:flex-row sm:justify-end">
         <Button asChild className="h-10 rounded-lg px-5 text-sm">
           <Link href={`/dashboard/requests/${request.reference}`}>
             View matches

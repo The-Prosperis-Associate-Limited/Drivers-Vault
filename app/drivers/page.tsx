@@ -46,16 +46,16 @@ export default function DriversLanding() {
 
         <WhySection
           chip="Why drive with TEGAT"
-          heading="Work that respects your profession."
+          heading="Work that respects your profession"
           features={[
             {
               icon: Wallet,
-              title: "Clear earnings.",
+              title: "Clear earnings",
               body: "See what a job pays before you accept, no hidden deductions.",
             },
             {
               icon: CalendarCheck,
-              title: "Your schedule.",
+              title: "Your schedule",
               body: "Set your availability and choose only the jobs that suit you.",
             },
             {
@@ -71,7 +71,7 @@ export default function DriversLanding() {
         />
 
         <StepsSection
-          heading="From application to First Payout In Three Steps."
+          heading="From application to first payout in three steps"
           steps={[
             {
               title: "Apply and get verified",
@@ -138,7 +138,7 @@ export default function DriversLanding() {
             {
               question: "What kinds of jobs are available?",
               answer:
-                "Contract, private, corporate, executive, spy-driver and expatriate engagements — from one-off trips to full-time monthly placements.",
+                "Contract, private, corporate, executive, spy and expatriate engagements — from one-off trips to full-time monthly placements.",
             },
             {
               question: "What support do I get on a job?",

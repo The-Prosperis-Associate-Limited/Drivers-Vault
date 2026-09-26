@@ -55,7 +55,7 @@ export default function SignUp() {
       </div>
 
       <AuthHeading
-        title="Create your account"
+        title="Create your driver account"
         subtitle="Takes about 2 minutes. You'll verify your documents in the next step."
       />
 

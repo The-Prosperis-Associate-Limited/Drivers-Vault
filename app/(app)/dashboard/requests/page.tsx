@@ -43,7 +43,7 @@ export default function Requests() {
     <div className="mx-auto max-w-6xl">
       <PageHeader
         title="My requests"
-        subtitle="Every staffing request you have posted, with applicant activity."
+        subtitle="Every staffing request you have posted, with its matched drivers."
         action={
           <Button
             className="h-10 rounded-lg px-5 text-sm"

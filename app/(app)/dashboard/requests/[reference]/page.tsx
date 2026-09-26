@@ -5,28 +5,22 @@ import { AppText } from "@/components/shared/app-text";
 import { BackLink } from "@/components/shared/back-link";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Pagination } from "@/components/shared/pagination";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetData } from "@/hooks/use-get-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
-import {
-  cn,
-  driverTypeLabel,
-  formatMoney,
-  getInitials,
-  HIRE_ENGAGEMENT_LABELS,
-} from "@/lib/utils";
+import { cn, formatMoney, HIRE_ENGAGEMENT_LABELS } from "@/lib/utils";
 import { SearchX } from "lucide-react";
 import { use, useState } from "react";
 import type { DriverSearchResult } from "@/types/driver";
 import type { APIResponse } from "@/types/response";
-import type { RequestApplicant, StaffingRequest } from "@/types/request";
+import type { StaffingRequest } from "@/types/request";
 
 const PAGE_SIZE = 6;
 
+// The server still returns applicants; the UI ignores them until the
+// driver-apply design is resolved (clients scout, drivers don't apply).
 interface MatchesPayload {
   request: StaffingRequest;
-  applicants: RequestApplicant[];
   matched: {
     data: DriverSearchResult[];
     total: number;
@@ -52,7 +46,6 @@ export default function RequestMatches({
 
   const payload = data?.data;
   const request = payload?.request;
-  const applicants = payload?.applicants ?? [];
   const matched = payload?.matched;
 
   return (
@@ -97,93 +90,6 @@ export default function RequestMatches({
               {request.status === "OPEN" ? "Open" : "Closed"}
             </span>
           </div>
-
-          <section className="mt-8">
-            <AppText type="h3" className="text-base font-bold">
-              Applicants ({applicants.length})
-            </AppText>
-
-            {applicants.length === 0 ? (
-              <AppText
-                type="caption"
-                className="text-muted-foreground mt-2 block text-sm"
-              >
-                No applicants yet — drivers who apply will appear here.
-              </AppText>
-            ) : (
-              <div className="border-border mt-3 divide-y rounded-2xl border bg-white px-5">
-                {applicants.map((applicant) => {
-                  const name =
-                    [applicant.driver.first_name, applicant.driver.last_name]
-                      .filter(Boolean)
-                      .join(" ") || "Driver";
-
-                  const profile = applicant.driver.driver_profile;
-
-                  return (
-                    <div
-                      key={applicant.id}
-                      className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"
-                    >
-                      <div className="flex min-w-0 items-center gap-3">
-                        <Avatar className="h-10 w-10 shrink-0">
-                          <AvatarImage
-                            src={applicant.driver.profile_pic ?? undefined}
-                            alt=""
-                          />
-                          <AvatarFallback>
-                            {getInitials(
-                              applicant.driver.first_name,
-                              applicant.driver.last_name,
-                            )}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="min-w-0">
-                          <span className="flex items-center gap-2">
-                            <AppText
-                              type="label"
-                              className="truncate text-sm font-semibold"
-                            >
-                              {name}
-                            </AppText>
-                            {applicant.status === "SHORTLISTED" && (
-                              <span className="bg-brand-soft text-brand rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase">
-                                Shortlisted
-                              </span>
-                            )}
-                          </span>
-                          <AppText
-                            type="caption"
-                            className="text-muted-foreground mt-0.5 block truncate text-xs"
-                          >
-                            {[
-                              driverTypeLabel(profile?.driver_type),
-                              [
-                                applicant.driver.city,
-                                applicant.driver.state_of_residence,
-                              ]
-                                .filter(Boolean)
-                                .join(", "),
-                            ]
-                              .filter(Boolean)
-                              .join(" · ")}
-                          </AppText>
-                        </div>
-                      </div>
-                      <AppText
-                        type="label"
-                        className="shrink-0 pl-13 text-sm font-semibold sm:pl-0"
-                      >
-                        {profile?.expected_monthly_rate
-                          ? `${formatMoney(profile.expected_monthly_rate)} / month`
-                          : "Rate not set"}
-                      </AppText>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </section>
 
           <section className="mt-8">
             <AppText type="h3" className="text-base font-bold">

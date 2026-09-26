@@ -16,7 +16,7 @@ export default function AdminResetSuccessful() {
       </div>
 
       <AppText type="h2" className="mb-3 text-[26px] font-bold">
-        Password changed
+        Password reset successful
       </AppText>
 
       <AppText type="subtitle" className="text-muted-foreground mb-8 text-sm">
@@ -28,7 +28,7 @@ export default function AdminResetSuccessful() {
         onClick={() => router.push("/admin/auth/signin")}
         className="h-12 w-full rounded-lg text-sm"
       >
-        Try signing in with new password
+        Sign in with your new password
       </Button>
     </AuthShell>
   );

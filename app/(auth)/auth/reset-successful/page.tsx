@@ -16,19 +16,19 @@ export default function ResetSuccessful() {
       </div>
 
       <AppText type="h2" className="mb-3 text-[26px] font-bold">
-        Password Reset Successful
+        Password reset successful
       </AppText>
 
       <AppText type="subtitle" className="text-muted-foreground mb-8 text-sm">
         Your password has been changed successfully. For security, we've signed
-        you out on all other devices, use your new password to sign back in.
+        you out on all other devices — use your new password to sign back in.
       </AppText>
 
       <Button
         onClick={() => router.push("/auth/signin")}
         className="h-12 w-full rounded-lg text-sm"
       >
-        Try signing with new Password
+        Sign in with your new password
       </Button>
     </AuthShell>
   );

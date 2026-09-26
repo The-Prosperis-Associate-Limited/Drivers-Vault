@@ -58,7 +58,7 @@ export default function ForgotPassword() {
           isLoading={isPending}
           className="h-12 w-full rounded-lg text-sm"
         >
-          Send Reset Link
+          Send reset link
         </Button>
       </form>
 

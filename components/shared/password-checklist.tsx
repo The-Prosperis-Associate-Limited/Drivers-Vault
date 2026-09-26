@@ -8,7 +8,7 @@ interface Props {
 
 const RULES = [
   {
-    label: "At least 8 Characters",
+    label: "At least 8 characters",
     test: (value: string) => value.length >= 8,
   },
   {

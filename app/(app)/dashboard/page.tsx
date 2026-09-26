@@ -2,6 +2,7 @@
 
 import { AppText } from "@/components/shared/app-text";
 import { HireRow } from "@/components/hires/hire-row";
+import { OnboardingPromptCard } from "./_components/onboarding-prompt-card";
 import { StatCard } from "@/components/shared/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetData } from "@/hooks/use-get-data";
@@ -116,6 +117,10 @@ export default function DashboardOverview() {
       </div>
 
       <div className="border-border mt-5 border-t" />
+
+      {profile && (
+        <OnboardingPromptCard clientProfile={profile.client_profile ?? null} />
+      )}
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cards

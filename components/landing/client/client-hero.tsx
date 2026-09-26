@@ -35,7 +35,7 @@ export const ClientHero = function () {
       <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 items-center gap-14 md:mt-20 lg:grid-cols-2">
         <div>
           <h1 className="text-4xl leading-tight font-bold text-white md:text-6xl">
-            Drivers, verified before they reach you.
+            Drivers, verified before they reach you
           </h1>
           <p className="mt-5 max-w-lg text-base text-blue-100 md:text-lg">
             Hire a verified professional driver for a single trip, a recurring
@@ -46,7 +46,7 @@ export const ClientHero = function () {
             href="/auth/signup"
             className="text-ink mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-blue-50"
           >
-            Hire a Driver
+            Hire a driver
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

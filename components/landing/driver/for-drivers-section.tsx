@@ -17,7 +17,7 @@ export const ForDriversSection = function () {
           <SectionChip>For Drivers</SectionChip>
 
           <h2 className="text-ink mt-6 text-3xl font-bold md:text-4xl">
-            Get steady, fair work.
+            Get steady, fair work
           </h2>
           <p className="text-muted-foreground mt-4 max-w-md text-sm leading-relaxed md:text-base">
             Build your reputation, choose suitable jobs, and earn through a
@@ -77,7 +77,7 @@ export const ForDriversSection = function () {
           <div className="border-border absolute -right-2 -bottom-4 z-10 rounded-2xl border bg-white p-3 shadow-lg md:-right-8">
             <span className="text-ink flex items-center gap-2 text-xs font-semibold">
               <Award className="h-4 w-4 text-amber-500" />
-              Badges Earned
+              Badges earned
             </span>
             <span className="mt-2 flex gap-2">
               {["Basic Defensive", "Basic Maintenance"].map((badge) => (

@@ -552,32 +552,32 @@ export const CLIENT_DRIVER_CATEGORY_OPTIONS: {
 }[] = [
   {
     value: "CONTRACT",
-    label: "Contract driver",
+    label: "Contract Driver",
     blurb: "Hiring for myself or family",
   },
   {
     value: "PRIVATE",
-    label: "Private driver",
+    label: "Private Driver",
     blurb: "Hiring for myself or family",
   },
   {
     value: "CORPORATE",
-    label: "Corporate driver",
+    label: "Corporate Driver",
     blurb: "Hiring for a company",
   },
   {
     value: "EXECUTIVE",
-    label: "Executive driver",
+    label: "Executive Driver",
     blurb: "Hiring for myself or family",
   },
   {
     value: "SPY",
-    label: "Spy drivers",
+    label: "Spy Driver",
     blurb: "Hiring for myself or family",
   },
   {
     value: "EXPATRIATE",
-    label: "Expatriate drivers",
+    label: "Expatriate Driver",
     blurb: "Hiring for a company",
   },
 ];

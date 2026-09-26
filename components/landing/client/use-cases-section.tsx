@@ -29,7 +29,7 @@ export const UseCasesSection = function () {
         <SectionChip variant="dark">Use Cases</SectionChip>
 
         <h2 className="mt-6 max-w-md text-3xl font-bold text-white md:text-4xl">
-          However you move, we have drivers for you.
+          However you move, we have drivers for you
         </h2>
 
         <div className="mt-10 grid grid-cols-1 gap-10 pb-4 md:grid-cols-3">
