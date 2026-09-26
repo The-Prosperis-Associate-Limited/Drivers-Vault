@@ -23,7 +23,7 @@ export const LandingNav = function ({ ctaHref }: Props) {
   return (
     <>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between rounded-full bg-white px-5 shadow-sm md:px-8">
-        <Link href="/" aria-label="TEGAT home">
+        <Link href="/" aria-label="Drivers Vault home">
           <TegatLogo size={36} />
         </Link>
 

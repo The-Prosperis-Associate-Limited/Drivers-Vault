@@ -5,11 +5,11 @@ import { AppProvider } from "./_components/provider";
 
 export const metadata: Metadata = {
   title: {
-    default: "TEGAT — DriverVault",
-    template: "%s | TEGAT",
+    default: "Drivers Vault",
+    template: "%s | Drivers Vault",
   },
   description:
-    "Hire drivers you can actually trust. TEGAT vets every candidate against national identity, licence and police records, then scores them on reliability.",
+    "Hire drivers you can actually trust. Drivers Vault vets every candidate against national identity, licence and police records, then scores them on reliability.",
 };
 
 export const viewport: Viewport = {

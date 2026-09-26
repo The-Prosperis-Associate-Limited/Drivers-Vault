@@ -62,7 +62,7 @@ export const ForDriversSection = function () {
             <div className="relative mx-auto w-fit">
               <Image
                 src="/landing/driver-photo.png"
-                alt="Verified TEGAT driver"
+                alt="Verified Drivers Vault driver"
                 width={144}
                 height={144}
                 className="h-36 w-36 rounded-full object-cover"

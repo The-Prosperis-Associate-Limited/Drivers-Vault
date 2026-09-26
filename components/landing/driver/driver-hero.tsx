@@ -32,7 +32,7 @@ export const DriverHero = function () {
             Drive on your terms. Earn what you're worth
           </h1>
           <p className="mt-5 max-w-lg text-base text-blue-100 md:text-lg">
-            DriverVault connects you with people and businesses that need
+            Drivers Vault connects you with people and businesses that need
             dependable drivers, with clear pay, fair terms, and no agency
             guesswork.
           </p>

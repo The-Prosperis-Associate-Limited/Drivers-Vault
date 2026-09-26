@@ -34,7 +34,7 @@ export default function FindTalent() {
         Find verified talent
       </AppText>
       <AppText type="subtitle" className="text-muted-foreground mt-1 text-sm">
-        Every profile below has passed TEGAT identity, licence and guarantor
+        Every profile below has passed Drivers Vault identity, licence and guarantor
         checks. Filter by role, city and budget.
       </AppText>
 

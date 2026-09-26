@@ -24,7 +24,7 @@ export const FindDriverSection = function () {
             Find the right driver
           </h2>
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-blue-100 md:text-base">
-            DriverVault vets every candidate against national identity, licence
+            Drivers Vault vets every candidate against national identity, licence
             and police records, then scores them on reliability so you decide
             with confidence.
           </p>

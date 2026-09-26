@@ -12,7 +12,7 @@ export const TegatLogo = function ({ size = 44, className }: Props) {
   return (
     <Image
       src="/logo.svg"
-      alt="TEGAT"
+      alt="Drivers Vault"
       width={size}
       height={size}
       priority

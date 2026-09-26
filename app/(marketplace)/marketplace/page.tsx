@@ -76,7 +76,7 @@ export default function Marketplace() {
               type="h1"
               className="text-4xl font-bold text-white md:text-5xl"
             >
-              Welcome to DriverVault
+              Welcome to Drivers Vault
             </AppText>
             <AppText type="subtitle" className="mt-4 block text-white/85">
               "Stop calling around and waiting for callbacks. Connect instantly

@@ -71,7 +71,7 @@ function SignInForm() {
       </div>
 
       <AuthHeading
-        title="Sign in to TEGAT"
+        title="Sign in to Drivers Vault"
         subtitle="Enter your details to access your account."
       />
 

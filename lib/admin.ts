@@ -30,7 +30,7 @@ export const clientName = (client: {
   client_profile?: { organisation_name: string | null } | null;
 }) => client.client_profile?.organisation_name || personName(client);
 
-// No stored TEGAT ID exists — this is a stable display form of the record id,
+// No stored Drivers Vault ID exists — this is a stable display form of the record id,
 // not a second identifier.
 export const tegatDisplayId = (userId: string, role: "DRIVER" | "CLIENT") =>
   `TG-${role === "DRIVER" ? "DRV" : "CLT"}-${userId.slice(-4).toUpperCase()}`;

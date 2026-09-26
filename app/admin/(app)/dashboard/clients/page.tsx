@@ -77,7 +77,7 @@ export default function AdminClients() {
           Clients
         </AppText>
         <AppText type="subtitle" className="text-muted-foreground text-sm">
-          Individual and organization clients hiring drivers on TEGAT.
+          Individual and organization clients hiring drivers on Drivers Vault.
         </AppText>
       </div>
 

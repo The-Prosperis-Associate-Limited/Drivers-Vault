@@ -22,7 +22,7 @@ interface Props {
   - a YouTube url has no media file behind it, so it plays in YouTube's iframe
     and reports position through their IFrame API;
   - any other url is a file the browser decodes (mp4/webm, hls on Safari), so it
-    plays in a real <video>. This is the branch TEGAT's Cloudinary uploads land
+    plays in a real <video>. This is the branch Drivers Vault's Cloudinary uploads land
     on, and it reports the same position and duration as the YouTube one;
   - a module with no video is a reading. It renders as text — never as an empty
     video frame.

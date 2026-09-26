@@ -13,7 +13,7 @@ import { WhySection } from "@/components/landing/why-section";
 export const metadata: Metadata = {
   title: "Hire verified drivers in Nigeria",
   description:
-    "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business. Every TEGAT driver passes identity, licence and background checks before they reach you.",
+    "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business. Every Drivers Vault driver passes identity, licence and background checks before they reach you.",
   keywords: [
     "hire a driver",
     "verified drivers",
@@ -22,15 +22,15 @@ export const metadata: Metadata = {
     "private driver Lagos",
   ],
   openGraph: {
-    title: "TEGAT — Drivers, verified before they reach you",
+    title: "Drivers Vault — Drivers, verified before they reach you",
     description:
       "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business — without agencies or guesswork.",
     type: "website",
-    siteName: "TEGAT — DriverVault",
+    siteName: "Drivers Vault",
   },
   twitter: {
     card: "summary",
-    title: "TEGAT — Drivers, verified before they reach you",
+    title: "Drivers Vault — Drivers, verified before they reach you",
     description:
       "Hire a verified professional driver without agencies or guesswork.",
   },
@@ -45,7 +45,7 @@ export default function Home() {
         <FindDriverSection />
 
         <WhySection
-          chip="Why clients choose DriverVault"
+          chip="Why clients choose Drivers Vault"
           heading="Peace of mind on every trip"
           features={[
             {
@@ -67,7 +67,7 @@ export default function Home() {
           ctaLabel="Sign up"
           ctaHref="/auth/signup"
           screenshot="/landing/client-dash.png"
-          screenshotAlt="The TEGAT client dashboard"
+          screenshotAlt="The Drivers Vault client dashboard"
         />
 
         <StepsSection
@@ -109,7 +109,7 @@ export default function Home() {
             },
             {
               quote:
-                "We staff three routes with TEGAT drivers now. Same faces, every week, zero agency overhead.",
+                "We staff three routes with Drivers Vault drivers now. Same faces, every week, zero agency overhead.",
               name: "Adaeze Nwosu",
               place: "Port Harcourt, Nigeria",
               avatar: "/landing/avatar-emmanuel.png",
@@ -128,7 +128,7 @@ export default function Home() {
             {
               question: "What does it cost?",
               answer:
-                "Each driver sets a clear monthly rate you see before you request them. You pay from your TEGAT wallet or by bank transfer, with the platform fee itemised upfront—no hidden charges.",
+                "Each driver sets a clear monthly rate you see before you request them. You pay from your Drivers Vault wallet or by bank transfer, with the platform fee itemised upfront—no hidden charges.",
             },
             {
               question: "Can I book recurring trips?",
@@ -156,7 +156,7 @@ export default function Home() {
               driver today
             </>
           }
-          body="Tell DriverVault what you need and get matched with a verified professional—usually within a day."
+          body="Tell Drivers Vault what you need and get matched with a verified professional—usually within a day."
           ctaLabel="Start hiring"
           ctaHref="/auth/signup"
         />

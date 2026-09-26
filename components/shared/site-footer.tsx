@@ -16,7 +16,7 @@ export const SiteFooter = function () {
         <div className="max-w-sm">
           <div className="flex items-center gap-2">
             <TegatLogo size={28} />
-            <span className="font-serif text-xl">DriverVault</span>
+            <span className="font-serif text-xl">Drivers Vault</span>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-white/70">
             Vetted drivers and professional staff, verified against NIMC, FRSC
@@ -69,7 +69,7 @@ export const SiteFooter = function () {
 
       <div className="border-t border-white/15">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-white/60 md:flex-row md:items-center md:justify-between md:px-8">
-          <p>© 2026 TEGAT · DriverVault. All rights reserved.</p>
+          <p>© 2026 Drivers Vault. All rights reserved.</p>
           <p className="tracking-[0.2em] uppercase">
             Verified hiring for Nigeria
           </p>

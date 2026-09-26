@@ -35,7 +35,7 @@ function SettingsContent() {
     <div className="mx-auto max-w-6xl space-y-6">
       <PageHeader
         title="Settings"
-        subtitle="Manage your profile, security and how TEGAT reaches you."
+        subtitle="Manage your profile, security and how Drivers Vault reaches you."
         action={
           <Button
             variant="outline"
@@ -76,7 +76,7 @@ function SettingsContent() {
         onOpenChange={setSignOutOpen}
         icon={LogOut}
         iconClassName="text-destructive"
-        title="Sign out of TEGAT?"
+        title="Sign out of Drivers Vault?"
         description="You'll need your email and password to sign back in."
         confirmLabel="Sign out"
         confirmVariant="destructive"

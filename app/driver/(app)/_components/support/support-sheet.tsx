@@ -41,7 +41,7 @@ const OPTIONS: { panel: Panel; title: string; description: string }[] = [
 ];
 
 const HEADINGS: Record<Panel, { title: string; description?: string }> = {
-  menu: { title: "Get support for your TEGAT experience" },
+  menu: { title: "Get support for your Drivers Vault experience" },
   chat: {
     title: "Ada · Support agent",
     description: "Usually replies in minutes",

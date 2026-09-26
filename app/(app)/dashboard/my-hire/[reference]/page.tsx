@@ -62,7 +62,7 @@ export default function HireDetail({
 
   const started = new Date(hire.starts_at).getTime() <= Date.now();
 
-  // No stored TEGAT ID exists — this is a stable display form of the driver's
+  // No stored Drivers Vault ID exists — this is a stable display form of the driver's
   // record id, not a second identifier.
   const tegatId = hire.driver
     ? `TG-DRV-${hire.driver.id.slice(-4).toUpperCase()}`
@@ -76,7 +76,7 @@ export default function HireDetail({
     .join(", ");
 
   const profileRows = [
-    { label: "TEGAT ID", value: tegatId },
+    { label: "Drivers Vault ID", value: tegatId },
     {
       label: "Gender",
       value: hire.driver_details?.gender
@@ -216,7 +216,7 @@ export default function HireDetail({
         <div className="space-y-6">
           <div className="border-border rounded-2xl border bg-white p-5 md:p-6">
             <AppText type="h3" className="text-base font-semibold">
-              TEGAT profile
+              Drivers Vault profile
             </AppText>
             <div className="mt-4 space-y-3">
               {profileRows.map((row) => (

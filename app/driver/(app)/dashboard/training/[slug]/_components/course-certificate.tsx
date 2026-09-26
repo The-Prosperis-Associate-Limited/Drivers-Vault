@@ -15,7 +15,7 @@ interface Props {
 
 /*
   Follows the reference template in ~/Downloads/Driversvault/Pick a template,
-  rebuilt with TEGAT's mark and a drawn seal — the template's own logo, seal and
+  rebuilt with Drivers Vault's mark and a drawn seal — the template's own logo, seal and
   founder signature belong to another product. Every value on it comes from the
   server; nothing here is decorative text pretending to be data.
 */

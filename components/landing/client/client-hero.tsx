@@ -59,7 +59,7 @@ export const ClientHero = function () {
             <div className="relative mx-auto w-fit">
               <Image
                 src="/landing/driver-photo.png"
-                alt="Verified TEGAT driver"
+                alt="Verified Drivers Vault driver"
                 width={160}
                 height={160}
                 className="h-40 w-40 rounded-full object-cover"

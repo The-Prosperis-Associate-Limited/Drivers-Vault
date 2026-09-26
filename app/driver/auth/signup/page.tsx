@@ -103,7 +103,7 @@ export default function SignUp() {
           name="accepted_terms"
           errors={errors}
           type="checkbox"
-          label="I agree to TEGAT's Terms of Service and Privacy Policy"
+          label="I agree to Drivers Vault's Terms of Service and Privacy Policy"
         />
 
         <Button

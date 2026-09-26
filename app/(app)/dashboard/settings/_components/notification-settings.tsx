@@ -45,7 +45,7 @@ const GROUPS: {
       {
         key: "product_news",
         label: "Product news & tips",
-        description: "Occasional updates about new TEGAT features.",
+        description: "Occasional updates about new Drivers Vault features.",
       },
     ],
   },

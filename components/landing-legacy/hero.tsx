@@ -27,7 +27,7 @@ export const Hero = function () {
               Hire drivers you can actually trust.
             </h1>
             <p className="mt-5 text-base text-white/85 md:text-lg">
-              DriverVault vets every candidate against national identity,
+              Drivers Vault vets every candidate against national identity,
               licence and police records, then scores them on reliability so you
               decide with confidence.
             </p>

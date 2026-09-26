@@ -11,7 +11,7 @@ import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { WhySection } from "@/components/landing/why-section";
 
 export const metadata: Metadata = {
-  title: "Drive with TEGAT — steady, fairly-paid work",
+  title: "Drive with Drivers Vault — steady, fairly-paid work",
   description:
     "Join a network that values professional drivers: see pay upfront, set your own schedule, and work with verified clients. Contract, private, corporate, executive and expatriate engagements.",
   keywords: [
@@ -22,15 +22,15 @@ export const metadata: Metadata = {
     "become a driver",
   ],
   openGraph: {
-    title: "Drive on your terms. Earn what you're worth — TEGAT",
+    title: "Drive on your terms. Earn what you're worth — Drivers Vault",
     description:
       "Clear pay, fair terms, verified clients. Apply, get verified, and pick the driving jobs that suit you.",
     type: "website",
-    siteName: "TEGAT — DriverVault",
+    siteName: "Drivers Vault",
   },
   twitter: {
     card: "summary",
-    title: "Drive on your terms. Earn what you're worth — TEGAT",
+    title: "Drive on your terms. Earn what you're worth — Drivers Vault",
     description:
       "Clear pay, fair terms, verified clients. Pick the driving jobs that suit you.",
   },
@@ -45,7 +45,7 @@ export default function DriversLanding() {
         <ForDriversSection />
 
         <WhySection
-          chip="Why drive with TEGAT"
+          chip="Why drive with Drivers Vault"
           heading="Work that respects your profession"
           features={[
             {
@@ -67,7 +67,7 @@ export default function DriversLanding() {
           ctaLabel="Sign up"
           ctaHref="/driver/auth/signup"
           screenshot="/landing/driver-dash.png"
-          screenshotAlt="The TEGAT driver dashboard"
+          screenshotAlt="The Drivers Vault driver dashboard"
         />
 
         <StepsSection
@@ -128,7 +128,7 @@ export default function DriversLanding() {
             {
               question: "How do I get paid?",
               answer:
-                "Earnings land in your TEGAT wallet when a job completes, and you withdraw to your own bank account whenever you choose. You always see the full pay for a job before you accept it.",
+                "Earnings land in your Drivers Vault wallet when a job completes, and you withdraw to your own bank account whenever you choose. You always see the full pay for a job before you accept it.",
             },
             {
               question: "Can I choose my own schedule?",
