@@ -3,6 +3,7 @@
 import { AppText } from "@/components/shared/app-text";
 import { BackLink } from "@/components/shared/back-link";
 import { EmptyState } from "@/components/shared/empty-state";
+import { HireRequestDialog } from "@/components/hires/hire-request-dialog";
 import { StarRating } from "@/components/shared/star-rating";
 import { TrustRing } from "@/components/drivers/trust-ring";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -24,7 +25,7 @@ import {
   ShieldCheck,
   UserRound,
 } from "lucide-react";
-import { use } from "react";
+import { use, useState } from "react";
 import type { DriverReview, PublicDriverProfile } from "@/types/driver";
 import type { APIResponse, PaginatedResponse } from "@/types/response";
 
@@ -61,6 +62,7 @@ export default function DriverProfilePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const [hireOpen, setHireOpen] = useState(false);
 
   const { data, isFetching } = useGetData<APIResponse<PublicDriverProfile>>({
     url: API_ENDPOINTS.drivers.detail(id),
@@ -150,8 +152,11 @@ export default function DriverProfilePage({
           </div>
         </div>
 
-        {/* The request flow has no designs yet — wired when they arrive. */}
-        <Button className="h-12 rounded-xl px-6 text-sm">
+        {/* The paid hire flow: request → admin invoice → pay → contact details. */}
+        <Button
+          className="h-12 rounded-xl px-6 text-sm"
+          onClick={() => setHireOpen(true)}
+        >
           <Plus className="h-4 w-4" />
           Hire Driver
         </Button>
@@ -343,6 +348,15 @@ export default function DriverProfilePage({
           </Card>
         </div>
       </div>
+
+      <HireRequestDialog
+        isOpen={hireOpen}
+        onOpenChange={setHireOpen}
+        driverUserId={id}
+        driverName={name}
+        rateMinor={profile.expected_monthly_rate}
+        rateCurrency={profile.rate_currency}
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { AppDialog } from "@/components/shared/app-dialog";
 import { AppText } from "@/components/shared/app-text";
 import { EmptyState } from "@/components/shared/empty-state";
+import { HireRequestDialog } from "@/components/hires/hire-request-dialog";
 import { StarRating } from "@/components/shared/star-rating";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetData } from "@/hooks/use-get-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import { driverTypeLabel, formatRelativeTime, getInitials } from "@/lib/utils";
+import { useState } from "react";
 import {
   BadgeCheck,
   BriefcaseBusiness,
@@ -36,6 +38,8 @@ export const DriverProfileDialog = function ({
   driverUserId,
   onOpenChange,
 }: Props) {
+  const [hireOpen, setHireOpen] = useState(false);
+
   const { data, isFetching } = useGetData<APIResponse<PublicDriverProfile>>({
     url: driverUserId ? API_ENDPOINTS.drivers.detail(driverUserId) : "",
     shouldFetch: !!driverUserId,
@@ -290,9 +294,11 @@ export const DriverProfileDialog = function ({
                 })}
               </div>
 
-              {/* The request flow has no designs yet — this button gets its
-                  action when they arrive. */}
-              <Button className="mt-5 h-12 w-full rounded-lg text-sm">
+              {/* The paid hire flow: request → admin invoice → pay → contact details. */}
+              <Button
+                className="mt-5 h-12 w-full rounded-lg text-sm"
+                onClick={() => setHireOpen(true)}
+              >
                 <Plus className="h-4 w-4" />
                 Request
               </Button>
@@ -378,6 +384,17 @@ export const DriverProfileDialog = function ({
             )}
           </div>
         </div>
+      )}
+
+      {profile && driverUserId && (
+        <HireRequestDialog
+          isOpen={hireOpen}
+          onOpenChange={setHireOpen}
+          driverUserId={driverUserId}
+          driverName={name}
+          rateMinor={profile.expected_monthly_rate}
+          rateCurrency={profile.rate_currency}
+        />
       )}
     </AppDialog>
   );

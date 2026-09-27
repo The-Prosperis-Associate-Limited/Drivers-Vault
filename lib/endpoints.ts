@@ -370,6 +370,39 @@ export const API_ENDPOINTS = {
     read: (conversationId: string) => `/chat/${conversationId}/read`,
   },
 
+  hireRequests: {
+    create: "/client/hire-requests",
+    list: ({
+      page,
+      limit,
+      status,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+    }) =>
+      `/client/hire-requests?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
+    detail: (reference: string) => `/client/hire-requests/${reference}`,
+    pay: (reference: string) => `/client/hire-requests/${reference}/pay`,
+    cancel: (reference: string) => `/client/hire-requests/${reference}/cancel`,
+  },
+
+  adminHires: {
+    list: ({
+      page,
+      limit,
+      status,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+    }) =>
+      `/admin/hires?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
+    detail: (reference: string) => `/admin/hires/${reference}`,
+    invoice: (reference: string) => `/admin/hires/${reference}/invoice`,
+    decline: (reference: string) => `/admin/hires/${reference}/decline`,
+  },
+
   adminChat: {
     list: ({
       page,

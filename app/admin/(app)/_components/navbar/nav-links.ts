@@ -3,6 +3,7 @@ import {
   GraduationCap,
   LayoutGrid,
   MessagesSquare,
+  ReceiptText,
   Settings,
   UserRound,
   UsersRound,
@@ -23,6 +24,11 @@ export const ADMIN_NAV_LINKS: AdminNavLink[] = [
     href: "/admin/dashboard/transactions",
     label: "Transaction",
     icon: ArrowLeftRight,
+  },
+  {
+    href: "/admin/dashboard/hires",
+    label: "Hires",
+    icon: ReceiptText,
   },
   {
     href: "/admin/dashboard/training",
