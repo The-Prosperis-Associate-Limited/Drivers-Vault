@@ -11,7 +11,7 @@ import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { WhySection } from "@/components/landing/why-section";
 
 export const metadata: Metadata = {
-  title: "Drive with Drivers Vault — steady, fairly-paid work",
+  title: "Drive with us — steady, fairly-paid work",
   description:
     "Join a network that values professional drivers: see pay upfront, set your own schedule, and work with verified clients. Contract, private, corporate, executive and expatriate engagements.",
   keywords: [

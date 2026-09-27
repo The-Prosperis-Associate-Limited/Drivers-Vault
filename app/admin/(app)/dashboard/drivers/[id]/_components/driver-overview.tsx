@@ -49,7 +49,7 @@ export const DriverOverview = function ({ user }: Props) {
 
           <div className="mt-2 flex items-center gap-2">
             <AppText type="caption" className="text-brand font-medium">
-              Tegat Id: {tegatDisplayId(user.id, "DRIVER")}
+              Drivers Vault ID: {tegatDisplayId(user.id, "DRIVER")}
             </AppText>
             <StatusBadge
               label={statusLabel(user.account_status)}

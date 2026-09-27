@@ -90,7 +90,7 @@ function CoursePlayer() {
 
   const driverName =
     [profile?.first_name, profile?.last_name].filter(Boolean).join(" ") ||
-    "Tegat driver";
+    "Drivers Vault driver";
 
   const totalMinutes = modules.reduce(
     (total, module) => total + module.duration_minutes,

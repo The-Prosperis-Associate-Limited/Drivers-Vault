@@ -80,7 +80,7 @@ export default function TransactionsPage() {
 
     const link = document.createElement("a");
     link.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-    link.download = "tegat-payments.csv";
+    link.download = "drivers-vault-payments.csv";
     link.click();
     URL.revokeObjectURL(link.href);
   };

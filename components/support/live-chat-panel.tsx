@@ -85,8 +85,8 @@ export const LiveChatPanel = function ({ firstName }: Props) {
 
         <div className="max-w-[85%] rounded-xl bg-gray-100 px-4 py-3">
           <AppText type="caption" className="text-foreground block">
-            Hi {firstName ?? "there"} 👋 I&rsquo;m Ada from Tegat Support. How
-            can I help with your account today?
+            Hi {firstName ?? "there"} 👋 I&rsquo;m Ada from Drivers Vault
+            Support. How can I help with your account today?
           </AppText>
         </div>
 

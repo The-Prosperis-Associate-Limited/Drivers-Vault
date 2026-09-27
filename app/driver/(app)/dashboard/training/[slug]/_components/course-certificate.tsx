@@ -64,7 +64,7 @@ export const CourseCertificate = function ({
             type="caption"
             className="text-foreground mt-2 block text-[10px] font-bold tracking-wide uppercase sm:text-xs"
           >
-            Tegat
+            Drivers Vault
           </AppText>
           <AppText
             type="caption"

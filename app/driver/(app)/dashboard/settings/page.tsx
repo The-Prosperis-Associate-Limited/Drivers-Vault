@@ -44,7 +44,7 @@ function SettingsContent() {
     <div className="mx-auto max-w-6xl space-y-6">
       <PageHeader
         title="Settings"
-        subtitle="Manage your profile, payments and how Tegat reaches you."
+        subtitle="Manage your profile, payments and how Drivers Vault reaches you."
         action={
           <Button
             variant="outline"
