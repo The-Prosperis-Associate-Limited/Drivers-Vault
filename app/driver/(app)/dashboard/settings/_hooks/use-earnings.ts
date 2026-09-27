@@ -69,7 +69,13 @@ export const useBanks = function ({
     shouldFetch,
   });
 
-  return { banks: data?.data ?? [], isFetching };
+  // Paystack repeats a code across bank variants — duplicate codes break both
+  // React keys and account resolution, so only the first of each survives.
+  const banks = Array.from(
+    new Map((data?.data ?? []).map((bank) => [bank.code, bank])).values(),
+  );
+
+  return { banks, isFetching };
 };
 
 export const useAddBankAccount = function ({
