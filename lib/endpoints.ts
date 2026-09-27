@@ -363,4 +363,30 @@ export const API_ENDPOINTS = {
     comment: (id: string) => `/admin/tickets/${id}/comments`,
     update: (id: string) => `/admin/tickets/${id}`,
   },
+
+  chat: {
+    conversation: "/chat/conversation",
+    message: "/chat/message",
+    read: (conversationId: string) => `/chat/${conversationId}/read`,
+  },
+
+  adminChat: {
+    list: ({
+      page,
+      limit,
+      status,
+    }: {
+      page: number;
+      limit: number;
+      status?: string;
+    }) =>
+      `/admin/chat?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
+    get: (conversationId: string) => `/admin/chat/${conversationId}`,
+    join: (conversationId: string) => `/admin/chat/${conversationId}/join`,
+    message: (conversationId: string) =>
+      `/admin/chat/${conversationId}/message`,
+    resolve: (conversationId: string) =>
+      `/admin/chat/${conversationId}/resolve`,
+    read: (conversationId: string) => `/admin/chat/${conversationId}/read`,
+  },
 } as const;

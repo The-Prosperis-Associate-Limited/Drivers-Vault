@@ -2,6 +2,7 @@ import {
   ArrowLeftRight,
   GraduationCap,
   LayoutGrid,
+  MessagesSquare,
   Settings,
   UserRound,
   UsersRound,
@@ -27,6 +28,11 @@ export const ADMIN_NAV_LINKS: AdminNavLink[] = [
     href: "/admin/dashboard/training",
     label: "Training",
     icon: GraduationCap,
+  },
+  {
+    href: "/admin/dashboard/support",
+    label: "Support",
+    icon: MessagesSquare,
   },
 ];
 
