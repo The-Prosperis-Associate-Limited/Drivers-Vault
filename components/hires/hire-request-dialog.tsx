@@ -8,7 +8,11 @@ import { FormSelect } from "@/components/form/form-select";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { useSubmitData } from "@/hooks/use-submit-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
-import { formatMoney } from "@/lib/utils";
+import {
+  formatMoney,
+  TRANSMISSION_OPTIONS,
+  WORK_SCHEDULE_OPTIONS,
+} from "@/lib/utils";
 import {
   hireRequestSchema,
   type HireRequestFormValues,
@@ -52,7 +56,7 @@ export const HireRequestDialog = function ({
     formState: { errors },
   } = useForm<HireRequestFormValues>({
     resolver: zodResolver(hireRequestSchema),
-    defaultValues: { engagement_type: "MONTHLY" },
+    defaultValues: { engagement_type: "MONTHLY", schedule: "WEEKDAYS" },
   });
 
   const { mutate, isPending } = useSubmitData<
@@ -104,6 +108,22 @@ export const HireRequestDialog = function ({
           errors={errors}
           label="When should they start?"
           minDate={new Date()}
+        />
+
+        <FormSelect<HireRequestFormValues>
+          control={control}
+          name="schedule"
+          errors={errors}
+          label="Work schedule"
+          options={WORK_SCHEDULE_OPTIONS}
+        />
+
+        <FormSelect<HireRequestFormValues>
+          control={control}
+          name="transmission"
+          errors={errors}
+          label="Vehicle transmission (optional)"
+          options={TRANSMISSION_OPTIONS}
         />
 
         <FormTextarea<HireRequestFormValues>

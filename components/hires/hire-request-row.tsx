@@ -16,6 +16,7 @@ import type { HireRequest, HireRequestStatus } from "@/types/hire";
 export const HIRE_REQUEST_STATUS_STYLES: Record<HireRequestStatus, string> = {
   PENDING_REVIEW: "bg-amber-50 text-amber-600",
   INVOICED: "bg-blue-50 text-blue-600",
+  PAYMENT_REVIEW: "bg-purple-50 text-purple-600",
   PAID: "bg-emerald-50 text-emerald-600",
   DECLINED: "bg-red-50 text-red-600",
   CANCELLED: "bg-muted text-muted-foreground",
@@ -23,7 +24,8 @@ export const HIRE_REQUEST_STATUS_STYLES: Record<HireRequestStatus, string> = {
 
 export const HIRE_REQUEST_STATUS_LABELS: Record<HireRequestStatus, string> = {
   PENDING_REVIEW: "Under review",
-  INVOICED: "Invoice ready",
+  INVOICED: "Awaiting payment",
+  PAYMENT_REVIEW: "Confirming payment",
   PAID: "Paid",
   DECLINED: "Declined",
   CANCELLED: "Cancelled",
@@ -35,8 +37,10 @@ interface Props {
 
 export const HireRequestRow = function ({ request }: Props) {
   const driver = request.driver;
-  const name =
-    [driver.first_name, driver.last_name].filter(Boolean).join(" ") || "Driver";
+  const name = driver
+    ? [driver.first_name, driver.last_name].filter(Boolean).join(" ") ||
+      "Driver"
+    : "Matching a driver for you";
 
   return (
     <Link
@@ -44,9 +48,9 @@ export const HireRequestRow = function ({ request }: Props) {
       className="hover:bg-muted/40 flex items-center gap-4 py-4 transition-colors"
     >
       <Avatar className="h-11 w-11 shrink-0">
-        <AvatarImage src={driver.profile_pic ?? undefined} alt="" />
+        <AvatarImage src={driver?.profile_pic ?? undefined} alt="" />
         <AvatarFallback>
-          {getInitials(driver.first_name, driver.last_name)}
+          {driver ? getInitials(driver.first_name, driver.last_name) : "DV"}
         </AvatarFallback>
       </Avatar>
 
@@ -69,7 +73,11 @@ export const HireRequestRow = function ({ request }: Props) {
           className="text-muted-foreground mt-0.5 block truncate text-xs"
         >
           {[
-            driverTypeLabel(driver.driver_profile?.driver_type ?? undefined),
+            driverTypeLabel(
+              driver?.driver_profile?.driver_type ??
+                request.driver_type ??
+                undefined,
+            ),
             `Starts ${formatDate(request.starts_at)}`,
             request.invoice
               ? `Invoice ${formatMoney(request.invoice.total_minor, request.invoice.currency)}`

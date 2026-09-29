@@ -174,7 +174,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
           value={labelFor(DRIVER_TYPE_OPTIONS, profile?.driver_type)}
         />
         <Row
-          label="What can you drive?"
+          label="Vehicle transmission"
           value={labelFor(TRANSMISSION_OPTIONS, profile?.transmission)}
         />
         <Row

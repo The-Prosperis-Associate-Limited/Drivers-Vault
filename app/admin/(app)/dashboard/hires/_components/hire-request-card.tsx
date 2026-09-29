@@ -4,12 +4,16 @@ import { AppDialog } from "@/components/shared/app-dialog";
 import { AppInput } from "@/components/shared/app-input";
 import { AppText } from "@/components/shared/app-text";
 import { AppTextArea } from "@/components/shared/app-textarea";
+import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import {
   HIRE_REQUEST_STATUS_LABELS,
   HIRE_REQUEST_STATUS_STYLES,
 } from "@/components/hires/hire-request-row";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDebounce } from "@/hooks/use-debounce";
+import { useGetData } from "@/hooks/use-get-data";
 import { useSubmitData } from "@/hooks/use-submit-data";
 import { clientName } from "@/lib/admin";
 import { API_ENDPOINTS } from "@/lib/endpoints";
@@ -20,10 +24,22 @@ import {
   formatMoney,
   getInitials,
   HIRE_ENGAGEMENT_LABELS,
+  HIRE_PACKAGE_OPTIONS,
+  TRANSMISSION_OPTIONS,
+  WORK_SCHEDULE_LABELS,
 } from "@/lib/utils";
-import { ReceiptText, XCircle } from "lucide-react";
+import {
+  BadgeCheck,
+  ExternalLink,
+  ReceiptText,
+  Search,
+  UserPlus,
+  XCircle,
+} from "lucide-react";
 import { useState } from "react";
+import type { AdminUserRow } from "@/types/admin";
 import type { HireRequest } from "@/types/hire";
+import type { PaginatedResponse } from "@/types/response";
 
 interface Props {
   request: HireRequest;
@@ -35,9 +51,13 @@ const DEFAULT_VAT = 7.5;
 export const HireRequestCard = function ({ request, listUrl }: Props) {
   const [invoiceOpen, setInvoiceOpen] = useState(false);
   const [declineOpen, setDeclineOpen] = useState(false);
+  const [assignOpen, setAssignOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [rejectOpen, setRejectOpen] = useState(false);
+  const [driverSearch, setDriverSearch] = useState("");
 
-  const rate = request.driver.driver_profile?.expected_monthly_rate ?? null;
-  const currency = request.driver.driver_profile?.rate_currency ?? "NGN";
+  const rate = request.driver?.driver_profile?.expected_monthly_rate ?? null;
+  const currency = request.driver?.driver_profile?.rate_currency ?? "NGN";
 
   // Naira input for the admin, kobo on the wire.
   const [amountMajor, setAmountMajor] = useState(
@@ -46,14 +66,35 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
   const [vatPercent, setVatPercent] = useState(String(DEFAULT_VAT));
   const [note, setNote] = useState("");
   const [reason, setReason] = useState("");
+  const [rejectReason, setRejectReason] = useState("");
 
   const driver = request.driver;
-  const driverName =
-    [driver.first_name, driver.last_name].filter(Boolean).join(" ") || "Driver";
+  const driverName = driver
+    ? [driver.first_name, driver.last_name].filter(Boolean).join(" ") ||
+      "Driver"
+    : "Unassigned";
   const requester = request.client ? clientName(request.client) : "Client";
+  const invoice = request.invoice;
 
   const amountMinor = Math.round(Number(amountMajor || 0) * 100);
   const vatMinor = Math.round((amountMinor * Number(vatPercent || 0)) / 100);
+
+  const debouncedSearch = useDebounce(driverSearch, 400);
+  const { data: driverResults, isFetching: isSearching } = useGetData<
+    PaginatedResponse<AdminUserRow>
+  >({
+    url: API_ENDPOINTS.adminUsers.list({
+      page: 1,
+      limit: 6,
+      role: "DRIVER",
+      ...(debouncedSearch.trim() && { search: debouncedSearch.trim() }),
+    }),
+    shouldFetch: assignOpen,
+  });
+
+  const candidates = (driverResults?.data ?? []).filter(
+    (row) => row.driver_profile?.verification_status === "APPROVED",
+  );
 
   const { mutate: generate, isPending: isGenerating } = useSubmitData<{
     amount_minor: number;
@@ -75,14 +116,44 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
     onSuccess: () => setDeclineOpen(false),
   });
 
+  const { mutate: assign, isPending: isAssigning } = useSubmitData<{
+    driverId: string;
+  }>({
+    url: API_ENDPOINTS.adminHires.assign(request.reference),
+    onSuccessMessage: "Driver assigned",
+    additionalQueryKeys: [[listUrl]],
+    onSuccess: () => setAssignOpen(false),
+  });
+
+  const { mutate: confirmPayment, isPending: isConfirming } = useSubmitData({
+    url: API_ENDPOINTS.adminHires.confirmPayment(request.reference),
+    onSuccessMessage: "Payment confirmed — engagement created",
+    additionalQueryKeys: [[listUrl]],
+    onSuccess: () => setConfirmOpen(false),
+  });
+
+  const { mutate: rejectProof, isPending: isRejecting } = useSubmitData<{
+    reason: string;
+  }>({
+    url: API_ENDPOINTS.adminHires.rejectProof(request.reference),
+    onSuccessMessage: "Proof rejected — the client can re-upload",
+    additionalQueryKeys: [[listUrl]],
+    onSuccess: () => setRejectOpen(false),
+  });
+
+  const openInvoiceDialog = () => {
+    if (!amountMajor && rate) setAmountMajor(String(Math.round(rate / 100)));
+    setInvoiceOpen(true);
+  };
+
   return (
     <div className="border-border rounded-2xl border bg-white p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <Avatar className="h-11 w-11 shrink-0">
-            <AvatarImage src={driver.profile_pic ?? undefined} alt="" />
+            <AvatarImage src={driver?.profile_pic ?? undefined} alt="" />
             <AvatarFallback>
-              {getInitials(driver.first_name, driver.last_name)}
+              {driver ? getInitials(driver.first_name, driver.last_name) : "?"}
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0">
@@ -110,14 +181,24 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
         </div>
 
         {request.status === "PENDING_REVIEW" && (
-          <div className="flex shrink-0 gap-2">
+          <div className="flex shrink-0 flex-wrap gap-2">
             <Button
+              variant={driver ? "outline" : "default"}
               className="h-9 rounded-lg px-4 text-xs"
-              onClick={() => setInvoiceOpen(true)}
+              onClick={() => setAssignOpen(true)}
             >
-              <ReceiptText className="h-3.5 w-3.5" />
-              Generate invoice
+              <UserPlus className="h-3.5 w-3.5" />
+              {driver ? "Reassign driver" : "Assign driver"}
             </Button>
+            {driver && (
+              <Button
+                className="h-9 rounded-lg px-4 text-xs"
+                onClick={openInvoiceDialog}
+              >
+                <ReceiptText className="h-3.5 w-3.5" />
+                Generate invoice
+              </Button>
+            )}
             <Button
               variant="outline"
               className="text-destructive border-destructive/40 h-9 rounded-lg px-4 text-xs"
@@ -125,6 +206,42 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
             >
               <XCircle className="h-3.5 w-3.5" />
               Decline
+            </Button>
+          </div>
+        )}
+
+        {request.status === "PAYMENT_REVIEW" && (
+          <div className="flex shrink-0 flex-wrap gap-2">
+            {invoice?.proof_url && (
+              <Button
+                variant="outline"
+                className="h-9 rounded-lg px-4 text-xs"
+                asChild
+              >
+                <a
+                  href={invoice.proof_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  View proof
+                </a>
+              </Button>
+            )}
+            <Button
+              className="h-9 rounded-lg px-4 text-xs"
+              onClick={() => setConfirmOpen(true)}
+            >
+              <BadgeCheck className="h-3.5 w-3.5" />
+              Confirm payment
+            </Button>
+            <Button
+              variant="outline"
+              className="text-destructive border-destructive/40 h-9 rounded-lg px-4 text-xs"
+              onClick={() => setRejectOpen(true)}
+            >
+              <XCircle className="h-3.5 w-3.5" />
+              Reject proof
             </Button>
           </div>
         )}
@@ -140,30 +257,81 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
           {
             label: "Driver type",
             value: driverTypeLabel(
-              driver.driver_profile?.driver_type ?? undefined,
+              driver?.driver_profile?.driver_type ??
+                request.driver_type ??
+                undefined,
             ),
           },
           {
-            label: request.invoice ? "Invoice total" : "Advertised rate",
-            value: request.invoice
-              ? formatMoney(
-                  request.invoice.total_minor,
-                  request.invoice.currency,
-                )
+            label: "Package",
+            value:
+              HIRE_PACKAGE_OPTIONS.find((o) => o.value === request.package)
+                ?.label ?? request.package,
+          },
+          {
+            label: "Schedule",
+            value: WORK_SCHEDULE_LABELS[request.schedule] ?? request.schedule,
+          },
+          request.resumption_time || request.closing_time
+            ? {
+                label: "Hours",
+                value: [request.resumption_time, request.closing_time]
+                  .filter(Boolean)
+                  .join(" – "),
+              }
+            : null,
+          request.transmission
+            ? {
+                label: "Transmission",
+                value:
+                  TRANSMISSION_OPTIONS.find(
+                    (o) => o.value === request.transmission,
+                  )?.label ?? request.transmission,
+              }
+            : null,
+          request.drivers_needed > 1
+            ? { label: "Drivers needed", value: String(request.drivers_needed) }
+            : null,
+          request.duration_months
+            ? {
+                label: "Duration",
+                value: `${request.duration_months} month${request.duration_months > 1 ? "s" : ""}`,
+              }
+            : null,
+          request.state
+            ? {
+                label: "Location",
+                value: [request.nearest_area, request.state]
+                  .filter(Boolean)
+                  .join(", "),
+              }
+            : null,
+          request.insurance_cover
+            ? { label: "Insurance", value: request.insurance_cover }
+            : null,
+          request.provides_accommodation
+            ? { label: "Accommodation", value: "Provided" }
+            : null,
+          {
+            label: invoice ? "Invoice total" : "Advertised rate",
+            value: invoice
+              ? formatMoney(invoice.total_minor, invoice.currency)
               : rate
                 ? `${formatMoney(rate, currency)} / month`
                 : "Not set",
           },
-        ].map((entry) => (
-          <div key={entry.label}>
-            <AppText type="caption" className="text-muted-foreground text-xs">
-              {entry.label}
-            </AppText>
-            <AppText type="label" className="block text-sm font-semibold">
-              {entry.value}
-            </AppText>
-          </div>
-        ))}
+        ]
+          .filter((entry) => entry !== null)
+          .map((entry) => (
+            <div key={entry.label}>
+              <AppText type="caption" className="text-muted-foreground text-xs">
+                {entry.label}
+              </AppText>
+              <AppText type="label" className="block text-sm font-semibold">
+                {entry.value}
+              </AppText>
+            </div>
+          ))}
       </div>
 
       {request.note && (
@@ -172,6 +340,15 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
           className="text-muted-foreground mt-3 block text-xs"
         >
           Client note: &ldquo;{request.note}&rdquo;
+        </AppText>
+      )}
+
+      {invoice?.proof_note && request.status === "PAYMENT_REVIEW" && (
+        <AppText
+          type="caption"
+          className="text-muted-foreground mt-3 block text-xs"
+        >
+          Payment note: &ldquo;{invoice.proof_note}&rdquo;
         </AppText>
       )}
 
@@ -253,6 +430,118 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
             }
           >
             Issue invoice
+          </Button>
+        </div>
+      </AppDialog>
+
+      <AppDialog
+        isOpen={assignOpen}
+        onOpenChange={setAssignOpen}
+        title={driver ? "Reassign driver" : "Assign a driver"}
+        description="Pick an approved driver that fits the client's requirements."
+      >
+        <div className="space-y-4">
+          <AppInput
+            label="Search drivers"
+            icon={Search}
+            value={driverSearch}
+            onChange={(event) => setDriverSearch(event.target.value)}
+            placeholder="Name or email"
+          />
+
+          {isSearching ? (
+            <div className="space-y-2">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <Skeleton key={index} className="h-14 rounded-xl" />
+              ))}
+            </div>
+          ) : candidates.length === 0 ? (
+            <AppText
+              type="caption"
+              className="text-muted-foreground block text-sm"
+            >
+              No approved drivers match that search.
+            </AppText>
+          ) : (
+            <div className="max-h-72 space-y-2 overflow-y-auto">
+              {candidates.map((candidate) => (
+                <div
+                  key={candidate.id}
+                  className="border-border flex items-center gap-3 rounded-xl border p-3"
+                >
+                  <Avatar className="h-9 w-9 shrink-0">
+                    <AvatarImage
+                      src={candidate.profile_pic ?? undefined}
+                      alt=""
+                    />
+                    <AvatarFallback>
+                      {getInitials(candidate.first_name, candidate.last_name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0 flex-1">
+                    <AppText
+                      type="label"
+                      className="block truncate text-sm font-semibold"
+                    >
+                      {[candidate.first_name, candidate.last_name]
+                        .filter(Boolean)
+                        .join(" ") || candidate.email}
+                    </AppText>
+                    <AppText
+                      type="caption"
+                      className="text-muted-foreground block truncate text-xs"
+                    >
+                      {driverTypeLabel(
+                        candidate.driver_profile?.driver_type ?? undefined,
+                      )}
+                    </AppText>
+                  </div>
+                  <Button
+                    className="h-8 shrink-0 rounded-lg px-3 text-xs"
+                    isLoading={isAssigning}
+                    onClick={() => assign({ driverId: candidate.id })}
+                  >
+                    Assign
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </AppDialog>
+
+      <ConfirmDialog
+        isOpen={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        icon={BadgeCheck}
+        title="Confirm this payment?"
+        description={`Confirming means the transfer landed in the organisation account. ${driverName} is credited ${invoice ? formatMoney(invoice.amount_minor, invoice.currency) : ""} and the client unlocks their contact details immediately.`}
+        confirmLabel="Confirm payment"
+        isLoading={isConfirming}
+        onConfirm={() => confirmPayment({})}
+      />
+
+      <AppDialog
+        isOpen={rejectOpen}
+        onOpenChange={setRejectOpen}
+        title="Reject this proof"
+        description="The client sees your reason word for word and can upload a new receipt."
+      >
+        <div className="space-y-4">
+          <AppTextArea
+            label="Reason"
+            value={rejectReason}
+            onChange={(event) => setRejectReason(event.target.value)}
+            placeholder="E.g the receipt doesn't match the invoice total"
+          />
+          <Button
+            variant="destructive"
+            className="h-11 w-full rounded-lg text-sm"
+            disabled={rejectReason.trim().length < 5}
+            isLoading={isRejecting}
+            onClick={() => rejectProof({ reason: rejectReason.trim() })}
+          >
+            Reject proof
           </Button>
         </div>
       </AppDialog>

@@ -691,6 +691,36 @@ export const HIRE_ENGAGEMENT_LABELS: Record<string, string> = {
   CONTRACT: "Contract",
 };
 
+export const HIRE_PACKAGE_OPTIONS = [
+  {
+    value: "PRIVATE",
+    label: "Private package",
+    blurb: "A dedicated driver working directly for you or your family",
+  },
+  {
+    value: "SUBSCRIPTION",
+    label: "Subscription package",
+    blurb: "A driver on a fixed monthly plan you can renew or end",
+  },
+];
+
+export const WORK_SCHEDULE_OPTIONS = [
+  { value: "WEEKDAYS", label: "Weekdays (Mon – Fri)" },
+  { value: "WEEKDAYS_AND_SATURDAY", label: "Weekdays + Saturday" },
+  { value: "FULL_WEEK", label: "Full week (Mon – Sun)" },
+  { value: "CUSTOM", label: "Custom schedule" },
+];
+
+export const WORK_SCHEDULE_LABELS: Record<string, string> = Object.fromEntries(
+  WORK_SCHEDULE_OPTIONS.map((o) => [o.value, o.label]),
+);
+
+export const INSURANCE_COVER_OPTIONS = [
+  "Comprehensive",
+  "Third-party",
+  "None",
+].map((value) => ({ value, label: value }));
+
 export const prettifyEnum = (value: string) =>
   value
     .toLowerCase()

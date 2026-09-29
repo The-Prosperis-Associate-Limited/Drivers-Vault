@@ -2,9 +2,7 @@ import {
   BookOpen,
   BriefcaseBusiness,
   LayoutGrid,
-  ReceiptText,
   Settings,
-  WalletMinimal,
   type LucideIcon,
 } from "lucide-react";
 
@@ -14,16 +12,12 @@ export interface NavLink {
   icon: LucideIcon;
 }
 
+// Wallet and Transactions left the nav with the org-account payment pivot —
+// the routes still exist but nothing links to them.
 export const NAV_LINKS: NavLink[] = [
   { label: "Overview", href: "/dashboard", icon: LayoutGrid },
   { label: "My Hire", href: "/dashboard/my-hire", icon: BriefcaseBusiness },
   { label: "Request", href: "/dashboard/requests", icon: BookOpen },
-  { label: "Wallet", href: "/dashboard/wallet", icon: WalletMinimal },
-  {
-    label: "Transactions",
-    href: "/dashboard/transactions",
-    icon: ReceiptText,
-  },
 ];
 
 export const FOOTER_LINKS: NavLink[] = [

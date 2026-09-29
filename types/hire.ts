@@ -2,9 +2,21 @@ import type { DriverType } from "./driver";
 import type { EngagementType } from "./booking";
 
 export type HireRequestStatus =
-  "PENDING_REVIEW" | "INVOICED" | "PAID" | "DECLINED" | "CANCELLED";
+  | "PENDING_REVIEW"
+  | "INVOICED"
+  | "PAYMENT_REVIEW"
+  | "PAID"
+  | "DECLINED"
+  | "CANCELLED";
 
-export type HireInvoiceStatus = "UNPAID" | "PAID" | "VOID";
+export type HireInvoiceStatus = "UNPAID" | "PAYMENT_REVIEW" | "PAID" | "VOID";
+
+export type HirePackage = "PRIVATE" | "SUBSCRIPTION";
+
+export type WorkSchedule =
+  "WEEKDAYS" | "WEEKDAYS_AND_SATURDAY" | "FULL_WEEK" | "CUSTOM";
+
+export type HireTransmission = "AUTOMATIC" | "MANUAL" | "BOTH";
 
 export interface HireInvoice {
   id: string;
@@ -17,8 +29,18 @@ export interface HireInvoice {
   currency: string;
   status: HireInvoiceStatus;
   note: string | null;
+  proof_url: string | null;
+  proof_note: string | null;
+  proof_submitted_at: string | null;
+  proof_rejected_reason: string | null;
   paid_at: string | null;
   createdAt: string;
+}
+
+export interface PaymentAccount {
+  bank_name: string;
+  account_name: string;
+  account_number: string;
 }
 
 export interface HireRequestDriver {
@@ -63,17 +85,30 @@ export interface HireRequest {
   id: string;
   reference: string;
   clientId: string;
-  driverId: string;
+  driverId: string | null;
   engagement_type: EngagementType;
   starts_at: string;
   note: string | null;
   status: HireRequestStatus;
+  package: HirePackage;
+  duration_months: number | null;
+  drivers_needed: number;
+  driver_type: DriverType | null;
+  schedule: WorkSchedule;
+  resumption_time: string | null;
+  closing_time: string | null;
+  transmission: HireTransmission | null;
+  insurance_cover: string | null;
+  provides_accommodation: boolean;
+  state: string | null;
+  nearest_area: string | null;
   declined_reason: string | null;
   paid_at: string | null;
   createdAt: string;
-  driver: HireRequestDriver;
+  driver: HireRequestDriver | null;
   client?: HireRequestClient;
   invoice: HireInvoice | null;
   booking?: { id: string; reference: string; status: string } | null;
   combo_pack?: ComboPack | null;
+  payment_account?: PaymentAccount | null;
 }

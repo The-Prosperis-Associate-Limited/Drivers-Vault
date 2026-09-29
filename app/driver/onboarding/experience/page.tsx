@@ -98,7 +98,7 @@ export default function ExperienceStep() {
           control={control}
           name="transmission"
           errors={errors}
-          label="What can you drive?"
+          label="Vehicle transmission"
           placeholder="E.g Automatic"
           options={TRANSMISSION_OPTIONS}
         />

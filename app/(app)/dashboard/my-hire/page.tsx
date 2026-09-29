@@ -6,10 +6,12 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { HireRow } from "@/components/hires/hire-row";
 import { HireRequestRow } from "@/components/hires/hire-request-row";
 import { Pagination } from "@/components/shared/pagination";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetData } from "@/hooks/use-get-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
-import { BriefcaseBusiness, FileClock } from "lucide-react";
+import { BriefcaseBusiness, FileClock, Plus } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import type { PaginatedResponse } from "@/types/response";
 import type { HireRequest } from "@/types/hire";
@@ -40,12 +42,25 @@ export default function MyHire() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <AppText type="h2" className="text-xl font-bold md:text-2xl">
-        My Hire
-      </AppText>
-      <AppText type="subtitle" className="text-muted-foreground mt-1 text-sm">
-        Keep track of the drivers and staff you've brought on board.
-      </AppText>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <AppText type="h2" className="text-xl font-bold md:text-2xl">
+            My Hire
+          </AppText>
+          <AppText
+            type="subtitle"
+            className="text-muted-foreground mt-1 text-sm"
+          >
+            Keep track of the drivers and staff you've brought on board.
+          </AppText>
+        </div>
+        <Button asChild className="h-10 rounded-lg px-4 text-sm">
+          <Link href="/dashboard/my-hire/request">
+            <Plus className="h-4 w-4" />
+            Request a driver
+          </Link>
+        </Button>
+      </div>
 
       <div className="border-border mt-5 border-t" />
 

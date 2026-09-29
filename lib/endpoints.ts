@@ -383,7 +383,7 @@ export const API_ENDPOINTS = {
     }) =>
       `/client/hire-requests?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
     detail: (reference: string) => `/client/hire-requests/${reference}`,
-    pay: (reference: string) => `/client/hire-requests/${reference}/pay`,
+    proof: (reference: string) => `/client/hire-requests/${reference}/proof`,
     cancel: (reference: string) => `/client/hire-requests/${reference}/cancel`,
   },
 
@@ -399,7 +399,12 @@ export const API_ENDPOINTS = {
     }) =>
       `/admin/hires?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
     detail: (reference: string) => `/admin/hires/${reference}`,
+    assign: (reference: string) => `/admin/hires/${reference}/assign`,
     invoice: (reference: string) => `/admin/hires/${reference}/invoice`,
+    confirmPayment: (reference: string) =>
+      `/admin/hires/${reference}/confirm-payment`,
+    rejectProof: (reference: string) =>
+      `/admin/hires/${reference}/reject-proof`,
     decline: (reference: string) => `/admin/hires/${reference}/decline`,
   },
 

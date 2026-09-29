@@ -27,6 +27,7 @@ const FILTERS: { value: Filter; label: string }[] = [
   { value: "ALL", label: "All" },
   { value: "PENDING_REVIEW", label: "Pending review" },
   { value: "INVOICED", label: "Invoiced" },
+  { value: "PAYMENT_REVIEW", label: "Payment review" },
   { value: "PAID", label: "Paid" },
   { value: "DECLINED", label: "Declined" },
   { value: "CANCELLED", label: "Cancelled" },

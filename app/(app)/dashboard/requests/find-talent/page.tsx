@@ -9,8 +9,10 @@ import { AppText } from "@/components/shared/app-text";
 import { BackLink } from "@/components/shared/back-link";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Pagination } from "@/components/shared/pagination";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SearchX } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { useDriverSearch } from "@/hooks/use-driver-search";
 
@@ -34,8 +36,8 @@ export default function FindTalent() {
         Find verified talent
       </AppText>
       <AppText type="subtitle" className="text-muted-foreground mt-1 text-sm">
-        Every profile below has passed Drivers Vault identity, licence and guarantor
-        checks. Filter by role, city and budget.
+        Every profile below has passed Drivers Vault identity, licence and
+        guarantor checks. Filter by role, city and budget.
       </AppText>
 
       <SearchPanel
@@ -45,6 +47,27 @@ export default function FindTalent() {
           setPage(1);
         }}
       />
+
+      <div className="bg-brand-soft/60 mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl px-5 py-4">
+        <div>
+          <AppText type="label" className="text-sm font-semibold">
+            Can't decide? Let us match you
+          </AppText>
+          <AppText
+            type="caption"
+            className="text-muted-foreground block text-xs"
+          >
+            Tell us what you need and our team picks a vetted driver for you.
+          </AppText>
+        </div>
+        <Button
+          asChild
+          variant="outline"
+          className="h-9 rounded-lg px-4 text-xs"
+        >
+          <Link href="/dashboard/my-hire/request">Request a driver</Link>
+        </Button>
+      </div>
 
       <AppText type="caption" className="text-muted-foreground mt-6 block">
         {total} {total === 1 ? "profile matches" : "profiles match"} your
