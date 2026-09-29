@@ -27,12 +27,18 @@ export const metadata: Metadata = {
       "Clear pay, fair terms, verified clients. Apply, get verified, and pick the driving jobs that suit you.",
     type: "website",
     siteName: "Drivers Vault",
+    url: "/drivers",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Drive on your terms. Earn what you're worth - Drivers Vault",
     description:
       "Clear pay, fair terms, verified clients. Pick the driving jobs that suit you.",
+    images: ["/og-image.png"],
+  },
+  alternates: {
+    canonical: "/drivers",
   },
 };
 

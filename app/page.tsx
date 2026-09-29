@@ -27,12 +27,18 @@ export const metadata: Metadata = {
       "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business - without agencies or guesswork.",
     type: "website",
     siteName: "Drivers Vault",
+    url: "/",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Drivers Vault - Drivers, verified before they reach you",
     description:
       "Hire a verified professional driver without agencies or guesswork.",
+    images: ["/og-image.png"],
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 
