@@ -47,7 +47,7 @@ export const TopNav = function ({ mobileTrigger }: Props) {
             onClick={() => setNotificationsOpen(true)}
             className="size-10"
           >
-            {/* The badge hangs off the icon's corner rather than sitting on it —
+            {/* The badge hangs off the icon's corner rather than sitting on it -
                 anchored to the icon, not the button, so it clears the glyph. */}
             <span className="relative inline-flex">
               <Bell className="h-[22px] w-[22px]" />

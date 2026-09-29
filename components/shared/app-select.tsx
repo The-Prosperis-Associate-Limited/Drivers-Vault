@@ -48,7 +48,7 @@ export const AppSelect = function ({
     o.label.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // Close on outside click — the list is portalled, so check both nodes.
+  // Close on outside click - the list is portalled, so check both nodes.
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (
@@ -65,7 +65,7 @@ export const AppSelect = function ({
 
   /*
     The list renders in a body portal with a fixed position measured from the
-    trigger — an overflow container (a dialog body, the marketplace hero) can
+    trigger - an overflow container (a dialog body, the marketplace hero) can
     therefore never clip it. Capture-phase scroll keeps it glued while any
     ancestor scrolls.
   */
@@ -166,7 +166,7 @@ export const AppSelect = function ({
           </div>
         </div>
 
-        {/* Dropdown — body portal, above the dialog's z-50. pointer-events-auto
+        {/* Dropdown - body portal, above the dialog's z-50. pointer-events-auto
             undoes the pointer lock a modal dialog puts on everything outside
             its subtree; stopping pointerdown propagation keeps the dialog from
             reading an option click as an outside dismissal. */}
@@ -193,7 +193,7 @@ export const AppSelect = function ({
                       key={option.value}
                       // preventDefault stops the focus steal; selection waits
                       // for click so the list is still mounted when the event
-                      // completes — unmounting on mousedown let the click land
+                      // completes - unmounting on mousedown let the click land
                       // on whatever input sat underneath and open it.
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => handleSelect(option)}

@@ -1,5 +1,5 @@
 /*
-  The query key IS the url — useGetData keys on it and useSubmitData refetches
+  The query key IS the url - useGetData keys on it and useSubmitData refetches
   that key on success. A url built inline in a component invalidates nothing, so
   every endpoint the app calls belongs here.
 */
@@ -206,7 +206,7 @@ export const API_ENDPOINTS = {
     comment: (id: string) => `/tickets/${id}/comments`,
   },
 
-  // The admin surface — /api/admin/*, documented in ../tegat-server/docs/admin-api.md.
+  // The admin surface - /api/admin/*, documented in ../tegat-server/docs/admin-api.md.
   adminDashboard: {
     stats: "/admin/dashboard/stats",
     growth: (period: "7d" | "14d" | "30d") =>

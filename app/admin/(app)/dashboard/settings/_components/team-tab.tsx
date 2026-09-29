@@ -191,7 +191,7 @@ export const TeamTab = function () {
                             ? formatRelativeTime(
                                 member.admin_profile.last_active_at,
                               )
-                            : "—"}
+                            : "-"}
                         </td>
                         <td className="py-3 text-right">
                           {!isSelf && (

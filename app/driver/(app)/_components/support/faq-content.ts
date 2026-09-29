@@ -8,7 +8,7 @@ interface FaqSection {
 
 /*
   Static copy, not a CMS. These answers describe how this app and the server
-  behave, so they belong beside the code that behaves that way — if verification
+  behave, so they belong beside the code that behaves that way - if verification
   or payouts change, this file changes in the same commit.
 */
 export const FAQ_SECTIONS: FaqSection[] = [
@@ -24,7 +24,7 @@ export const FAQ_SECTIONS: FaqSection[] = [
       {
         question: "My proof of address was rejected",
         answer:
-          "Open the verification centre from your dashboard. The reviewer's reason is shown against each document — fix only those and resubmit. The rest of your application stands, you do not start again.",
+          "Open the verification centre from your dashboard. The reviewer's reason is shown against each document - fix only those and resubmit. The rest of your application stands, you do not start again.",
       },
       {
         question: "How long does verification take?",

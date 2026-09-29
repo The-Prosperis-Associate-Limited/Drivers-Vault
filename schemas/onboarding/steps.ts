@@ -87,7 +87,7 @@ export const workExperienceSchema = z.object({
     .min(1, "Add at least one role"),
 });
 
-// One previous-employer reference and exactly one guarantor — the guarantor
+// One previous-employer reference and exactly one guarantor - the guarantor
 // must be a working professional, never a family member or friend.
 export const guarantorSchema = z.object({
   reference: z.object({

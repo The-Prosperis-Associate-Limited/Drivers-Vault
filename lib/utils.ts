@@ -44,12 +44,12 @@ export const ENV = {
   },
 } as const;
 
-// Only allow safe, relative, in-app paths — prevents open-redirect via callbackUrl
+// Only allow safe, relative, in-app paths - prevents open-redirect via callbackUrl
 export const isSafeCallback = function (url: string | null): url is string {
   return !!url && url.startsWith("/") && !url.startsWith("//");
 };
 
-// One codebase, three surfaces — everyone lands on their dashboard. The
+// One codebase, three surfaces - everyone lands on their dashboard. The
 // onboarding wizards are prompts reached from there, never a gate after auth.
 export const handleSigninRedirect = function (role: string) {
   if (role === "DRIVER") return "/driver/dashboard";
@@ -59,7 +59,7 @@ export const handleSigninRedirect = function (role: string) {
 };
 
 /*
-================= NOTE: onboarding — the step order the wizard runs in. The
+================= NOTE: onboarding - the step order the wizard runs in. The
 server returns onboarding_step and never moves it backwards, so this is only
 used to turn that value into a route.
 */
@@ -112,7 +112,7 @@ export const ONBOARDING_STEPS: {
 ];
 
 /*
-  One set per step, rotated under the card. They are step-specific on purpose —
+  One set per step, rotated under the card. They are step-specific on purpose -
   a single global tip ends up wrong on most screens, which is how the wizard
   came to advertise a role question it never asks. Every line here has to be
   true of what the server actually does; nothing invented to fill a slot.
@@ -120,12 +120,12 @@ export const ONBOARDING_STEPS: {
 export const ONBOARDING_TIPS: Record<OnboardingStep, string[]> = {
   PERSONAL_INFORMATION: [
     "Each step is saved as you finish it, so you can stop here and pick up where you left off.",
-    "Enter your name exactly as it appears on your ID — a reviewer checks it against your documents.",
+    "Enter your name exactly as it appears on your ID - a reviewer checks it against your documents.",
     "The state you pick is where clients will find you once you're verified.",
   ],
   EXPERIENCE: [
     "Your driver type is one of the filters clients search by.",
-    "Add every licence class you hold — each one widens the jobs you match.",
+    "Add every licence class you hold - each one widens the jobs you match.",
     "Your licence needs at least a year left before it expires.",
   ],
   ACADEMIC_QUALIFICATION: [
@@ -134,24 +134,24 @@ export const ONBOARDING_TIPS: Record<OnboardingStep, string[]> = {
   ],
   WORK_EXPERIENCE: [
     "Still in a role? Mark it as ongoing instead of setting an end date.",
-    "Add as many roles as you like — you can remove any of them later.",
+    "Add as many roles as you like - you can remove any of them later.",
   ],
   GUARANTORS: [
-    "Your reference should be a previous employer — someone you have actually driven for.",
+    "Your reference should be a previous employer - someone you have actually driven for.",
     "Your guarantor must be a working professional: a civil servant (grade level 8+) or a business owner. Family and friends are not accepted.",
     "A guarantor needs their own passport photo and NIN slip, so pick someone who can send you both.",
   ],
   ADDITIONAL_INFORMATION: [
-    "Every field here is optional — skip it and your submission still goes through.",
+    "Every field here is optional - skip it and your submission still goes through.",
     "You can come back and fill this in at any time.",
   ],
   DOCUMENTS: [
     "Three documents are required: your NIN slip, a passport photo and your driver's licence.",
-    "Photograph documents flat and in good light — a reviewer has to read every detail.",
+    "Photograph documents flat and in good light - a reviewer has to read every detail.",
     "If one is turned down you'll get the reviewer's reason, and you only replace that one.",
   ],
   REVIEW: [
-    "You can edit any section from here — it won't send you back to the start.",
+    "You can edit any section from here - it won't send you back to the start.",
     "Verification takes 24-48 hours once you submit.",
     "Resubmitting sends every document back to the queue, including ones already approved.",
   ],
@@ -173,7 +173,7 @@ export const getOnboardingProgress = function (
 };
 
 /*
-================= NOTE: money — the API returns integers in minor units plus a
+================= NOTE: money - the API returns integers in minor units plus a
 currency code. Format at the edge, never compute in major units.
 */
 
@@ -207,7 +207,7 @@ export const toMinorUnits = (amount: number) => Math.round(amount * 100);
 export const toMajorUnits = (minor: number) => minor / 100;
 
 /*
-================= NOTE: verification — three of the four statuses render a
+================= NOTE: verification - three of the four statuses render a
 different dashboard, so the copy lives here rather than inside each screen.
 */
 
@@ -238,7 +238,7 @@ export const VERIFICATION_COPY: Record<
 };
 
 /*
-================= NOTE: bookings — the status machine lives on the server, this
+================= NOTE: bookings - the status machine lives on the server, this
 is only how each status is shown.
 */
 
@@ -309,8 +309,8 @@ export const formatWorkingHours = function (
   const spansDays = format(end, "yyyy-MM-dd") !== format(start, "yyyy-MM-dd");
 
   return spansDays
-    ? `${day} ${from} – ${format(end, "EEE HH:mm")}`
-    : `${day} · ${from} – ${format(end, "HH:mm")}`;
+    ? `${day} ${from} - ${format(end, "EEE HH:mm")}`
+    : `${day} · ${from} - ${format(end, "HH:mm")}`;
 };
 
 export const BOOKING_STATUS_LABELS: Record<BookingStatus, string> = {
@@ -324,7 +324,7 @@ export const BOOKING_STATUS_LABELS: Record<BookingStatus, string> = {
 };
 
 /*
-================= NOTE: notifications — icon and colour per server type
+================= NOTE: notifications - icon and colour per server type
 */
 
 export const TYPE_CONFIG: Record<
@@ -390,7 +390,7 @@ export const formatTime = (date: string | Date) =>
 /*
 ================= NOTE: course video. Modules hold whatever url the course was
 authored with. A recognised YouTube url yields an id, which the player hands to
-YouTube's IFrame API — that API is the only way to read playback position back
+YouTube's IFrame API - that API is the only way to read playback position back
 out of an embed. Anything else is a direct file the browser decodes in a <video>.
 Both report position the same way, so a module moving from YouTube to Cloudinary
 needs no other change. Remove nothing here when the real uploads land.
@@ -420,7 +420,7 @@ export const getInitials = function (
 
 /*
 ================= NOTE: the option lists the onboarding selects render. These
-mirror the server enums exactly — a value that is not in the server enum is a
+mirror the server enums exactly - a value that is not in the server enum is a
 400 the driver cannot fix.
 */
 
@@ -441,7 +441,7 @@ export const LICENCE_CLASS_OPTIONS = [
     value: "C",
     label: "Class C",
     description:
-      "Commercial light vehicles under 3 tonnes — taxis, small buses",
+      "Commercial light vehicles under 3 tonnes - taxis, small buses",
   },
   {
     value: "D",
@@ -457,7 +457,7 @@ export const LICENCE_CLASS_OPTIONS = [
   {
     value: "G",
     label: "Class G",
-    description: "Articulated vehicles — trailers and tankers",
+    description: "Articulated vehicles - trailers and tankers",
   },
   {
     value: "H",
@@ -474,7 +474,7 @@ export const LICENCE_CLASS_OPTIONS = [
 export const TRANSMISSION_OPTIONS = [
   { value: "AUTOMATIC", label: "Automatic" },
   { value: "MANUAL", label: "Manual" },
-  { value: "BOTH", label: "Both — automatic and manual" },
+  { value: "BOTH", label: "Both - automatic and manual" },
 ];
 
 export const EXPERIENCE_YEARS_OPTIONS = [
@@ -509,7 +509,7 @@ export const ACADEMIC_LEVEL_OPTIONS = [
   { value: "PHD", label: "PhD" },
 ];
 
-// Family and friends are not acceptable guarantors — the guarantor must be a
+// Family and friends are not acceptable guarantors - the guarantor must be a
 // working professional (civil servant grade level 8+, or a business owner).
 export const GUARANTOR_RELATIONSHIP_OPTIONS = [
   { value: "FORMER_EMPLOYER", label: "Former Employer" },
@@ -584,7 +584,7 @@ export const TICKET_CATEGORIES = [
 ];
 
 /*
-================= NOTE: the client surface — wizard steps, search options and
+================= NOTE: the client surface - wizard steps, search options and
 display helpers. The option values mirror the server enums exactly; a value
 outside them is a 400 the client cannot fix.
 */
@@ -639,8 +639,8 @@ export const DRIVERS_NEEDED_OPTIONS: {
   label: string;
 }[] = [
   { value: "ONE", label: "1" },
-  { value: "TWO_TO_FIVE", label: "2–5" },
-  { value: "SIX_TO_FIFTEEN", label: "6–15" },
+  { value: "TWO_TO_FIVE", label: "2-5" },
+  { value: "SIX_TO_FIFTEEN", label: "6-15" },
   { value: "SIXTEEN_PLUS", label: "16+" },
 ];
 
@@ -663,13 +663,13 @@ export const HIRING_TIMELINE_OPTIONS: {
 ];
 
 export const BUDGET_RANGE_OPTIONS: { value: BudgetRange; label: string }[] = [
-  { value: "RANGE_150_200K", label: "₦150k – ₦200k / month" },
-  { value: "RANGE_201_250K", label: "₦201k – ₦250k / month" },
-  { value: "RANGE_251_300K", label: "₦251k – ₦300k / month" },
+  { value: "RANGE_150_200K", label: "₦150k - ₦200k / month" },
+  { value: "RANGE_201_250K", label: "₦201k - ₦250k / month" },
+  { value: "RANGE_251_300K", label: "₦251k - ₦300k / month" },
   { value: "RANGE_301K_PLUS", label: "₦301k / per month and above" },
 ];
 
-// Kobo bounds per budget option — what the search actually sends. Kept beside
+// Kobo bounds per budget option - what the search actually sends. Kept beside
 // the labels so a new range is one entry, not two edits.
 export const BUDGET_RANGE_BOUNDS: Record<
   BudgetRange,
@@ -681,7 +681,7 @@ export const BUDGET_RANGE_BOUNDS: Record<
   RANGE_301K_PLUS: { min: 30_100_000 },
 };
 
-// The hire screens say "Full-time" where the booking model says MONTHLY — the
+// The hire screens say "Full-time" where the booking model says MONTHLY - the
 // driver screens keep the literal engagement labels above.
 export const HIRE_ENGAGEMENT_LABELS: Record<string, string> = {
   ONE_OFF: "One-off",
@@ -705,9 +705,9 @@ export const HIRE_PACKAGE_OPTIONS = [
 ];
 
 export const WORK_SCHEDULE_OPTIONS = [
-  { value: "WEEKDAYS", label: "Weekdays (Mon – Fri)" },
+  { value: "WEEKDAYS", label: "Weekdays (Mon - Fri)" },
   { value: "WEEKDAYS_AND_SATURDAY", label: "Weekdays + Saturday" },
-  { value: "FULL_WEEK", label: "Full week (Mon – Sun)" },
+  { value: "FULL_WEEK", label: "Full week (Mon - Sun)" },
   { value: "CUSTOM", label: "Custom schedule" },
 ];
 
@@ -736,7 +736,7 @@ export const driverTypeLabel = function (type?: string | null) {
   );
 };
 
-// ₦405k — the overview stat card format. Falls back to the full figure below
+// ₦405k - the overview stat card format. Falls back to the full figure below
 // four digits, where compacting saves nothing.
 export const formatMoneyCompact = function (
   minor: number | undefined,

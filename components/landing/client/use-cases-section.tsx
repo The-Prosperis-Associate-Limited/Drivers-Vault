@@ -15,7 +15,7 @@ const USE_CASES = [
   {
     icon: Briefcase,
     title: "Business Travel",
-    body: "Reliable transport for executives, teams, and visiting partners—on schedule, every time.",
+    body: "Reliable transport for executives, teams, and visiting partners-on schedule, every time.",
   },
   {
     icon: CalendarClock,

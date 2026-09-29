@@ -22,15 +22,15 @@ export const metadata: Metadata = {
     "private driver Lagos",
   ],
   openGraph: {
-    title: "Drivers Vault — Drivers, verified before they reach you",
+    title: "Drivers Vault - Drivers, verified before they reach you",
     description:
-      "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business — without agencies or guesswork.",
+      "Hire a verified professional driver for a single trip, a recurring schedule, or your whole business - without agencies or guesswork.",
     type: "website",
     siteName: "Drivers Vault",
   },
   twitter: {
     card: "summary",
-    title: "Drivers Vault — Drivers, verified before they reach you",
+    title: "Drivers Vault - Drivers, verified before they reach you",
     description:
       "Hire a verified professional driver without agencies or guesswork.",
   },
@@ -56,7 +56,7 @@ export default function Home() {
             {
               icon: ReceiptText,
               title: "Transparent pricing",
-              body: "Know the cost upfront—no hidden fees, ever.",
+              body: "Know the cost upfront-no hidden fees, ever.",
             },
             {
               icon: MapPin,
@@ -83,7 +83,7 @@ export default function Home() {
             },
             {
               title: "Make payment",
-              body: "Pay securely from your wallet or by bank transfer—no hidden fees, ever.",
+              body: "Pay securely from your wallet or by bank transfer-no hidden fees, ever.",
             },
           ]}
         />
@@ -123,17 +123,17 @@ export default function Home() {
             {
               question: "How do I book a driver?",
               answer:
-                "Create an account, tell us where you're going and when, and browse verified drivers matched to your route and budget. Send a request and the driver confirms—usually within a day.",
+                "Create an account, tell us where you're going and when, and browse verified drivers matched to your route and budget. Send a request and the driver confirms-usually within a day.",
             },
             {
               question: "What does it cost?",
               answer:
-                "Each driver sets a clear monthly rate you see before you request them. You pay from your Drivers Vault wallet or by bank transfer, with the platform fee itemised upfront—no hidden charges.",
+                "Each driver sets a clear monthly rate you see before you request them. You pay from your Drivers Vault wallet or by bank transfer, with the platform fee itemised upfront-no hidden charges.",
             },
             {
               question: "Can I book recurring trips?",
               answer:
-                "Yes. Hire for a single trip, a weekly schedule, or a full-time monthly engagement—the same vetted driver handles your route every time.",
+                "Yes. Hire for a single trip, a weekly schedule, or a full-time monthly engagement-the same vetted driver handles your route every time.",
             },
             {
               question: "What if my plans change?",
@@ -156,7 +156,7 @@ export default function Home() {
               driver today
             </>
           }
-          body="Tell Drivers Vault what you need and get matched with a verified professional—usually within a day."
+          body="Tell Drivers Vault what you need and get matched with a verified professional-usually within a day."
           ctaLabel="Start hiring"
           ctaHref="/auth/signup"
         />

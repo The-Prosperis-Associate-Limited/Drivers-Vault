@@ -76,7 +76,7 @@ function CoursePlayer() {
     !!activeModule && completedModuleIds.has(activeModule.id);
 
   /*
-    Resume where the driver stopped, unless they already finished the module —
+    Resume where the driver stopped, unless they already finished the module -
     dropping someone back at 94% of something they have completed is worse than
     starting it over.
   */

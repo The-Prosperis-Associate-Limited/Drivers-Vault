@@ -110,7 +110,7 @@ function SearchResults() {
             <EmptyState
               icon={SearchX}
               title="Ohh no, we couldn't find a driver that suits your need."
-              description="Loosen a filter or two — or search a nearby state."
+              description="Loosen a filter or two - or search a nearby state."
               className="py-24"
             />
           ) : (
@@ -134,7 +134,7 @@ function SearchResults() {
           )}
         </div>
 
-        {/* Decorative below lg it would push the results off screen — drop it. */}
+        {/* Decorative below lg it would push the results off screen - drop it. */}
         <div className="hidden lg:block">
           <ResultsMap key={center.join(",")} center={center} />
         </div>

@@ -27,7 +27,7 @@ const ENGAGEMENT_OPTIONS = [
 interface Props {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  // The list url currently on screen — creating a request refetches it.
+  // The list url currently on screen - creating a request refetches it.
   listUrl: string;
 }
 
@@ -111,7 +111,7 @@ export const CreateRequestDialog = function ({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title="Post a request"
-      description="Tell drivers what you need — matched profiles see it and apply."
+      description="Tell drivers what you need - matched profiles see it and apply."
       width="520px"
       isSubmitting={isPending}
     >
@@ -177,7 +177,7 @@ export const CreateRequestDialog = function ({
           name="description"
           errors={errors}
           label="Description"
-          placeholder="Routes, schedule, vehicle — anything a driver should know before applying."
+          placeholder="Routes, schedule, vehicle - anything a driver should know before applying."
           rows={4}
         />
 

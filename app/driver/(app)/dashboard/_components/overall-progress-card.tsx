@@ -13,7 +13,7 @@ interface Props {
 }
 
 /*
-  The percentage is how far through onboarding the driver is — the only progress
+  The percentage is how far through onboarding the driver is - the only progress
   figure the server actually reports. Once the application is in, their part is
   done and the bar sits full while the copy explains that review is what is left.
 */
@@ -23,7 +23,7 @@ const COPY: Record<DriverVerificationStatus, string> = {
   PENDING:
     "Application submitted. Your profile stays private and unsearchable until identity, licence and criminal-record checks are complete.",
   REJECTED:
-    "Two documents need another look. Fix them and resubmit — the rest of your application stands.",
+    "Two documents need another look. Fix them and resubmit - the rest of your application stands.",
   APPROVED: "",
 };
 

@@ -32,7 +32,7 @@ interface Props {
   rateCurrency?: string;
 }
 
-// A brokered hire is an ongoing engagement — one-off trips go through requests.
+// A brokered hire is an ongoing engagement - one-off trips go through requests.
 const ENGAGEMENT_OPTIONS = [
   { value: "MONTHLY", label: "Full-time (monthly)" },
   { value: "CONTRACT", label: "Contract" },
@@ -64,7 +64,7 @@ export const HireRequestDialog = function ({
     APIResponse<HireRequest>
   >({
     url: API_ENDPOINTS.hireRequests.create,
-    onSuccessMessage: "Request sent — we'll review it and send your invoice",
+    onSuccessMessage: "Request sent - we'll review it and send your invoice",
     onSuccess: (response) => {
       onOpenChange(false);
       router.push(`/dashboard/my-hire/requests/${response.data.reference}`);
@@ -76,7 +76,7 @@ export const HireRequestDialog = function ({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title={`Hire ${driverName}`}
-      description="Tell us when you need them. Our team reviews every hire and sends you an invoice — you pay nothing now."
+      description="Tell us when you need them. Our team reviews every hire and sends you an invoice - you pay nothing now."
     >
       <form
         onSubmit={handleSubmit((data) =>

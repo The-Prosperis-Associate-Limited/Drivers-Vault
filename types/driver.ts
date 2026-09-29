@@ -20,7 +20,7 @@ export type DriverType =
   | "RIDE_HAILING_DRIVER"
   | "HEAVY_DUTY_DRIVER";
 
-// FRSC licence classes — no class I exists.
+// FRSC licence classes - no class I exists.
 export type LicenceClass = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "J";
 
 export type Transmission = "AUTOMATIC" | "MANUAL" | "BOTH";
@@ -163,7 +163,7 @@ export interface TrustScoreActivity {
 }
 
 // The server sends points and the raw counts behind them. The sentences under
-// each bar are composed here — the weights and the numbers stay server-side.
+// each bar are composed here - the weights and the numbers stay server-side.
 export interface TrustScoreBreakdown {
   total: number;
   percentile: number | null;
@@ -186,7 +186,7 @@ export interface TrustScoreBreakdown {
 }
 
 /*
-================= NOTE: the client-surface shapes — what the marketplace search
+================= NOTE: the client-surface shapes - what the marketplace search
 and the public driver profile return. Contact details never appear here.
 */
 

@@ -16,7 +16,7 @@ import type { PaginatedResponse } from "@/types/response";
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  // The server writes driver actionUrls as /dashboard/... — on the driver
+  // The server writes driver actionUrls as /dashboard/... - on the driver
   // surface those live under /driver, so its top nav passes a prefix.
   actionUrlPrefix?: string;
 }

@@ -32,7 +32,7 @@ export const OnboardingShell = function ({
   const router = useRouter();
   const { profile } = useGetProfile();
 
-  // Skipping is completing — the wizard is a prompt, not a gate, and it must
+  // Skipping is completing - the wizard is a prompt, not a gate, and it must
   // not reappear on every sign-in.
   const { complete, isPending: isSkipping } = useCompleteOnboarding({
     silent: true,

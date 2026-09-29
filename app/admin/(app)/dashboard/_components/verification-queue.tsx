@@ -46,7 +46,7 @@ export const VerificationQueue = function () {
     const approved = documents.filter(
       (document) => document.status === "APPROVED",
     ).length;
-    return documents.length ? `${approved}/${documents.length} verified` : "—";
+    return documents.length ? `${approved}/${documents.length} verified` : "-";
   };
 
   return (
@@ -122,7 +122,7 @@ export const VerificationQueue = function () {
                         {driverTypeLabel(row.user.driver_profile?.driver_type)}
                       </td>
                       <td className="text-muted-foreground py-3 pr-4">
-                        {row.submitted_at ? formatDate(row.submitted_at) : "—"}
+                        {row.submitted_at ? formatDate(row.submitted_at) : "-"}
                       </td>
                       <td className="text-muted-foreground py-3 pr-4">
                         {documentsSummary(row)}
@@ -177,7 +177,7 @@ export const VerificationQueue = function () {
                     </p>
                     <p>
                       Applied{" "}
-                      {row.submitted_at ? formatDate(row.submitted_at) : "—"} ·{" "}
+                      {row.submitted_at ? formatDate(row.submitted_at) : "-"} ·{" "}
                       {documentsSummary(row)}
                     </p>
                   </div>

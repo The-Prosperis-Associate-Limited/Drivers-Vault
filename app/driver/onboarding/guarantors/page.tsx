@@ -44,7 +44,7 @@ export default function GuarantorsStep() {
   useEffect(() => {
     if (!profile) return;
 
-    // Only the first saved guarantor carries over — the step now takes exactly one.
+    // Only the first saved guarantor carries over - the step now takes exactly one.
     const saved = profile.guarantors[0];
 
     reset({
@@ -92,7 +92,7 @@ export default function GuarantorsStep() {
         <div className="border-border space-y-4 rounded-xl border p-4">
           <div>
             <AppText type="label" className="block text-sm font-semibold">
-              Reference — previous employer
+              Reference - previous employer
             </AppText>
             <AppText
               type="caption"
@@ -135,7 +135,7 @@ export default function GuarantorsStep() {
               type="caption"
               className="text-muted-foreground mt-1 block text-xs"
             >
-              Must be a working professional — a civil servant (grade level 8 or
+              Must be a working professional - a civil servant (grade level 8 or
               above) or a business owner. Family members and friends are not
               accepted.
             </AppText>

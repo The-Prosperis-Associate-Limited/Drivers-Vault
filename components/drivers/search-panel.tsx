@@ -23,7 +23,7 @@ interface Props {
   onSearch?: (filters: SearchFilters) => void;
 }
 
-// The marketplace is Nigeria-only for now — "Verified hiring for Nigeria".
+// The marketplace is Nigeria-only for now - "Verified hiring for Nigeria".
 const NIGERIA = "NG";
 
 export const SearchPanel = function ({

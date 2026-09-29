@@ -53,7 +53,7 @@ export const DriverProfileDialog = function ({
   const profile = data?.data;
   const reviews = reviewsData?.data ?? [];
 
-  // Same type, same state — the two most alike drivers the marketplace has.
+  // Same type, same state - the two most alike drivers the marketplace has.
   const { data: similarData } = useGetData<
     PaginatedResponse<DriverSearchResult>
   >({
@@ -90,14 +90,14 @@ export const DriverProfileDialog = function ({
     {
       icon: Clock,
       label: "On-Time Rate",
-      value: profile.on_time_rate === null ? "—" : `${profile.on_time_rate}%`,
+      value: profile.on_time_rate === null ? "-" : `${profile.on_time_rate}%`,
     },
     {
       icon: Clock,
       label: "Response Time",
       value:
         profile.response_time_minutes === null
-          ? "—"
+          ? "-"
           : profile.response_time_minutes < 60
             ? `${profile.response_time_minutes} mins`
             : `${Math.round(profile.response_time_minutes / 60)} hrs`,

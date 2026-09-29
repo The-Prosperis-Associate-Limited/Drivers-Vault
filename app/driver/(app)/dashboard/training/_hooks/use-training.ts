@@ -90,7 +90,7 @@ export const useEnrollInCourse = function (slug: string) {
 */
 /*
   The autosave path. Fires every few seconds while a module plays, so it must not
-  toast and must not refetch the course — refetching would remount the player and
+  toast and must not refetch the course - refetching would remount the player and
   throw the driver back to the start of the video.
 */
 export const useSavePlaybackPosition = function (slug: string) {

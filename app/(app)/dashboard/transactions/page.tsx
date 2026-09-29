@@ -24,7 +24,7 @@ const staffName = (transaction: WalletTransaction) =>
     transaction.booking?.driver?.last_name,
   ]
     .filter(Boolean)
-    .join(" ") || "—";
+    .join(" ") || "-";
 
 // A payment leg is settled the moment it is written, so PAID_OUT is the only
 // status a charge can carry today; PENDING covers whatever a future scheduler adds.
@@ -181,7 +181,7 @@ export default function TransactionsPage() {
             isLoading={isFetching}
             className="px-5 pb-5"
           >
-            {/* A five-column table is unreadable on a phone — rows become cards below md. */}
+            {/* A five-column table is unreadable on a phone - rows become cards below md. */}
             <div className="hidden md:block">
               <table className="w-full text-sm">
                 <thead>

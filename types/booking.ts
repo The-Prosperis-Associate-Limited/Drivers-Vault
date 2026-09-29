@@ -64,7 +64,7 @@ export interface JobRequestSummary {
   open: number;
   accepted: number;
   declined: number;
-  // Null until a request has actually closed — a driver nobody has asked yet
+  // Null until a request has actually closed - a driver nobody has asked yet
   // has no record, and 0% would read as a bad one.
   response_rate: number | null;
 }
@@ -86,7 +86,7 @@ export interface DashboardStats {
 }
 
 /*
-================= NOTE: the client-surface shapes — hires, the hire detail and
+================= NOTE: the client-surface shapes - hires, the hire detail and
 the overview payload.
 */
 

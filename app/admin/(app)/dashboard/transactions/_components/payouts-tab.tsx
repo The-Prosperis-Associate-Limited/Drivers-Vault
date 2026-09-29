@@ -82,8 +82,8 @@ export const PayoutsTab = function () {
           personName(row.user),
           formatMoney(row.amount_minor, row.currency),
           row.status,
-          row.bankAccount?.bank_name ?? "—",
-          row.bankAccount?.account_number ?? "—",
+          row.bankAccount?.bank_name ?? "-",
+          row.bankAccount?.account_number ?? "-",
           formatDate(row.createdAt),
         ],
       ],
@@ -164,7 +164,7 @@ export const PayoutsTab = function () {
                       <td className="text-muted-foreground py-3 pr-4">
                         {row.bankAccount
                           ? `${row.bankAccount.bank_name} ·· ${row.bankAccount.account_number.slice(-4)}`
-                          : "—"}
+                          : "-"}
                       </td>
                       <td className="py-3 pr-4 font-semibold">
                         {formatMoney(row.amount_minor, row.currency)}
@@ -249,8 +249,8 @@ export const PayoutsTab = function () {
               label="Bank"
               value={
                 viewing.bankAccount
-                  ? `${viewing.bankAccount.bank_name} — ${viewing.bankAccount.account_name}`
-                  : "—"
+                  ? `${viewing.bankAccount.bank_name} - ${viewing.bankAccount.account_name}`
+                  : "-"
               }
             />
             <DetailRow
@@ -258,7 +258,7 @@ export const PayoutsTab = function () {
               value={
                 viewing.bankAccount
                   ? `·· ${viewing.bankAccount.account_number.slice(-4)}`
-                  : "—"
+                  : "-"
               }
             />
             <DetailRow
@@ -283,7 +283,7 @@ export const PayoutsTab = function () {
             ? `Release ${formatMoney(paying.amount_minor, paying.currency)}?`
             : ""
         }
-        description="Marks the payout as paid — the driver's wallet debit becomes final and they are notified."
+        description="Marks the payout as paid - the driver's wallet debit becomes final and they are notified."
         confirmLabel="Release Funds"
         isLoading={isSettling}
         onConfirm={() =>
@@ -300,7 +300,7 @@ export const PayoutsTab = function () {
           }
         }}
         title="Mark payout as failed"
-        description="The wallet debit is reversed exactly as a provider failure would — the driver keeps the money."
+        description="The wallet debit is reversed exactly as a provider failure would - the driver keeps the money."
         width="480px"
         dialogFooter={
           <div className="flex w-full justify-end gap-3">

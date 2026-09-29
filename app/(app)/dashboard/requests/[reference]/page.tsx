@@ -113,7 +113,7 @@ export default function RequestMatches({
               <EmptyState
                 icon={SearchX}
                 title="No matches yet"
-                description="No verified driver fits these criteria right now — new drivers are verified every week."
+                description="No verified driver fits these criteria right now - new drivers are verified every week."
                 className="mt-6"
               />
             ) : (

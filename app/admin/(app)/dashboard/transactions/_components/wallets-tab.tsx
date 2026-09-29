@@ -13,7 +13,7 @@ import { useState } from "react";
 import type { PaginatedResponse } from "@/types/response";
 import type { ClientWalletRow } from "@/types/admin";
 
-// Balance state stands in for the mockup's wallet status column — funded vs
+// Balance state stands in for the mockup's wallet status column - funded vs
 // low balance is a threshold, not a stored flag.
 const LOW_BALANCE_MINOR = 5000000;
 

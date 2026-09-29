@@ -9,7 +9,7 @@ interface Props {
   y?: number;
 }
 
-// One scroll-reveal used across landing sections and auth shells — animating
+// One scroll-reveal used across landing sections and auth shells - animating
 // here animates every call site.
 export const Reveal = function ({
   children,

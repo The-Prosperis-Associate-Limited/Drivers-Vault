@@ -63,7 +63,7 @@ export default function AdditionalInformationStep() {
     >
       <StepHeader
         title="Additional information (optional)"
-        description="Share any additional details — totally optional"
+        description="Share any additional details - totally optional"
         progress={getOnboardingProgress("ADDITIONAL_INFORMATION")}
       />
 

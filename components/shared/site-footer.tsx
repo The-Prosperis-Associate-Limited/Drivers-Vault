@@ -20,7 +20,7 @@ export const SiteFooter = function () {
           </div>
           <p className="mt-4 text-sm leading-relaxed text-white/70">
             Vetted drivers and professional staff, verified against NIMC, FRSC
-            and police records — so you hire on trust, not guesswork.
+            and police records - so you hire on trust, not guesswork.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export const SiteFooter = function () {
           <p className="mt-4 text-sm text-white/70">
             Role announcements and hiring tips. No account needed.
           </p>
-          {/* Deliberately unwired — the server has no newsletter endpoint yet. */}
+          {/* Deliberately unwired - the server has no newsletter endpoint yet. */}
           <div className="mt-4 flex">
             <input
               type="email"

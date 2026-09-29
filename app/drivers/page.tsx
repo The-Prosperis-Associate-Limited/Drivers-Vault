@@ -11,7 +11,7 @@ import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { WhySection } from "@/components/landing/why-section";
 
 export const metadata: Metadata = {
-  title: "Drive with us — steady, fairly-paid work",
+  title: "Drive with us - steady, fairly-paid work",
   description:
     "Join a network that values professional drivers: see pay upfront, set your own schedule, and work with verified clients. Contract, private, corporate, executive and expatriate engagements.",
   keywords: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "become a driver",
   ],
   openGraph: {
-    title: "Drive on your terms. Earn what you're worth — Drivers Vault",
+    title: "Drive on your terms. Earn what you're worth - Drivers Vault",
     description:
       "Clear pay, fair terms, verified clients. Apply, get verified, and pick the driving jobs that suit you.",
     type: "website",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Drive on your terms. Earn what you're worth — Drivers Vault",
+    title: "Drive on your terms. Earn what you're worth - Drivers Vault",
     description:
       "Clear pay, fair terms, verified clients. Pick the driving jobs that suit you.",
   },
@@ -109,7 +109,7 @@ export default function DriversLanding() {
             },
             {
               quote:
-                "My trust score does the marketing for me — clients come to me now, not the other way round.",
+                "My trust score does the marketing for me - clients come to me now, not the other way round.",
               name: "David Okon",
               place: "Ibadan, Nigeria",
               avatar: "/landing/avatar-mike.png",
@@ -123,7 +123,7 @@ export default function DriversLanding() {
             {
               question: "How do I join the network?",
               answer:
-                "Create a free account, complete the onboarding steps — personal details, experience, guarantors and documents — then submit for verification. Once your identity, licence and record checks clear, your profile goes live to clients.",
+                "Create a free account, complete the onboarding steps - personal details, experience, guarantors and documents - then submit for verification. Once your identity, licence and record checks clear, your profile goes live to clients.",
             },
             {
               question: "How do I get paid?",
@@ -133,12 +133,12 @@ export default function DriversLanding() {
             {
               question: "Can I choose my own schedule?",
               answer:
-                "Yes. You set your availability and only receive requests that fit it — accept the jobs that suit you and decline the ones that don't, without penalty.",
+                "Yes. You set your availability and only receive requests that fit it - accept the jobs that suit you and decline the ones that don't, without penalty.",
             },
             {
               question: "What kinds of jobs are available?",
               answer:
-                "Contract, private, corporate, executive, spy and expatriate engagements — from one-off trips to full-time monthly placements.",
+                "Contract, private, corporate, executive, spy and expatriate engagements - from one-off trips to full-time monthly placements.",
             },
             {
               question: "What support do I get on a job?",

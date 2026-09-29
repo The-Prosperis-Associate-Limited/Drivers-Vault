@@ -44,7 +44,7 @@ export const FindDriverSection = function () {
           </Link>
         </Reveal>
 
-        {/* The real marketplace search — submitting lands on the results page
+        {/* The real marketplace search - submitting lands on the results page
             (through signin first for a visitor). */}
         <SearchPanel className="sm:grid-cols-1 lg:grid-cols-1" />
       </div>

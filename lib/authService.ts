@@ -4,7 +4,7 @@ import { accessTokenExpiration } from "./api";
 export const isProd = process.env.NODE_ENV === "production";
 export const COOKIE_DOMAIN = ".tegat.com";
 
-// A cookie whose Domain doesn't match the page's host is silently rejected —
+// A cookie whose Domain doesn't match the page's host is silently rejected -
 // on any other host (vercel.app previews) fall back to a host-only cookie.
 const cookieDomain = () =>
   isProd &&

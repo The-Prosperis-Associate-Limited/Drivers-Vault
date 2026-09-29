@@ -116,7 +116,7 @@ export const BankAccounts = function () {
             onChange={(event) => setAccountNumber(event.target.value)}
           />
 
-          {/* The name is never typed — the server confirms it with the bank, so
+          {/* The name is never typed - the server confirms it with the bank, so
               a typo cannot send money to a stranger. */}
           <AppText type="caption" className="text-muted-foreground block">
             We confirm the account name with your bank before saving it.

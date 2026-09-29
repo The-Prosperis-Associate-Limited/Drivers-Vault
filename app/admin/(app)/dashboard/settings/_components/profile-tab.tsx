@@ -75,7 +75,7 @@ export const ProfileTab = function () {
 
         <div className="min-w-0">
           <AppText type="h3" className="text-lg font-semibold">
-            {profile ? personName(profile) : "—"}
+            {profile ? personName(profile) : "-"}
           </AppText>
           <AppText type="caption" className="text-muted-foreground block">
             {profile?.email}

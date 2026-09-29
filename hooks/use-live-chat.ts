@@ -71,7 +71,7 @@ export const useLiveChat = function (isOpen: boolean) {
       });
 
       // A message on an unknown conversation means a new thread started
-      // elsewhere (or ours was created server-side) — resync.
+      // elsewhere (or ours was created server-side) - resync.
       if (!conversationId) refetch();
     };
 
@@ -82,7 +82,7 @@ export const useLiveChat = function (isOpen: boolean) {
 
     socket.on("new-message", onMessage);
     socket.on("chat-resolved", onResolved);
-    // A reconnect may have missed echoes — the DB is the source of truth.
+    // A reconnect may have missed echoes - the DB is the source of truth.
     socket.on("connect", refetch);
 
     return () => {
@@ -107,7 +107,7 @@ export const useLiveChat = function (isOpen: boolean) {
     silent: true,
     skipRefetch: true,
     onSuccess: (response) => {
-      // First message of a fresh thread — pick up the new conversation id.
+      // First message of a fresh thread - pick up the new conversation id.
       if (!conversationId) refetch();
       const message = response.data.message;
       seenIds.current.add(message.id);

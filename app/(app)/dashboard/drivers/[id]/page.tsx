@@ -29,7 +29,7 @@ import { use, useState } from "react";
 import type { DriverReview, PublicDriverProfile } from "@/types/driver";
 import type { APIResponse, PaginatedResponse } from "@/types/response";
 
-// The checks an APPROVED driver has actually passed — identity (NIN slip),
+// The checks an APPROVED driver has actually passed - identity (NIN slip),
 // licence and guarantor documents are what verification reviews. A police
 // record check does not exist yet, so it is not listed.
 const VERIFIED_CHECKS = ["NIMC identity", "FRSC licence", "Guarantor"];
@@ -232,7 +232,7 @@ export default function DriverProfilePage({
                       </AppText>
                     </span>
                     <AppText type="caption" className="text-muted-foreground">
-                      {new Date(experience.started_at).getFullYear()} –{" "}
+                      {new Date(experience.started_at).getFullYear()} -{" "}
                       {experience.is_current || !experience.ended_at
                         ? "date"
                         : new Date(experience.ended_at).getFullYear()}

@@ -66,8 +66,8 @@ export const OnboardingPromptCard = function ({ clientProfile }: Props) {
       />
 
       <AppText type="caption" className="mt-4 block text-white/90">
-        Tell us how you plan to hire — driver categories, capacity, location and
-        budget — so every match we surface is personalised from day one.
+        Tell us how you plan to hire - driver categories, capacity, location and
+        budget - so every match we surface is personalised from day one.
       </AppText>
 
       <Button

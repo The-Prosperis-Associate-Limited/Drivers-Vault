@@ -28,7 +28,7 @@ const CONFIG = {
   },
 } as const;
 
-// Read before clearAuthCookies wipes it — a signed-out driver or admin belongs
+// Read before clearAuthCookies wipes it - a signed-out driver or admin belongs
 // on their own signin, everyone else on the client one.
 const loginRouteForSession = () => {
   const sessionType = Cookies.get("session_type");

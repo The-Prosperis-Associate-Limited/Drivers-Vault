@@ -6,7 +6,7 @@ interface Props {
   className?: string;
 }
 
-// Renders exactly what the API returns — the score is never computed here.
+// Renders exactly what the API returns - the score is never computed here.
 export const TrustRing = function ({ score, size = 64, className }: Props) {
   const stroke = 4;
   const radius = (size - stroke) / 2;

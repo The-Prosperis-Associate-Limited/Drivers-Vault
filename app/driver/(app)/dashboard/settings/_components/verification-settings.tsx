@@ -44,7 +44,7 @@ export const VerificationSettings = function () {
             >
               <CircleAlert className="text-destructive mt-0.5 h-4 w-4 shrink-0" />
               <AppText type="caption" className="text-destructive">
-                {/* The reviewer wrote this for the driver — never reworded. */}
+                {/* The reviewer wrote this for the driver - never reworded. */}
                 {document.label}:{" "}
                 {document.reason ?? "Please re-upload this document."}
               </AppText>

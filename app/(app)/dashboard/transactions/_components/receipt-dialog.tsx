@@ -27,7 +27,7 @@ export const ReceiptDialog = function ({ transaction, onOpenChange }: Props) {
       transaction.booking?.driver?.last_name,
     ]
       .filter(Boolean)
-      .join(" ") || "—";
+      .join(" ") || "-";
 
   const rows = [
     { label: "Staff", value: staff },
@@ -35,11 +35,11 @@ export const ReceiptDialog = function ({ transaction, onOpenChange }: Props) {
       label: "Role",
       value: transaction.booking?.driver_type
         ? driverTypeLabel(transaction.booking.driver_type)
-        : "—",
+        : "-",
     },
     { label: "Date", value: formatDate(transaction.createdAt) },
     { label: "Payment method", value: "Wallet payment" },
-    { label: "Note", value: transaction.description ?? "—" },
+    { label: "Note", value: transaction.description ?? "-" },
   ];
 
   const status = STATUS_PILL[transaction.status];

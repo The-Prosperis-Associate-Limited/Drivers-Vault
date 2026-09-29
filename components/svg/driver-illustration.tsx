@@ -2,7 +2,7 @@ import Image from "next/image";
 
 /*
   In the design the panel is the full height of the screen under the header, not
-  a card sized to its illustration — so the height is set here rather than left
+  a card sized to its illustration - so the height is set here rather than left
   to the content. `min-h`, not `h`, because the signup form is taller than 80vh
   on a short viewport and the panel should match it rather than be overrun.
 

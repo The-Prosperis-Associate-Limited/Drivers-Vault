@@ -24,7 +24,7 @@ interface Props {
   - any other url is a file the browser decodes (mp4/webm, hls on Safari), so it
     plays in a real <video>. This is the branch Drivers Vault's Cloudinary uploads land
     on, and it reports the same position and duration as the YouTube one;
-  - a module with no video is a reading. It renders as text — never as an empty
+  - a module with no video is a reading. It renders as text - never as an empty
     video frame.
 */
 export const ModulePlayer = function ({

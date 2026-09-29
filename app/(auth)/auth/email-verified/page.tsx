@@ -25,7 +25,7 @@ function EmailVerified() {
       <AppText type="subtitle" className="text-muted-foreground mb-8 text-sm">
         {name ? (
           <>
-            You're all set, <span className="text-brand">{name}</span> — your
+            You're all set, <span className="text-brand">{name}</span> - your
             email is confirmed and your account is active.
           </>
         ) : (

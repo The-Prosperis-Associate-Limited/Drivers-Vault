@@ -15,7 +15,7 @@ export interface ModuleProgress {
   moduleId: string;
   completed_at: string | null;
   minutes_spent: number;
-  // Furthest point reached, in seconds — what the player resumes from.
+  // Furthest point reached, in seconds - what the player resumes from.
   last_position_seconds: number;
   duration_seconds: number | null;
 }

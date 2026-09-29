@@ -133,7 +133,7 @@ export const DriverDocuments = function ({ userId }: Props) {
               value={
                 verification?.submitted_at
                   ? formatDate(verification.submitted_at)
-                  : "—"
+                  : "-"
               }
             />
             <DetailRow
@@ -281,7 +281,7 @@ export const DriverDocuments = function ({ userId }: Props) {
         isOpen={!!rejecting}
         onOpenChange={(open) => !open && closeRejectForm()}
         title="Reject document"
-        description={`Give ${driverName || "the driver"} a reason they can act on — it is sent with the resubmission notice.`}
+        description={`Give ${driverName || "the driver"} a reason they can act on - it is sent with the resubmission notice.`}
         width="520px"
         dialogFooter={
           <div className="flex w-full justify-end gap-3">

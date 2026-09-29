@@ -11,7 +11,7 @@ interface Props {
 }
 
 /*
-  The same contract as the YouTube player, over a file the browser can decode —
+  The same contract as the YouTube player, over a file the browser can decode -
   mp4/webm anywhere, hls on Safari. This is the branch Drivers Vault's own uploads land
   on, and swapping a module's url from YouTube to Cloudinary needs no other
   change: resume and completion already work the same on both.

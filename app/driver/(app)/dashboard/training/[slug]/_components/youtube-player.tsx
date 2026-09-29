@@ -35,7 +35,7 @@ const API_SRC = "https://www.youtube.com/iframe_api";
 
 /*
   YouTube hands back no media file, so the only way to know where a driver got to
-  is its own IFrame API — `getCurrentTime` on an interval while playing. The
+  is its own IFrame API - `getCurrentTime` on an interval while playing. The
   script is a singleton: YouTube calls `onYouTubeIframeAPIReady` exactly once for
   the page, so a second <script> tag would never fire and the player would hang.
 */

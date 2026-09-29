@@ -54,7 +54,7 @@ export const useJobRequest = function (reference: string, shouldFetch = true) {
 };
 
 /*
-  Accept, decline, start and complete are the same shape — a PATCH on the
+  Accept, decline, start and complete are the same shape - a PATCH on the
   reference that refetches the booking and the lists it appears in. The server
   owns which transitions are legal; a refused one comes back as a message.
 

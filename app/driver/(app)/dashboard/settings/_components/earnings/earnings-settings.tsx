@@ -116,7 +116,7 @@ export const EarningsSettings = function () {
               />
             ) : (
               <>
-                {/* Below sm the table becomes stacked cards — a six-column table
+                {/* Below sm the table becomes stacked cards - a six-column table
                   on a phone is unreadable however it is scrolled. */}
                 <div className="divide-border divide-y sm:hidden">
                   {transactions.map((transaction) => (
@@ -178,7 +178,7 @@ export const EarningsSettings = function () {
                           </TableCell>
                           <TableCell>{typeLabels[transaction.type]}</TableCell>
                           <TableCell className="max-w-[220px] truncate">
-                            {transaction.description ?? "—"}
+                            {transaction.description ?? "-"}
                           </TableCell>
                           <TableCell>
                             {transaction.booking
@@ -187,8 +187,8 @@ export const EarningsSettings = function () {
                                   transaction.booking.client.last_name,
                                 ]
                                   .filter(Boolean)
-                                  .join(" ") || "—"
-                              : "—"}
+                                  .join(" ") || "-"
+                              : "-"}
                           </TableCell>
                           <TableCell>
                             <StatusBadge

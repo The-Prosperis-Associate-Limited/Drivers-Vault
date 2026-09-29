@@ -28,11 +28,11 @@ const AUTH_BYPASS_PATHS = [
   "/driver/auth/reset-password",
   "/admin/auth/reset-password",
   // An invited admin is signed in but locked out of /api/admin until the
-  // temporary password is rotated — this screen must not bounce them.
+  // temporary password is rotated - this screen must not bounce them.
   "/admin/auth/change-password",
 ];
 
-// One codebase, three surfaces — the session type decides which one a
+// One codebase, three surfaces - the session type decides which one a
 // signed-in visitor belongs to. UX only; every endpoint checks the role itself.
 const SURFACE_FOR_ROLE: Record<UserRole, string> = {
   CLIENT: ROUTES.DASHBOARD,
@@ -51,7 +51,7 @@ export default function proxy(request: NextRequest) {
     Presence of the refresh cookie only. The access token is short-lived and
     api.ts refreshes it in the background, so gating on session_id would sign a
     client out every thirty minutes. This is a UX gate, never the security
-    boundary — every endpoint behind it is checked on the server.
+    boundary - every endpoint behind it is checked on the server.
   */
   const hasValidSession = !!sessionType && !!refreshToken;
 

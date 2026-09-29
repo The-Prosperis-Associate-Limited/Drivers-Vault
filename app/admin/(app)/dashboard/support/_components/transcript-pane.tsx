@@ -36,7 +36,7 @@ export const TranscriptPane = function ({ conversationId, onChanged }: Props) {
   const conversation = data?.data.conversation;
   const messages = conversation?.messages ?? [];
 
-  // Live echoes for this thread — a refetch keeps ordering server-authoritative.
+  // Live echoes for this thread - a refetch keeps ordering server-authoritative.
   useEffect(() => {
     const socket = getChatSocket();
     if (!socket) return;

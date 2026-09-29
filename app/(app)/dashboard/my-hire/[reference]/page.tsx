@@ -62,11 +62,11 @@ export default function HireDetail({
 
   const started = new Date(hire.starts_at).getTime() <= Date.now();
 
-  // No stored Drivers Vault ID exists — this is a stable display form of the driver's
+  // No stored Drivers Vault ID exists - this is a stable display form of the driver's
   // record id, not a second identifier.
   const tegatId = hire.driver
     ? `TG-DRV-${hire.driver.id.slice(-4).toUpperCase()}`
-    : "—";
+    : "-";
 
   const location = [
     hire.driver_details?.city,
@@ -81,9 +81,9 @@ export default function HireDetail({
       label: "Gender",
       value: hire.driver_details?.gender
         ? prettifyEnum(hire.driver_details.gender)
-        : "—",
+        : "-",
     },
-    { label: "Based in", value: location || "—" },
+    { label: "Based in", value: location || "-" },
     {
       label: "Work pref.",
       value:
@@ -95,7 +95,7 @@ export default function HireDetail({
       label: "Rate",
       value: profile?.expected_monthly_rate
         ? `${formatMoney(profile.expected_monthly_rate, profile.rate_currency)} / mo`
-        : "—",
+        : "-",
     },
     { label: "Reviews", value: String(hire.driver_review_count) },
   ];
@@ -254,8 +254,8 @@ export default function HireDetail({
               className="text-muted-foreground mt-3 block"
             >
               {hire.ends_at
-                ? `Fixed term — ends ${formatDate(hire.ends_at)}`
-                : "Open-ended — no fixed end date"}
+                ? `Fixed term - ends ${formatDate(hire.ends_at)}`
+                : "Open-ended - no fixed end date"}
             </AppText>
           </div>
         </div>

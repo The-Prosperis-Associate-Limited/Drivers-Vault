@@ -36,19 +36,19 @@ export default function AdminTraining() {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         <StatCard
           label="Published courses"
-          value={stats ? String(stats.published) : "—"}
+          value={stats ? String(stats.published) : "-"}
           caption="Visible to drivers"
           captionTone="muted"
         />
         <StatCard
           label="Required for certification"
-          value={stats ? String(stats.required) : "—"}
+          value={stats ? String(stats.required) : "-"}
           caption="The certification path"
           captionTone="muted"
         />
         <StatCard
           label="Drafts"
-          value={stats ? String(stats.drafts) : "—"}
+          value={stats ? String(stats.drafts) : "-"}
           caption="Hidden from drivers"
           captionTone="muted"
         />

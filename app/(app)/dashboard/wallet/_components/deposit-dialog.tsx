@@ -45,7 +45,7 @@ export const DepositDialog = function ({
 
       showToast(
         "info",
-        "We haven't seen your transfer yet — your wallet is credited automatically the moment it lands.",
+        "We haven't seen your transfer yet - your wallet is credited automatically the moment it lands.",
       );
       handleOpenChange(false);
     },
@@ -158,7 +158,7 @@ export const DepositDialog = function ({
             type="caption"
             className="text-muted-foreground mx-auto mt-2 block max-w-xs"
           >
-            We couldn't set up your dedicated account. Try again shortly — it is
+            We couldn't set up your dedicated account. Try again shortly - it is
             created automatically.
           </AppText>
         </div>
@@ -185,7 +185,7 @@ export const DepositDialog = function ({
                   </AppText>
                   <span className="flex min-w-0 items-center gap-2">
                     <AppText type="label" className="truncate text-sm">
-                      {row.value ?? "—"}
+                      {row.value ?? "-"}
                     </AppText>
                     {row.value && (
                       <button

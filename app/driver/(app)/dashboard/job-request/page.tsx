@@ -17,7 +17,7 @@ import {
 import type { JobRequestBucket } from "@/types/booking";
 
 /*
-  The bucket names only — the server owns which statuses each one covers, so a
+  The bucket names only - the server owns which statuses each one covers, so a
   request cannot be counted under one tab and listed under another.
 */
 const TABS: {
@@ -102,7 +102,7 @@ export default function JobRequests() {
               label="Response rate"
               value={
                 summary?.response_rate == null
-                  ? "—"
+                  ? "-"
                   : `${summary.response_rate}%`
               }
               hint="How many closed requests you answered, accepted or declined. A request that expires before you reply counts against it."

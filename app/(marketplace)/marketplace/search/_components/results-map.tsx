@@ -7,7 +7,7 @@ interface Props {
   center: [number, number];
 }
 
-// No pins yet — drivers carry no coordinates, only state and LGA. The map gives
+// No pins yet - drivers carry no coordinates, only state and LGA. The map gives
 // the searched area, nothing more.
 export const ResultsMap = function ({ center }: Props) {
   return (

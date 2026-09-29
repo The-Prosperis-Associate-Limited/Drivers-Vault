@@ -42,7 +42,7 @@ export default function AdminTransactions() {
           value={
             stats
               ? formatMoneyCompact(stats.held_in_client_wallets_minor, currency)
-              : "—"
+              : "-"
           }
           caption="Available + escrow"
           captionTone="muted"
@@ -52,14 +52,14 @@ export default function AdminTransactions() {
           value={
             stats
               ? formatMoneyCompact(stats.paid_to_drivers_minor, currency)
-              : "—"
+              : "-"
           }
           caption={stats ? `${stats.paid_payouts} settled payouts` : " "}
           captionTone="muted"
         />
         <StatCard
           label="Awaiting release"
-          value={stats ? String(stats.awaiting_release.count) : "—"}
+          value={stats ? String(stats.awaiting_release.count) : "-"}
           caption={
             stats
               ? `${formatMoneyCompact(stats.awaiting_release.amount_minor, currency)} escrowed`
@@ -69,7 +69,7 @@ export default function AdminTransactions() {
         />
         <StatCard
           label="Failed payments"
-          value={stats ? String(stats.failed_payouts) : "—"}
+          value={stats ? String(stats.failed_payouts) : "-"}
           caption={
             stats && stats.failed_payouts > 0 ? "Need attention" : "All clear"
           }

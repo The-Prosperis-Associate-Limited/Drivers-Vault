@@ -85,19 +85,19 @@ export default function AdminDrivers() {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         <StatCard
           label="All drivers"
-          value={stats ? String(stats.total) : "—"}
+          value={stats ? String(stats.total) : "-"}
           caption="Every driver account"
           captionTone="muted"
         />
         <StatCard
           label="Active drivers"
-          value={stats ? String(stats.active) : "—"}
+          value={stats ? String(stats.active) : "-"}
           caption="Verified and discoverable"
           captionTone="muted"
         />
         <StatCard
           label="Pending approval"
-          value={stats ? String(stats.pending_approval) : "—"}
+          value={stats ? String(stats.pending_approval) : "-"}
           caption={
             stats && stats.pending_approval > 0
               ? "Awaiting review"

@@ -18,7 +18,7 @@ import { DepositDialog } from "./_components/deposit-dialog";
 import { useWallet, useWalletTransactions } from "@/hooks/use-wallet";
 
 const transactionTitle = (transaction: WalletTransaction) => {
-  if (transaction.type === "FUNDING") return "Wallet top-up — bank transfer";
+  if (transaction.type === "FUNDING") return "Wallet top-up - bank transfer";
   if (transaction.type === "PLATFORM_FEE") return "Payment fee";
   return transaction.description ?? "Payment";
 };

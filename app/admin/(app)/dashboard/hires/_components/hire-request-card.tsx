@@ -127,7 +127,7 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
 
   const { mutate: confirmPayment, isPending: isConfirming } = useSubmitData({
     url: API_ENDPOINTS.adminHires.confirmPayment(request.reference),
-    onSuccessMessage: "Payment confirmed — engagement created",
+    onSuccessMessage: "Payment confirmed - engagement created",
     additionalQueryKeys: [[listUrl]],
     onSuccess: () => setConfirmOpen(false),
   });
@@ -136,7 +136,7 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
     reason: string;
   }>({
     url: API_ENDPOINTS.adminHires.rejectProof(request.reference),
-    onSuccessMessage: "Proof rejected — the client can re-upload",
+    onSuccessMessage: "Proof rejected - the client can re-upload",
     additionalQueryKeys: [[listUrl]],
     onSuccess: () => setRejectOpen(false),
   });
@@ -277,7 +277,7 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
                 label: "Hours",
                 value: [request.resumption_time, request.closing_time]
                   .filter(Boolean)
-                  .join(" – "),
+                  .join(" - "),
               }
             : null,
           request.transmission

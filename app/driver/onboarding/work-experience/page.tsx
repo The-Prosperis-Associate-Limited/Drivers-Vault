@@ -68,7 +68,7 @@ export default function WorkExperienceStep() {
     onSuccessMessage: "Work experience saved",
   });
 
-  // Only a row that already exists on the server is worth stopping for — a
+  // Only a row that already exists on the server is worth stopping for - a
   // freshly added one has nothing to lose.
   const savedCount = profile?.work_experiences.length ?? 0;
 
@@ -91,7 +91,7 @@ export default function WorkExperienceStep() {
         progress={getOnboardingProgress("WORK_EXPERIENCE")}
       />
 
-      {/* An empty or current-role end date must be omitted — the server
+      {/* An empty or current-role end date must be omitted - the server
           coerces "" into Invalid Date and rejects the whole step. */}
       <form
         onSubmit={handleSubmit((data) =>

@@ -32,7 +32,7 @@ interface BaseProps<TFieldValues extends FieldValues> {
   minDate?: Date;
   /** Disable all dates strictly after this date */
   maxDate?: Date;
-  /** "dropdown" adds month/year selects — essential for dates decades away */
+  /** "dropdown" adds month/year selects - essential for dates decades away */
   captionLayout?: "label" | "dropdown";
 }
 

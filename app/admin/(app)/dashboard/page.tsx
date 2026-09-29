@@ -33,7 +33,7 @@ export default function AdminOverview() {
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         <StatCard
           label="Total users"
-          value={stats ? String(stats.total_users) : "—"}
+          value={stats ? String(stats.total_users) : "-"}
           caption={
             stats ? `${stats.drivers} drivers · ${stats.clients} clients` : " "
           }
@@ -41,19 +41,19 @@ export default function AdminOverview() {
         />
         <StatCard
           label="Active drivers"
-          value={stats ? String(stats.active_drivers) : "—"}
+          value={stats ? String(stats.active_drivers) : "-"}
           caption="Verified and discoverable"
           captionTone="muted"
         />
         <StatCard
           label="Open requests"
-          value={stats ? String(stats.open_requests) : "—"}
+          value={stats ? String(stats.open_requests) : "-"}
           caption="Awaiting match or in progress"
           captionTone="muted"
         />
         <StatCard
           label="Pending verifications"
-          value={stats ? String(stats.pending_verifications) : "—"}
+          value={stats ? String(stats.pending_verifications) : "-"}
           caption={
             stats && stats.pending_verifications > 0
               ? "Need your attention"

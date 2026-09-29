@@ -13,7 +13,7 @@ interface Props {
 }
 
 // The sidebar becomes a drawer below lg. The designs are desktop-only, so this
-// is ours to decide — the nav is identical, it just slides in.
+// is ours to decide - the nav is identical, it just slides in.
 export const MobileNav = function ({ status, user }: Props) {
   const [open, setOpen] = useState(false);
 

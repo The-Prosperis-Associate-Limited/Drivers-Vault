@@ -69,7 +69,7 @@ export const useBanks = function ({
     shouldFetch,
   });
 
-  // Paystack repeats a code across bank variants — duplicate codes break both
+  // Paystack repeats a code across bank variants - duplicate codes break both
   // React keys and account resolution, so only the first of each survives.
   const banks = Array.from(
     new Map((data?.data ?? []).map((bank) => [bank.code, bank])).values(),
@@ -94,7 +94,7 @@ export const useAddBankAccount = function ({
   >({
     url: API_ENDPOINTS.earnings.bankAccounts,
     method: "post",
-    // The account name is never sent — the server resolves it with the bank so
+    // The account name is never sent - the server resolves it with the bank so
     // a typo cannot send money to a stranger.
     onSuccessMessage: "Bank account added",
     additionalQueryKeys: [[API_ENDPOINTS.earnings.bankAccounts]],

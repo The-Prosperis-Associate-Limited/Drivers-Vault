@@ -69,7 +69,7 @@ export function FormPhoneInput<TFieldValues extends FieldValues>({
         const { code, local } = parseValue((field.value as string) ?? "");
 
         const commit = (nextCode: string, nextLocal: string) => {
-          // A leading 0 is the local prefix (0801...) — E.164 drops it.
+          // A leading 0 is the local prefix (0801...) - E.164 drops it.
           const cleaned = nextLocal.replace(/\D/g, "").replace(/^0+/, "");
           field.onChange(cleaned ? `${nextCode}${cleaned}` : "");
         };

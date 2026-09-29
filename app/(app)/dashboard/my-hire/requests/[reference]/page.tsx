@@ -53,7 +53,7 @@ const STATUS_COPY: Record<string, string> = {
     "Your invoice is ready. Transfer the total to our account below, then upload your proof of payment.",
   PAYMENT_REVIEW:
     "We're confirming your transfer. The driver's verified details unlock the moment it's confirmed.",
-  PAID: "Paid — the driver's verified details are yours below.",
+  PAID: "Paid - the driver's verified details are yours below.",
   DECLINED: "This request was declined.",
   CANCELLED: "You cancelled this request.",
 };
@@ -83,7 +83,7 @@ export default function HireRequestDetail({
     APIResponse<HireRequest>
   >({
     url: API_ENDPOINTS.hireRequests.proof(reference),
-    onSuccessMessage: "Proof submitted — we'll confirm your payment shortly",
+    onSuccessMessage: "Proof submitted - we'll confirm your payment shortly",
     additionalQueryKeys: [[detailUrl]],
     onSuccess: () => {
       setProofFile(null);
@@ -261,7 +261,7 @@ export default function HireRequestDetail({
                       label: "Hours",
                       value: [request.resumption_time, request.closing_time]
                         .filter(Boolean)
-                        .join(" – "),
+                        .join(" - "),
                     }
                   : null,
                 request.transmission
@@ -323,7 +323,7 @@ export default function HireRequestDetail({
             )}
           </div>
 
-          {/* The combo pack — locked until paid */}
+          {/* The combo pack - locked until paid */}
           <div className="border-border rounded-2xl border bg-white p-5">
             <span className="flex items-center gap-2">
               {pack ? (
@@ -392,7 +392,7 @@ export default function HireRequestDetail({
                     >
                       My Hire
                     </Link>{" "}
-                    — reviews and further payments happen there.
+                    - reviews and further payments happen there.
                   </AppText>
                 )}
               </div>
@@ -419,7 +419,7 @@ export default function HireRequestDetail({
               type="caption"
               className="text-muted-foreground mt-3 block text-sm"
             >
-              No invoice yet — our team is reviewing this request.
+              No invoice yet - our team is reviewing this request.
             </AppText>
           ) : (
             <>
@@ -595,7 +595,7 @@ export default function HireRequestDetail({
                   {invoice.proof_submitted_at
                     ? formatDate(invoice.proof_submitted_at)
                     : ""}{" "}
-                  — we're confirming your transfer.
+                  - we're confirming your transfer.
                 </AppText>
               )}
 

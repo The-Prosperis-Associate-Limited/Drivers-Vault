@@ -154,7 +154,7 @@ export default function DashboardOverview() {
               type="caption"
               className="text-muted-foreground mt-4 block"
             >
-              No active hires yet — your hired drivers will appear here.
+              No active hires yet - your hired drivers will appear here.
             </AppText>
           ) : (
             <div className="mt-2 divide-y">

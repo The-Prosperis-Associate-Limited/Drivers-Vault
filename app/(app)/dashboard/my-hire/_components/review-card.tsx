@@ -11,7 +11,7 @@ import { Star } from "lucide-react";
 import { useState } from "react";
 import type { HireDetail } from "@/types/booking";
 
-// Mirrors REVIEW_CRITERIA on the server — a key outside this list is a 400.
+// Mirrors REVIEW_CRITERIA on the server - a key outside this list is a 400.
 const CRITERIA = [
   "Reliability",
   "Professionalism",

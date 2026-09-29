@@ -16,7 +16,7 @@ interface CategoryStyle {
 }
 
 // The designer's own glyphs are not exported yet, so these are Lucide stand-ins
-// in the same tinted tile. `category` is free text on the server — anything not
+// in the same tinted tile. `category` is free text on the server - anything not
 // listed falls back to the neutral style rather than rendering nothing.
 const CATEGORIES: Record<string, CategoryStyle> = {
   ONBOARDING: {

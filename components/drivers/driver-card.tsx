@@ -20,7 +20,7 @@ const CHIP_STYLES = [
 ];
 
 export const DriverCard = function ({ driver, onRequest, className }: Props) {
-  // The design's skill chips — the closest real data is what the driver can
+  // The design's skill chips - the closest real data is what the driver can
   // drive and speak.
   const chips = [
     ...driver.licence_classes.map((entry) => `Class ${entry}`),

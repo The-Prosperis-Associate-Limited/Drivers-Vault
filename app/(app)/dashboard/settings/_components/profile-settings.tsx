@@ -24,7 +24,7 @@ const MAX_AVATAR_BYTES = 5 * 1024 * 1024;
 export const ProfileSettings = function () {
   const { profile } = useGetProfile();
   const fileInput = useRef<HTMLInputElement>(null);
-  // The picked file lives in state, not on the ref — submit runs during render
+  // The picked file lives in state, not on the ref - submit runs during render
   // and must not read the input back out of the DOM.
   const [avatar, setAvatar] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);

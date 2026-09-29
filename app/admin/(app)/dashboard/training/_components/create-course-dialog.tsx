@@ -47,7 +47,7 @@ interface Props {
   coursesUrl: string;
 }
 
-// Course files (video/PDF) live on modules, not the course — the server refuses
+// Course files (video/PDF) live on modules, not the course - the server refuses
 // to publish an empty course, so creation lands in drafts until modules exist.
 export const CreateCourseDialog = function ({
   isOpen,
@@ -69,7 +69,7 @@ export const CreateCourseDialog = function ({
   >({
     url: API_ENDPOINTS.adminTraining.createCourse,
     method: "post",
-    onSuccessMessage: "Course created as a draft — add modules to publish it",
+    onSuccessMessage: "Course created as a draft - add modules to publish it",
     additionalQueryKeys: [[coursesUrl]],
     onSuccess: () => {
       reset();

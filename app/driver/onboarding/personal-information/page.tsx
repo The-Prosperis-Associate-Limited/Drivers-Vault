@@ -104,7 +104,7 @@ export default function PersonalInformationStep() {
           options={MARITAL_STATUS_OPTIONS}
         />
 
-        {/* Eighteen years back — the schema refuses younger anyway. */}
+        {/* Eighteen years back - the schema refuses younger anyway. */}
         <FormDatePicker<PersonalInformationFormValues>
           control={control}
           mode="single"

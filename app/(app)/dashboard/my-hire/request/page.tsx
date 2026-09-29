@@ -37,7 +37,7 @@ const ENGAGEMENT_OPTIONS = [
   { value: "CONTRACT", label: "Contract" },
 ];
 
-// The concierge path: no driver named — our team matches one, then invoices.
+// The concierge path: no driver named - our team matches one, then invoices.
 export default function RequestDriver() {
   const router = useRouter();
 
@@ -74,7 +74,7 @@ export default function RequestDriver() {
   >({
     url: API_ENDPOINTS.hireRequests.create,
     onSuccessMessage:
-      "Request sent — we'll match a driver and send your invoice",
+      "Request sent - we'll match a driver and send your invoice",
     onSuccess: (response) => {
       router.push(`/dashboard/my-hire/requests/${response.data.reference}`);
     },
@@ -98,7 +98,7 @@ export default function RequestDriver() {
         Request a driver
       </AppText>
       <AppText type="subtitle" className="text-muted-foreground mt-1 text-sm">
-        Tell us what you need — our team matches you with a vetted driver and
+        Tell us what you need - our team matches you with a vetted driver and
         sends you an invoice. You pay nothing now.
       </AppText>
 
@@ -239,7 +239,7 @@ export default function RequestDriver() {
                   type="caption"
                   className="text-muted-foreground text-xs"
                 >
-                  Whether you can house the driver — it widens who can take the
+                  Whether you can house the driver - it widens who can take the
                   job.
                 </AppText>
               </span>

@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 /*
   Three of the four verification states are their own screen in the design, and
-  they are the same screen with different copy — the rejected one is the only
+  they are the same screen with different copy - the rejected one is the only
   one that renders data, and it renders the server's per-document reasons
   verbatim rather than paraphrasing them.
 */
@@ -100,7 +100,7 @@ export default function OnboardingStatus() {
                   <li key={document.id}>
                     <AppText type="caption" className="text-destructive">
                       <span className="font-semibold">{document.label}</span>
-                      {document.reason ? ` — ${document.reason}` : ""}
+                      {document.reason ? ` - ${document.reason}` : ""}
                     </AppText>
                   </li>
                 ))}

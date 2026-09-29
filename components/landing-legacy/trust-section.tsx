@@ -26,7 +26,7 @@ export const TrustSection = function () {
             Verification you can see, privacy you can rely on.
           </h2>
           <p className="text-muted-foreground mt-4 max-w-md text-sm leading-relaxed">
-            You always see a candidate's verification status and trust score —
+            You always see a candidate's verification status and trust score -
             but never their raw NIN, licence numbers or guarantor documents.
             Sensitive data stays sealed.
           </p>

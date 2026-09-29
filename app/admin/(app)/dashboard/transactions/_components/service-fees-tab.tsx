@@ -46,11 +46,11 @@ export const ServiceFeesTab = function () {
       [
         [
           row.reference,
-          row.booking?.driver ? personName(row.booking.driver) : "—",
-          row.booking ? clientName(row.booking.client) : "—",
+          row.booking?.driver ? personName(row.booking.driver) : "-",
+          row.booking ? clientName(row.booking.client) : "-",
           row.booking
             ? formatMoney(row.booking.amount, row.booking.currency)
-            : "—",
+            : "-",
           formatMoney(row.amount_minor, row.currency),
           formatDate(row.createdAt),
         ],
@@ -101,10 +101,10 @@ export const ServiceFeesTab = function () {
                       <td className="py-3 pr-4">
                         {row.booking?.driver
                           ? personName(row.booking.driver)
-                          : "—"}
+                          : "-"}
                       </td>
                       <td className="text-muted-foreground py-3 pr-4">
-                        {row.booking ? clientName(row.booking.client) : "—"}
+                        {row.booking ? clientName(row.booking.client) : "-"}
                       </td>
                       <td className="text-muted-foreground py-3 pr-4">
                         {row.booking
@@ -112,7 +112,7 @@ export const ServiceFeesTab = function () {
                               row.booking.amount,
                               row.booking.currency,
                             )
-                          : "—"}
+                          : "-"}
                       </td>
                       <td className="py-3 pr-4 font-semibold">
                         {formatMoney(row.amount_minor, row.currency)}
@@ -152,9 +152,9 @@ export const ServiceFeesTab = function () {
                     </span>
                   </div>
                   <p className="text-muted-foreground mt-1 text-xs">
-                    {row.booking?.driver ? personName(row.booking.driver) : "—"}{" "}
+                    {row.booking?.driver ? personName(row.booking.driver) : "-"}{" "}
                     hired by{" "}
-                    {row.booking ? clientName(row.booking.client) : "—"} ·{" "}
+                    {row.booking ? clientName(row.booking.client) : "-"} ·{" "}
                     {formatDate(row.createdAt)}
                   </p>
                 </button>
@@ -170,7 +170,7 @@ export const ServiceFeesTab = function () {
         title={viewing ? `Service fee ${viewing.reference}` : "Service fee"}
         description={
           viewing
-            ? `Commission earned on this hire — ${formatDate(viewing.createdAt)}`
+            ? `Commission earned on this hire - ${formatDate(viewing.createdAt)}`
             : undefined
         }
         width="480px"
@@ -226,7 +226,7 @@ export const ServiceFeesTab = function () {
                         viewing.booking.amount,
                         viewing.booking.currency,
                       )
-                    : "—"
+                    : "-"
                 }
               />
               <DetailRow
@@ -241,7 +241,7 @@ export const ServiceFeesTab = function () {
                         viewing.booking.amount,
                         viewing.booking.currency,
                       )
-                    : "—"
+                    : "-"
                 }
               />
             </div>

@@ -46,7 +46,7 @@ export const MakePaymentDialog = function ({
   const amountMinor = amount ? toMinorUnits(Number(amount)) : 0;
   const debouncedAmount = useDebounce(amountMinor, 400);
 
-  // The fee preview is the server's answer, never local arithmetic — the
+  // The fee preview is the server's answer, never local arithmetic - the
   // percent, floor and cap live in server env and would drift here.
   const { data: quoteData, isFetching: isQuoting } = useGetData<
     APIResponse<PaymentQuote>
@@ -70,14 +70,14 @@ export const MakePaymentDialog = function ({
   });
 
   // The transfer lands in the wallet first (idempotent sync), then the same
-  // wallet payment runs — one rail regardless of the picked method. If the
+  // wallet payment runs - one rail regardless of the picked method. If the
   // transfer hasn't arrived yet the pay fails loudly and can be retried.
   const { sync, isSyncing } = useSyncFunding({
     onSynced: (credited) => {
       if (credited <= 0) {
         showToast(
           "info",
-          "We haven't seen your transfer yet — give it a moment and tap again.",
+          "We haven't seen your transfer yet - give it a moment and tap again.",
         );
         return;
       }
@@ -153,7 +153,7 @@ export const MakePaymentDialog = function ({
       label: "Bank transfer",
       description: wallet?.dva_account_number
         ? "Transfer into your dedicated account, then we complete the payment."
-        : "Your dedicated account isn't ready yet — try again shortly.",
+        : "Your dedicated account isn't ready yet - try again shortly.",
       icon: Landmark,
       disabled: !wallet?.dva_account_number,
     },
@@ -194,7 +194,7 @@ export const MakePaymentDialog = function ({
             type="caption"
             className="text-muted-foreground mt-2 block max-w-xs"
           >
-            {driverName} has been notified. The full amount goes to them — the
+            {driverName} has been notified. The full amount goes to them - the
             fee is itemised on your statement.
           </AppText>
           <Button
@@ -354,7 +354,7 @@ export const MakePaymentDialog = function ({
                   </AppText>
                   <span className="flex min-w-0 items-center gap-2">
                     <AppText type="label" className="truncate text-sm">
-                      {row.value ?? "—"}
+                      {row.value ?? "-"}
                     </AppText>
                     {row.value && (
                       <button

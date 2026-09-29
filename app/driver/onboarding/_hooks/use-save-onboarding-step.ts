@@ -9,7 +9,7 @@ import type { DriverProfile } from "@/types/driver";
   than navigating in the component keeps a step page to a form and nothing else.
   A step opened from the review screen's Edit link (?from=review) returns there
   after saving instead of marching through the remaining steps again. The query
-  is read off window rather than useSearchParams — the hook version forces a
+  is read off window rather than useSearchParams - the hook version forces a
   Suspense boundary into every step page at prerender time.
 */
 export const useSaveOnboardingStep = function <TData>({

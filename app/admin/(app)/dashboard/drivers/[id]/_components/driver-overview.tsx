@@ -138,12 +138,12 @@ export const DriverOverview = function ({ user }: Props) {
                   </AppText>
                 </div>
                 <AppText type="caption" className="text-muted-foreground">
-                  {formatDate(experience.started_at)} —{" "}
+                  {formatDate(experience.started_at)} -{" "}
                   {experience.is_current
                     ? "Present"
                     : experience.ended_at
                       ? formatDate(experience.ended_at)
-                      : "—"}
+                      : "-"}
                 </AppText>
               </div>
             ))

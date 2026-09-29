@@ -19,12 +19,12 @@ const JOB_TYPES: { icon: LucideIcon; title: string; body: string }[] = [
   {
     icon: FileText,
     title: "Contract Driver",
-    body: "Drive on a fixed-term contract for a company or individual — a defined engagement with a clear start and end date.",
+    body: "Drive on a fixed-term contract for a company or individual - a defined engagement with a clear start and end date.",
   },
   {
     icon: User,
     title: "Private Driver",
-    body: "Drive for an individual or family's daily needs — school runs, errands, and personal appointments.",
+    body: "Drive for an individual or family's daily needs - school runs, errands, and personal appointments.",
   },
   {
     icon: Briefcase,
@@ -107,7 +107,7 @@ const SectionHeader = function ({ compact = false }: { compact?: boolean }) {
 };
 
 // The tall wrapper is the scroll track: the section pins (sticky) for its
-// full height while scroll progress reveals one step at a time — and hides
+// full height while scroll progress reveals one step at a time - and hides
 // them again in reverse on the way up.
 const PinnedJobTypes = function () {
   const { trackRef, revealed } = usePinnedSteps(JOB_TYPES.length, REVEAL_SPAN);
@@ -137,7 +137,7 @@ const PinnedJobTypes = function () {
   );
 };
 
-// Below lg there is no room to pin — items simply fade in as they enter view.
+// Below lg there is no room to pin - items simply fade in as they enter view.
 const StaticJobTypes = function () {
   return (
     <section className={`bg-[#0d2fa5] px-4 py-16 lg:hidden ${blueGrid}`}>

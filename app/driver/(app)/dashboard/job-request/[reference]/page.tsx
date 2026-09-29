@@ -98,7 +98,7 @@ export default function JobRequestDetail() {
 
   const location = [booking.city, booking.state].filter(Boolean).join(", ");
 
-  // Contact details only make sense once the job is on — before that the driver
+  // Contact details only make sense once the job is on - before that the driver
   // has not agreed to anything.
   const canSeeContact = ["ACCEPTED", "IN_PROGRESS", "COMPLETED"].includes(
     booking.status,
@@ -226,7 +226,7 @@ export default function JobRequestDetail() {
         {booking.decline_reason && (
           <div className="p-4 md:p-6">
             <AppText type="caption" className="text-destructive">
-              You declined this request — {booking.decline_reason}
+              You declined this request - {booking.decline_reason}
             </AppText>
           </div>
         )}
@@ -304,7 +304,7 @@ export default function JobRequestDetail() {
                     className="text-muted-foreground block"
                   >
                     {formatDateTime(event.createdAt)}
-                    {event.note ? ` — ${event.note}` : ""}
+                    {event.note ? ` - ${event.note}` : ""}
                   </AppText>
                 </div>
               </li>

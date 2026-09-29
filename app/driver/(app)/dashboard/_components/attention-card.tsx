@@ -12,7 +12,7 @@ interface Props {
 
 /*
   Only the rejected state has anything to say here. The reviewer wrote each
-  reason for the driver, so it is rendered verbatim — never reworded.
+  reason for the driver, so it is rendered verbatim - never reworded.
 */
 export const AttentionCard = function ({ status }: Props) {
   const { verification } = useVerificationStatus(status === "REJECTED");

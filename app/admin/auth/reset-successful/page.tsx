@@ -21,7 +21,7 @@ export default function AdminResetSuccessful() {
 
       <AppText type="subtitle" className="text-muted-foreground mb-8 text-sm">
         Your password has been changed successfully. For security, we've signed
-        you out on all other devices — use your new password to sign back in.
+        you out on all other devices - use your new password to sign back in.
       </AppText>
 
       <Button

@@ -15,7 +15,7 @@ interface Props {
 
 /*
   Follows the reference template in ~/Downloads/Driversvault/Pick a template,
-  rebuilt with Drivers Vault's mark and a drawn seal — the template's own logo, seal and
+  rebuilt with Drivers Vault's mark and a drawn seal - the template's own logo, seal and
   founder signature belong to another product. Every value on it comes from the
   server; nothing here is decorative text pretending to be data.
 */
@@ -29,13 +29,13 @@ export const CourseCertificate = function ({
     <div className="aspect-[1.45] w-full bg-white px-6 py-8 text-center sm:px-10 md:px-16 md:py-12">
       <div className="flex items-start justify-between gap-4">
         <span className="text-muted-foreground text-[10px] sm:text-xs">
-          {certification ? formatDate(certification.issued_at) : "—"}
+          {certification ? formatDate(certification.issued_at) : "-"}
         </span>
 
         <TegatLogo size={44} />
 
         <span className="text-muted-foreground max-w-[30%] truncate text-[10px] sm:text-xs">
-          {certification?.reference ?? "—"}
+          {certification?.reference ?? "-"}
         </span>
       </div>
 

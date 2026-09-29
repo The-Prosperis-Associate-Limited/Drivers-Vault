@@ -84,19 +84,19 @@ export default function AdminClients() {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         <StatCard
           label="All clients"
-          value={stats ? String(stats.total) : "—"}
+          value={stats ? String(stats.total) : "-"}
           caption={stats ? `${stats.organisations} organizations` : " "}
           captionTone="muted"
         />
         <StatCard
           label="Active clients"
-          value={stats ? String(stats.active) : "—"}
+          value={stats ? String(stats.active) : "-"}
           caption="Accounts in good standing"
           captionTone="muted"
         />
         <StatCard
           label="Suspended"
-          value={stats ? String(stats.suspended) : "—"}
+          value={stats ? String(stats.suspended) : "-"}
           caption={
             stats && stats.suspended > 0 ? "Access revoked" : "All clear"
           }

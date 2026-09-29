@@ -20,7 +20,7 @@ interface Props {
   // A back chevron and the like, rendered before the title.
   headerLeading?: React.ReactNode;
   // The body scrolls with its own padding by default. Panels that manage their
-  // own layout — a chat thread pinned to a composer — pass their own classes.
+  // own layout - a chat thread pinned to a composer - pass their own classes.
   bodyClassName?: string;
 }
 

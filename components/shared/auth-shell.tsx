@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-// The client auth screens are a single centred column over the site footer —
+// The client auth screens are a single centred column over the site footer -
 // no illustration panel and no back header, unlike the driver app.
 export const AuthShell = function ({ children }: Props) {
   return (

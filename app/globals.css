@@ -6,7 +6,7 @@
 @import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=zodiak@400&display=swap");
 
 /*
-  The driver's course certificate is the one surface that is not General Sans —
+  The driver's course certificate is the one surface that is not General Sans -
   Zodiak for the title (same Fontshare request as above) and a formal script for
   the name. Fontshare has no script face, which is the only reason a second
   provider appears in this file. Nothing outside the certificate may use these.
@@ -137,7 +137,7 @@
 
 /*
   Printing a certificate. The driver hits Download, the browser opens its print
-  dialog, and only the certificate reaches the page — the sidebar, the lesson
+  dialog, and only the certificate reaches the page - the sidebar, the lesson
   list and the dialog chrome are all hidden. `visibility` rather than `display`
   so the sheet keeps the certificate's own layout intact.
 */

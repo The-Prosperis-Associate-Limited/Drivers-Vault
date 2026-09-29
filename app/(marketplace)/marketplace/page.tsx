@@ -139,7 +139,7 @@ export default function Marketplace() {
           <EmptyState
             icon={SearchX}
             title={`No verified drivers in ${state} yet`}
-            description="Try another state, or check back soon — new drivers are verified every week."
+            description="Try another state, or check back soon - new drivers are verified every week."
             className="mt-10"
           />
         ) : (

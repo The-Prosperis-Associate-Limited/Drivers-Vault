@@ -96,7 +96,7 @@ export const ClientOverview = function ({ user }: Props) {
 
         <DetailCard
           title="Hiring preferences"
-          subtitle="Collected by the onboarding wizard — optional"
+          subtitle="Collected by the onboarding wizard - optional"
         >
           <DetailRow
             label="Driver categories"

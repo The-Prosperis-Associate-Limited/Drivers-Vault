@@ -14,7 +14,7 @@ interface Props {
   onOpenChange: (open: boolean) => void;
 }
 
-// No FAQ panel on this surface yet — the client help-centre copy is unwritten.
+// No FAQ panel on this surface yet - the client help-centre copy is unwritten.
 type Panel = "menu" | "chat" | "report" | "contact";
 
 const OPTIONS: { panel: Panel; title: string; description: string }[] = [

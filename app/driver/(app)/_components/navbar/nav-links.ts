@@ -14,7 +14,7 @@ export interface NavLink {
 }
 
 /*
-  Earnings is no longer a top-level destination — the wallet, withdrawals and
+  Earnings is no longer a top-level destination - the wallet, withdrawals and
   payout accounts live on the Settings > Earnings tab, and /dashboard/earnings
   redirects there. Every endpoint behind it still 403s an unverified driver, so
   nothing here is a security boundary.

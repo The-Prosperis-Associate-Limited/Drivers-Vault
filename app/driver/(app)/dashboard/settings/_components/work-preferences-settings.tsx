@@ -83,7 +83,7 @@ export const WorkPreferencesSettings = function () {
         Work preferences
       </AppText>
       <AppText type="caption" className="text-muted-foreground mt-1 block">
-        What you expect to earn and when you work — clients filter and view
+        What you expect to earn and when you work - clients filter and view
         these on your marketplace profile.
       </AppText>
 

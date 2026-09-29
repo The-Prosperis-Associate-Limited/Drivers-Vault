@@ -56,7 +56,7 @@ export const DetailRow = function ({ label, value }: RowProps) {
         type="caption"
         className="text-foreground text-right font-medium"
       >
-        {value || "—"}
+        {value || "-"}
       </AppText>
     </div>
   );

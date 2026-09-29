@@ -67,7 +67,7 @@ export const ReportIssuePanel = function ({ onDone }: Props) {
     if (!issue) return;
 
     createTicket({
-      subject: reference ? `${issue.label} — ${reference}` : issue.label,
+      subject: reference ? `${issue.label} - ${reference}` : issue.label,
       description: description.trim(),
       category: issue.category,
       priority,

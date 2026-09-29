@@ -35,7 +35,7 @@ export const useWalletTransactions = function ({
   };
 };
 
-// The poll fallback behind "Transfer Done" — webhooks cannot reach a local dev
+// The poll fallback behind "Transfer Done" - webhooks cannot reach a local dev
 // server, and the credit is idempotent so syncing twice is harmless.
 export const useSyncFunding = function ({
   onSynced,

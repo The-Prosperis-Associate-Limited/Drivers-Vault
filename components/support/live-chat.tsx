@@ -23,7 +23,7 @@ const bubbleFor = function (message: ChatMessage, selfId: string | undefined) {
   return "support";
 };
 
-// The real support conversation — REST writes, socket echoes, one open
+// The real support conversation - REST writes, socket echoes, one open
 // thread per user. Shared by the client and driver support sheets.
 export const LiveChat = function ({
   firstName,
@@ -128,7 +128,7 @@ export const LiveChat = function ({
             type="caption"
             className="text-muted-foreground block text-center text-xs"
           >
-            This conversation is resolved — send a message to start a new one.
+            This conversation is resolved - send a message to start a new one.
           </AppText>
         )}
 

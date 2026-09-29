@@ -84,7 +84,7 @@ export default function FindTalent() {
         <EmptyState
           icon={SearchX}
           title="No profiles match your filters"
-          description="Loosen a filter or two — or check back soon, new drivers are verified every week."
+          description="Loosen a filter or two - or check back soon, new drivers are verified every week."
           className="mt-10"
         />
       ) : (

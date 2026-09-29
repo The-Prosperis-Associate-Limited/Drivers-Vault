@@ -35,7 +35,7 @@ export default function AdminChangePassword() {
   >({
     url: API_ENDPOINTS.auth.updatePassword,
     method: "put",
-    onSuccessMessage: "Password updated — welcome aboard",
+    onSuccessMessage: "Password updated - welcome aboard",
     redirectTo: "/admin/dashboard",
   });
 
@@ -47,7 +47,7 @@ export default function AdminChangePassword() {
 
       <AuthHeading
         title="Set your own password"
-        subtitle="You signed in with a temporary password. Choose your own before continuing — it expires after this first use."
+        subtitle="You signed in with a temporary password. Choose your own before continuing - it expires after this first use."
       />
 
       <form

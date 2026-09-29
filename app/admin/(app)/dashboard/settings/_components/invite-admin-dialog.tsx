@@ -84,7 +84,7 @@ export const InviteAdminDialog = function ({
       title={result ? "Share the credentials" : "Invite admin"}
       description={
         result
-          ? "The invite email carries only a sign-in link — the password below is shown once and never again."
+          ? "The invite email carries only a sign-in link - the password below is shown once and never again."
           : "They'll get an email invitation and a temporary password you share with them securely."
       }
       width="520px"
@@ -167,7 +167,7 @@ export const InviteAdminDialog = function ({
             type="caption"
             className="block rounded-lg bg-amber-50 p-3 text-amber-800"
           >
-            Share these credentials securely — not via email. The temporary
+            Share these credentials securely - not via email. The temporary
             password expires after first use and must be changed immediately on
             login.
           </AppText>

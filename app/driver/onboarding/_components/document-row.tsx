@@ -115,7 +115,7 @@ export const DocumentRow = function ({
         >
           {status.toLowerCase()}
           {status === "REJECTED" && rejectionReason
-            ? ` — ${rejectionReason}`
+            ? ` - ${rejectionReason}`
             : ""}
         </AppText>
       )}

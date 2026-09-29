@@ -51,7 +51,7 @@ export const getVerificationReadiness = function (
 const labelFor = (
   options: { value: string; label: string }[],
   value?: string | null,
-) => options.find((option) => option.value === value)?.label ?? value ?? "—";
+) => options.find((option) => option.value === value)?.label ?? value ?? "-";
 
 interface RowProps {
   label: string;
@@ -68,7 +68,7 @@ const Row = function ({ label, value }: RowProps) {
         type="caption"
         className="text-foreground text-right font-medium"
       >
-        {value || "—"}
+        {value || "-"}
       </AppText>
     </div>
   );
@@ -107,7 +107,7 @@ const Section = function ({
       <AccordionContent>
         <div className="divide-border divide-y">{children}</div>
 
-        {/* Editing an earlier step never sends the driver back to the start —
+        {/* Editing an earlier step never sends the driver back to the start -
             onboarding_step only moves forward on the server. */}
         <Link
           href={editHref}
@@ -219,7 +219,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
             <Row
               key={entry.id}
               label={entry.employer}
-              value={`${entry.job_title} · ${formatDate(entry.started_at)} – ${
+              value={`${entry.job_title} · ${formatDate(entry.started_at)} - ${
                 entry.is_current || !entry.ended_at
                   ? "Present"
                   : formatDate(entry.ended_at)
@@ -289,7 +289,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
               label={DOCUMENT_LABELS[document.type] ?? document.type}
               value={
                 document.status === "REJECTED" ? (
-                  // The reviewer wrote this for the driver — render it verbatim.
+                  // The reviewer wrote this for the driver - render it verbatim.
                   <span className="text-destructive">
                     {document.rejection_reason ?? "Rejected"}
                   </span>

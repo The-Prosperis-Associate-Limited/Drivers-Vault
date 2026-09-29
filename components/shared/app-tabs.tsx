@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 interface AppTab<T extends string> {
   value: T;
   label: string;
-  // Omit when every tab shows the same region and only the query changes — the
+  // Omit when every tab shows the same region and only the query changes - the
   // consumer then renders the content itself, below the tab strip.
   content?: React.ReactNode;
 }
