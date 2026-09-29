@@ -14,9 +14,7 @@ import {
   getInitials,
   prettifyEnum,
 } from "@/lib/utils";
-import { Banknote } from "lucide-react";
-import { use, useState } from "react";
-import { MakePaymentDialog } from "../_components/make-payment-dialog";
+import { use } from "react";
 import { ReviewCard } from "../_components/review-card";
 import { useHire } from "../_hooks/use-hires";
 import Link from "next/link";
@@ -29,7 +27,6 @@ export default function HireDetail({
   params: Promise<{ reference: string }>;
 }) {
   const { reference } = use(params);
-  const [payOpen, setPayOpen] = useState(false);
 
   const { hire, isFetching } = useHire(reference);
 
@@ -145,14 +142,6 @@ export default function HireDetail({
             </span>
           </div>
         </div>
-
-        <Button
-          className="h-12 rounded-xl px-6 text-sm"
-          onClick={() => setPayOpen(true)}
-        >
-          <Banknote className="h-4 w-4" />
-          Make payment
-        </Button>
       </div>
 
       <div className="border-border mt-5 border-t" />
@@ -260,12 +249,6 @@ export default function HireDetail({
           </div>
         </div>
       </div>
-
-      <MakePaymentDialog
-        hire={hire}
-        isOpen={payOpen}
-        onOpenChange={setPayOpen}
-      />
     </div>
   );
 }

@@ -36,11 +36,20 @@ interface Props {
 }
 
 export const HireRequestRow = function ({ request }: Props) {
-  const driver = request.driver;
-  const name = driver
+  const drivers = request.assignments?.length
+    ? request.assignments.map((assignment) => assignment.driver)
+    : request.driver
+      ? [request.driver]
+      : [];
+  const driver = drivers[0] ?? null;
+  const baseName = driver
     ? [driver.first_name, driver.last_name].filter(Boolean).join(" ") ||
       "Driver"
-    : "Matching a driver for you";
+    : request.drivers_needed > 1
+      ? `Matching ${request.drivers_needed} drivers for you`
+      : "Matching a driver for you";
+  const name =
+    drivers.length > 1 ? `${baseName} +${drivers.length - 1} more` : baseName;
 
   return (
     <Link

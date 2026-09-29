@@ -130,12 +130,12 @@ export default function HireRequestDetail({
     );
   }
 
-  const driver = request.driver;
-  const name = driver
-    ? [driver.first_name, driver.last_name].filter(Boolean).join(" ") ||
-      "Driver"
-    : "your driver";
-  const pack = request.combo_pack;
+  const assignedDrivers = request.assignments?.length
+    ? request.assignments.map((assignment) => assignment.driver)
+    : request.driver
+      ? [request.driver]
+      : [];
+  const packs = request.combo_pack;
   const account = request.payment_account;
   const rejectedReason = invoice?.proof_rejected_reason;
 
@@ -166,9 +166,7 @@ export default function HireRequestDetail({
           </AppText>
         </div>
 
-        {["PENDING_REVIEW", "INVOICED", "PAYMENT_REVIEW"].includes(
-          request.status,
-        ) && (
+        {["PENDING_REVIEW", "INVOICED"].includes(request.status) && (
           <Button
             variant="outline"
             className="text-destructive border-destructive/40 h-10 rounded-lg px-4 text-sm"
@@ -190,40 +188,56 @@ export default function HireRequestDetail({
         <div className="space-y-5">
           {/* The engagement summary */}
           <div className="border-border rounded-2xl border bg-white p-5">
-            {driver ? (
-              <div className="flex items-center gap-4">
-                <Avatar className="h-14 w-14">
-                  <AvatarImage src={driver.profile_pic ?? undefined} alt="" />
-                  <AvatarFallback>
-                    {getInitials(driver.first_name, driver.last_name)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="min-w-0 flex-1">
-                  <AppText type="h3" className="text-base font-bold">
-                    {[driver.first_name, driver.last_name]
-                      .filter(Boolean)
-                      .join(" ") || "Driver"}
-                  </AppText>
+            {assignedDrivers.length ? (
+              <div className="space-y-4">
+                {assignedDrivers.map((driver) => (
+                  <div key={driver.id} className="flex items-center gap-4">
+                    <Avatar className="h-14 w-14">
+                      <AvatarImage
+                        src={driver.profile_pic ?? undefined}
+                        alt=""
+                      />
+                      <AvatarFallback>
+                        {getInitials(driver.first_name, driver.last_name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="min-w-0 flex-1">
+                      <AppText type="h3" className="text-base font-bold">
+                        {[driver.first_name, driver.last_name]
+                          .filter(Boolean)
+                          .join(" ") || "Driver"}
+                      </AppText>
+                      <AppText
+                        type="caption"
+                        className="text-muted-foreground block text-xs"
+                      >
+                        {[
+                          driverTypeLabel(
+                            driver.driver_profile?.driver_type ?? undefined,
+                          ),
+                          [driver.city, driver.state_of_residence]
+                            .filter(Boolean)
+                            .join(", "),
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </AppText>
+                    </div>
+                    <TrustRing
+                      score={driver.driver_profile?.trust_score ?? 0}
+                      size={52}
+                    />
+                  </div>
+                ))}
+                {assignedDrivers.length < request.drivers_needed && (
                   <AppText
                     type="caption"
                     className="text-muted-foreground block text-xs"
                   >
-                    {[
-                      driverTypeLabel(
-                        driver.driver_profile?.driver_type ?? undefined,
-                      ),
-                      [driver.city, driver.state_of_residence]
-                        .filter(Boolean)
-                        .join(", "),
-                    ]
-                      .filter(Boolean)
-                      .join(" · ")}
+                    {request.drivers_needed - assignedDrivers.length} more
+                    driver(s) still being matched.
                   </AppText>
-                </div>
-                <TrustRing
-                  score={driver.driver_profile?.trust_score ?? 0}
-                  size={52}
-                />
+                )}
               </div>
             ) : (
               <div className="flex items-center gap-4">
@@ -232,13 +246,17 @@ export default function HireRequestDetail({
                 </span>
                 <div className="min-w-0 flex-1">
                   <AppText type="h3" className="text-base font-bold">
-                    We're matching a driver for you
+                    We're matching{" "}
+                    {request.drivers_needed > 1
+                      ? `${request.drivers_needed} drivers`
+                      : "a driver"}{" "}
+                    for you
                   </AppText>
                   <AppText
                     type="caption"
                     className="text-muted-foreground block text-xs"
                   >
-                    Our team is picking a vetted driver that fits your
+                    Our team is picking vetted drivers that fit your
                     requirements below.
                   </AppText>
                 </div>
@@ -279,7 +297,7 @@ export default function HireRequestDetail({
                       value: `${request.duration_months} month${request.duration_months > 1 ? "s" : ""}`,
                     }
                   : null,
-                !driver && request.driver_type
+                !assignedDrivers.length && request.driver_type
                   ? {
                       label: "Driver type",
                       value: driverTypeLabel(request.driver_type),
@@ -326,7 +344,7 @@ export default function HireRequestDetail({
           {/* The combo pack - locked until paid */}
           <div className="border-border rounded-2xl border bg-white p-5">
             <span className="flex items-center gap-2">
-              {pack ? (
+              {packs?.length ? (
                 <LockOpen className="h-4 w-4 text-emerald-600" />
               ) : (
                 <Lock className="text-muted-foreground h-4 w-4" />
@@ -336,63 +354,83 @@ export default function HireRequestDetail({
               </AppText>
             </span>
 
-            {pack ? (
-              <div className="mt-4 space-y-3">
-                {[
-                  { icon: Phone, label: "Phone", value: pack.phone_no },
-                  {
-                    icon: Phone,
-                    label: "WhatsApp",
-                    value: pack.whatsapp_number,
-                  },
-                  { icon: Mail, label: "Email", value: pack.email },
-                  {
-                    icon: MapPin,
-                    label: "Location",
-                    value: [pack.city, pack.state_of_residence]
-                      .filter(Boolean)
-                      .join(", "),
-                  },
-                ]
-                  .filter((row) => row.value)
-                  .map((row) => {
-                    const Icon = row.icon;
-                    return (
-                      <span
-                        key={row.label}
-                        className="flex items-center justify-between gap-3"
-                      >
-                        <span className="flex items-center gap-3">
-                          <span className="bg-muted flex h-8 w-8 items-center justify-center rounded-full">
-                            <Icon className="text-muted-foreground h-4 w-4" />
-                          </span>
-                          <AppText
-                            type="caption"
-                            className="text-muted-foreground"
+            {packs?.length ? (
+              <div className="mt-4 space-y-5">
+                {packs.map((pack, index) => (
+                  <div key={pack.email ?? index} className="space-y-3">
+                    {packs.length > 1 && (
+                      <AppText type="label" className="block text-sm font-bold">
+                        {[pack.first_name, pack.last_name]
+                          .filter(Boolean)
+                          .join(" ") || `Driver ${index + 1}`}
+                      </AppText>
+                    )}
+                    {[
+                      { icon: Phone, label: "Phone", value: pack.phone_no },
+                      {
+                        icon: Phone,
+                        label: "WhatsApp",
+                        value: pack.whatsapp_number,
+                      },
+                      { icon: Mail, label: "Email", value: pack.email },
+                      {
+                        icon: MapPin,
+                        label: "Location",
+                        value: [pack.city, pack.state_of_residence]
+                          .filter(Boolean)
+                          .join(", "),
+                      },
+                    ]
+                      .filter((row) => row.value)
+                      .map((row) => {
+                        const Icon = row.icon;
+                        return (
+                          <span
+                            key={row.label}
+                            className="flex items-center justify-between gap-3"
                           >
-                            {row.label}
-                          </AppText>
-                        </span>
-                        <AppText type="label" className="text-sm font-semibold">
-                          {row.value}
-                        </AppText>
-                      </span>
-                    );
-                  })}
+                            <span className="flex items-center gap-3">
+                              <span className="bg-muted flex h-8 w-8 items-center justify-center rounded-full">
+                                <Icon className="text-muted-foreground h-4 w-4" />
+                              </span>
+                              <AppText
+                                type="caption"
+                                className="text-muted-foreground"
+                              >
+                                {row.label}
+                              </AppText>
+                            </span>
+                            <AppText
+                              type="label"
+                              className="text-sm font-semibold"
+                            >
+                              {row.value}
+                            </AppText>
+                          </span>
+                        );
+                      })}
+                  </div>
+                ))}
 
                 {request.booking && (
                   <AppText
                     type="caption"
                     className="text-muted-foreground border-border block border-t pt-3 text-xs"
                   >
-                    This engagement now lives in{" "}
+                    {assignedDrivers.length > 1
+                      ? "These engagements now live in "
+                      : "This engagement now lives in "}
                     <Link
-                      href={`/dashboard/my-hire/${request.booking.reference}`}
+                      href={
+                        assignedDrivers.length > 1
+                          ? "/dashboard/my-hire"
+                          : `/dashboard/my-hire/${request.booking.reference}`
+                      }
                       className="text-brand font-semibold underline underline-offset-2"
                     >
                       My Hire
                     </Link>{" "}
-                    - reviews and further payments happen there.
+                    - reviews happen there.
                   </AppText>
                 )}
               </div>
@@ -401,8 +439,9 @@ export default function HireRequestDetail({
                 type="caption"
                 className="text-muted-foreground mt-3 block text-sm"
               >
-                The driver's verified phone, WhatsApp and email unlock here once
-                your payment is confirmed.
+                The verified phone, WhatsApp and email of your{" "}
+                {request.drivers_needed > 1 ? "drivers" : "driver"} unlock here
+                once your payment is confirmed.
               </AppText>
             )}
           </div>
@@ -432,6 +471,15 @@ export default function HireRequestDetail({
 
               <div className="mt-4 space-y-2.5">
                 {[
+                  invoice.per_driver_minor && request.drivers_needed > 1
+                    ? {
+                        label: `Salary per driver × ${request.drivers_needed}`,
+                        value: formatMoney(
+                          invoice.per_driver_minor,
+                          invoice.currency,
+                        ),
+                      }
+                    : null,
                   {
                     label: "Engagement amount",
                     value: formatMoney(invoice.amount_minor, invoice.currency),
@@ -444,19 +492,21 @@ export default function HireRequestDetail({
                     label: "Platform fee",
                     value: formatMoney(invoice.fee_minor, invoice.currency),
                   },
-                ].map((row) => (
-                  <span
-                    key={row.label}
-                    className="flex items-center justify-between"
-                  >
-                    <AppText type="caption" className="text-muted-foreground">
-                      {row.label}
-                    </AppText>
-                    <AppText type="label" className="text-sm">
-                      {row.value}
-                    </AppText>
-                  </span>
-                ))}
+                ]
+                  .filter((row) => row !== null)
+                  .map((row) => (
+                    <span
+                      key={row.label}
+                      className="flex items-center justify-between"
+                    >
+                      <AppText type="caption" className="text-muted-foreground">
+                        {row.label}
+                      </AppText>
+                      <AppText type="label" className="text-sm">
+                        {row.value}
+                      </AppText>
+                    </span>
+                  ))}
 
                 <span className="border-border flex items-center justify-between border-t pt-2.5">
                   <AppText type="label" className="text-sm font-bold">

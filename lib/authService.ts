@@ -2,16 +2,19 @@ import Cookies from "js-cookie";
 import { accessTokenExpiration } from "./api";
 
 export const isProd = process.env.NODE_ENV === "production";
-export const COOKIE_DOMAIN = ".tegat.com";
+
+// Apex domains whose subdomains share the session cookie.
+const SHARED_COOKIE_DOMAINS = [".hayadrivers.com", ".tegat.com"];
 
 // A cookie whose Domain doesn't match the page's host is silently rejected -
 // on any other host (vercel.app previews) fall back to a host-only cookie.
-const cookieDomain = () =>
-  isProd &&
-  typeof window !== "undefined" &&
-  window.location.hostname.endsWith(COOKIE_DOMAIN.slice(1))
-    ? COOKIE_DOMAIN
-    : undefined;
+const cookieDomain = () => {
+  if (!isProd || typeof window === "undefined") return undefined;
+
+  return SHARED_COOKIE_DOMAINS.find((domain) =>
+    window.location.hostname.endsWith(domain.slice(1)),
+  );
+};
 
 export const cookieOpts = (expires: Date) => ({
   domain: cookieDomain(),

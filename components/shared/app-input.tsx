@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Check, Eye, EyeOff, Search, type LucideIcon } from "lucide-react";
 
 interface Props extends React.ComponentProps<"input"> {
-  label?: string;
+  label?: React.ReactNode;
   error?: string;
   containerClassName?: string;
   icon?: LucideIcon;
@@ -29,7 +29,11 @@ export const AppInput = function ({
   const isSearch = type === "search";
   const [showPassword, setShowPassword] = useState(false);
 
-  const inputId = id ?? label?.toLowerCase().replace(/\s+/g, "-");
+  const inputId =
+    id ??
+    (typeof label === "string"
+      ? label.toLowerCase().replace(/\s+/g, "-")
+      : undefined);
   const resolvedType = isPassword ? (showPassword ? "text" : "password") : type;
   const ResolvedIcon = Icon ?? (isSearch ? Search : undefined);
 

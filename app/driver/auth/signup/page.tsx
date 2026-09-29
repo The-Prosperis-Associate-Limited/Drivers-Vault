@@ -103,7 +103,27 @@ export default function SignUp() {
           name="accepted_terms"
           errors={errors}
           type="checkbox"
-          label="I agree to Drivers Vault's Terms of Service and Privacy Policy"
+          id="accepted_terms"
+          label={
+            <>
+              I agree to Drivers Vault's{" "}
+              <Link
+                href="/terms"
+                target="_blank"
+                className="text-brand underline underline-offset-2"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                href="/privacy"
+                target="_blank"
+                className="text-brand underline underline-offset-2"
+              >
+                Privacy Policy
+              </Link>
+            </>
+          }
         />
 
         <Button

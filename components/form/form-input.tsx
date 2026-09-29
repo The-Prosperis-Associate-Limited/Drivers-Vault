@@ -17,7 +17,7 @@ interface Props<TFieldValues extends FieldValues> extends Omit<
   control: Control<TFieldValues>;
   name: Path<TFieldValues>;
   errors?: FieldErrors<TFieldValues>;
-  label?: string;
+  label?: React.ReactNode;
   containerClassName?: string;
   icon?: LucideIcon;
   suffix?: string;

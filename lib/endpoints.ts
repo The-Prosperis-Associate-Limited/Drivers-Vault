@@ -160,25 +160,6 @@ export const API_ENDPOINTS = {
     ) => `/client/requests/${reference}/matches?page=${page}&limit=${limit}`,
   },
 
-  wallet: {
-    get: "/client/wallet",
-    transactions: ({
-      page,
-      limit,
-      type,
-    }: {
-      page: number;
-      limit: number;
-      type?: string;
-    }) =>
-      `/client/wallet/transactions?page=${page}&limit=${limit}${type ? `&type=${type}` : ""}`,
-    summary: "/client/wallet/summary",
-    quote: (amountMinor: number) =>
-      `/client/wallet/quote?amount_minor=${amountMinor}`,
-    pay: "/client/wallet/pay",
-    sync: "/client/wallet/sync",
-  },
-
   bookings: {
     list: ({ page, limit }: { page: number; limit: number }) =>
       `/client/bookings?page=${page}&limit=${limit}`,
@@ -400,6 +381,7 @@ export const API_ENDPOINTS = {
       `/admin/hires?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
     detail: (reference: string) => `/admin/hires/${reference}`,
     assign: (reference: string) => `/admin/hires/${reference}/assign`,
+    unassign: (reference: string) => `/admin/hires/${reference}/unassign`,
     invoice: (reference: string) => `/admin/hires/${reference}/invoice`,
     confirmPayment: (reference: string) =>
       `/admin/hires/${reference}/confirm-payment`,

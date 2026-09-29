@@ -22,6 +22,7 @@ export interface HireInvoice {
   id: string;
   reference: string;
   amount_minor: number;
+  per_driver_minor: number | null;
   vat_percent: number;
   vat_minor: number;
   fee_minor: number;
@@ -81,6 +82,12 @@ export interface ComboPack {
   state_of_residence: string | null;
 }
 
+export interface HireAssignment {
+  id: string;
+  driverId: string;
+  driver: HireRequestDriver;
+}
+
 export interface HireRequest {
   id: string;
   reference: string;
@@ -106,9 +113,10 @@ export interface HireRequest {
   paid_at: string | null;
   createdAt: string;
   driver: HireRequestDriver | null;
+  assignments: HireAssignment[];
   client?: HireRequestClient;
   invoice: HireInvoice | null;
   booking?: { id: string; reference: string; status: string } | null;
-  combo_pack?: ComboPack | null;
+  combo_pack?: ComboPack[] | null;
   payment_account?: PaymentAccount | null;
 }

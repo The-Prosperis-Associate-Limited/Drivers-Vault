@@ -5,7 +5,7 @@ import { TegatLogo } from "@/components/svg/logo";
 const PLATFORM_LINKS = [
   { label: "Candidate directory", href: "/marketplace" },
   { label: "Search candidates", href: "/marketplace" },
-  { label: "Subscription plans", href: "/pricing" },
+  { label: "Drive with us", href: "/drivers" },
   { label: "Register as a client", href: "/auth/signup" },
 ];
 
@@ -70,6 +70,17 @@ export const SiteFooter = function () {
       <div className="border-t border-white/15">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-white/60 md:flex-row md:items-center md:justify-between md:px-8">
           <p>© 2026 Drivers Vault. All rights reserved.</p>
+          <span className="flex items-center gap-4">
+            <Link href="/terms" className="transition-colors hover:text-white">
+              Terms of service
+            </Link>
+            <Link
+              href="/privacy"
+              className="transition-colors hover:text-white"
+            >
+              Privacy policy
+            </Link>
+          </span>
           <p className="tracking-[0.2em] uppercase">
             Verified hiring for Nigeria
           </p>

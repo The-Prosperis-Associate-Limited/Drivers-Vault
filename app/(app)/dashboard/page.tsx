@@ -211,56 +211,18 @@ export default function DashboardOverview() {
         </SectionCard>
 
         <SectionCard
-          title="Recent payments"
-          action={seeAll("/dashboard/transactions", "See Transaction")}
+          title="Hire requests"
+          action={seeAll("/dashboard/my-hire", "See requests")}
         >
           {!overview ? (
             <Skeleton className="mt-4 h-40 rounded-xl" />
-          ) : overview.recent_payments.length === 0 ? (
+          ) : (
             <AppText
               type="caption"
               className="text-muted-foreground mt-4 block"
             >
-              Payments to your drivers will appear here.
+              Track your hire requests, invoices and payments under My Hire.
             </AppText>
-          ) : (
-            <div className="mt-2 divide-y">
-              {overview.recent_payments.map((payment) => (
-                <div
-                  key={payment.id}
-                  className="flex items-center justify-between gap-3 py-3.5"
-                >
-                  <span className="min-w-0">
-                    <AppText type="label" className="block truncate text-sm">
-                      {[
-                        payment.booking?.driver?.first_name,
-                        payment.booking?.driver?.last_name,
-                      ]
-                        .filter(Boolean)
-                        .join(" ") || "Driver"}
-                    </AppText>
-                    <AppText
-                      type="caption"
-                      className="text-muted-foreground mt-0.5 block truncate"
-                    >
-                      {payment.description ?? "Payment"} ·{" "}
-                      {formatDate(payment.createdAt)}
-                    </AppText>
-                  </span>
-                  <span className="shrink-0 text-right">
-                    <AppText type="label" className="block text-sm">
-                      {formatMoney(
-                        Math.abs(payment.amount_minor),
-                        payment.currency,
-                      )}
-                    </AppText>
-                    <span className="mt-1 inline-block rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-600">
-                      Paid
-                    </span>
-                  </span>
-                </div>
-              ))}
-            </div>
           )}
         </SectionCard>
       </div>
