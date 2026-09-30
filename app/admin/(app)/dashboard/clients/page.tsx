@@ -77,7 +77,7 @@ export default function AdminClients() {
           Clients
         </AppText>
         <AppText type="subtitle" className="text-muted-foreground text-sm">
-          Individual and organization clients hiring drivers on Drivers Vault.
+          Individual and organization clients hiring drivers on Haya Drivers.
         </AppText>
       </div>
 

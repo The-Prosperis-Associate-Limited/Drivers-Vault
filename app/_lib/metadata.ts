@@ -17,7 +17,7 @@ export const rootMetadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: [
-    "drivers vault",
+    "haya drivers",
     "hire a driver",
     "verified drivers",
     "professional drivers Nigeria",

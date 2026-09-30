@@ -36,7 +36,7 @@ export default function FindTalent() {
         Find verified talent
       </AppText>
       <AppText type="subtitle" className="text-muted-foreground mt-1 text-sm">
-        Every profile below has passed Drivers Vault identity, licence and
+        Every profile below has passed Haya Drivers identity, licence and
         guarantor checks. Filter by role, city and budget.
       </AppText>
 

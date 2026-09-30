@@ -5,7 +5,7 @@ const STEPS = [
     number: "01",
     title: "Browse & search",
     blurb:
-      "Explore verified candidates by role, or search by name or Drivers Vault ID.",
+      "Explore verified candidates by role, or search by name or Haya Drivers ID.",
   },
   {
     number: "02",

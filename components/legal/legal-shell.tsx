@@ -16,7 +16,7 @@ export function LegalShell({ title, updated, children }: Props) {
           <Link href="/" className="flex items-center gap-2">
             <TegatLogo size={26} />
             <span className="font-serif text-lg font-semibold">
-              Drivers Vault
+              Haya Drivers
             </span>
           </Link>
           <Link

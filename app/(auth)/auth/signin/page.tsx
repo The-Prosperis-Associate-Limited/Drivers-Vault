@@ -66,7 +66,7 @@ function SignInForm() {
   return (
     <AuthShell>
       <AuthHeading
-        title="Sign in to Drivers Vault"
+        title="Sign in to Haya Drivers"
         subtitle="Enter your details to access your account."
       />
 

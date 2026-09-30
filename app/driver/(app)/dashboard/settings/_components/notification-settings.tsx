@@ -48,7 +48,7 @@ const GROUPS: {
       {
         key: "product_news",
         label: "Product news & tips",
-        description: "Occasional updates about new Drivers Vault features.",
+        description: "Occasional updates about new Haya Drivers features.",
       },
     ],
   },

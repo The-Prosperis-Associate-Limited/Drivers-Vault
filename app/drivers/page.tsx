@@ -22,17 +22,17 @@ export const metadata: Metadata = {
     "become a driver",
   ],
   openGraph: {
-    title: "Drive on your terms. Earn what you're worth - Drivers Vault",
+    title: "Drive on your terms. Earn what you're worth - Haya Drivers",
     description:
       "Clear pay, fair terms, verified clients. Apply, get verified, and pick the driving jobs that suit you.",
     type: "website",
-    siteName: "Drivers Vault",
+    siteName: "Haya Drivers",
     url: "/drivers",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Drive on your terms. Earn what you're worth - Drivers Vault",
+    title: "Drive on your terms. Earn what you're worth - Haya Drivers",
     description:
       "Clear pay, fair terms, verified clients. Pick the driving jobs that suit you.",
     images: ["/og-image.png"],
@@ -51,7 +51,7 @@ export default function DriversLanding() {
         <ForDriversSection />
 
         <WhySection
-          chip="Why drive with Drivers Vault"
+          chip="Why drive with Haya Drivers"
           heading="Work that respects your profession"
           features={[
             {
@@ -73,7 +73,7 @@ export default function DriversLanding() {
           ctaLabel="Sign up"
           ctaHref="/driver/auth/signup"
           screenshot="/landing/driver-dash.png"
-          screenshotAlt="The Drivers Vault driver dashboard"
+          screenshotAlt="The Haya Drivers driver dashboard"
         />
 
         <StepsSection
@@ -134,7 +134,7 @@ export default function DriversLanding() {
             {
               question: "How do I get paid?",
               answer:
-                "Earnings land in your Drivers Vault wallet when a job completes, and you withdraw to your own bank account whenever you choose. You always see the full pay for a job before you accept it.",
+                "Earnings land in your Haya Drivers wallet when a job completes, and you withdraw to your own bank account whenever you choose. You always see the full pay for a job before you accept it.",
             },
             {
               question: "Can I choose my own schedule?",

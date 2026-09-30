@@ -5,7 +5,7 @@ import { LegalShell } from "@/components/legal/legal-shell";
 export const metadata: Metadata = {
   title: "Terms of service",
   description:
-    "The terms that govern your use of Drivers Vault - for clients hiring drivers and for drivers offering their services.",
+    "The terms that govern your use of Haya Drivers - for clients hiring drivers and for drivers offering their services.",
   alternates: { canonical: "/terms" },
 };
 
@@ -14,7 +14,7 @@ export default function TermsOfService() {
     <LegalShell title="Terms of service" updated="29 September 2026">
       <section>
         <p>
-          These terms govern your use of Drivers Vault (the "platform", "we",
+          These terms govern your use of Haya Drivers (the "platform", "we",
           "us"), a service that connects clients with vetted, professional
           drivers in Nigeria. By creating an account or using the platform you
           agree to these terms. If you do not agree, do not use the platform.
@@ -22,9 +22,9 @@ export default function TermsOfService() {
       </section>
 
       <section>
-        <h2>1. What Drivers Vault does</h2>
+        <h2>1. What Haya Drivers does</h2>
         <p>
-          Drivers Vault verifies the identity, driving licence and guarantor of
+          Haya Drivers verifies the identity, driving licence and guarantor of
           every driver on the platform before they can be hired, and brokers
           engagements between clients and drivers. We facilitate introductions,
           invoicing and payment administration. Unless expressly stated

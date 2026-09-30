@@ -5,7 +5,7 @@ import { LegalShell } from "@/components/legal/legal-shell";
 export const metadata: Metadata = {
   title: "Privacy policy",
   description:
-    "How Drivers Vault collects, uses, shares and protects your personal data.",
+    "How Haya Drivers collects, uses, shares and protects your personal data.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
     <LegalShell title="Privacy policy" updated="29 September 2026">
       <section>
         <p>
-          This policy explains what personal data Drivers Vault ("we", "us")
+          This policy explains what personal data Haya Drivers ("we", "us")
           collects, why we collect it, who we share it with and the choices you
           have. We process personal data in line with the Nigeria Data
           Protection Act and only for the purposes described here.

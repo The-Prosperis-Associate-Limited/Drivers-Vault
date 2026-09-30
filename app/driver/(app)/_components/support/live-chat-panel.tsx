@@ -17,7 +17,7 @@ export const LiveChatPanel = function ({ firstName }: Props) {
   return (
     <LiveChat
       firstName={firstName}
-      greeting="Welcome to Drivers Vault support. Send a message and one of our agents will reply here shortly."
+      greeting="Welcome to Haya Drivers support. Send a message and one of our agents will reply here shortly."
       quickReplies={QUICK_REPLIES}
     />
   );

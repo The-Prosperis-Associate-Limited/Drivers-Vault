@@ -37,7 +37,7 @@ export const ClientOverview = function ({ user }: Props) {
 
           <div className="mt-2 flex items-center gap-2">
             <AppText type="caption" className="text-brand font-medium">
-              Drivers Vault ID: {tegatDisplayId(user.id, "CLIENT")}
+              Haya Drivers ID: {tegatDisplayId(user.id, "CLIENT")}
             </AppText>
             <StatusBadge
               label={statusLabel(user.account_status)}

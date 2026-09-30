@@ -106,7 +106,7 @@ export default function SignUp() {
           id="accepted_terms"
           label={
             <>
-              I agree to Drivers Vault's{" "}
+              I agree to Haya Drivers's{" "}
               <Link
                 href="/terms"
                 target="_blank"
