@@ -46,11 +46,6 @@ const GROUPS: {
         description: "Progress on your identity and document checks.",
       },
       {
-        key: "training_reminders",
-        label: "Training reminders",
-        description: "Nudge me about courses that raise my trust score.",
-      },
-      {
         key: "product_news",
         label: "Product news & tips",
         description: "Occasional updates about new Drivers Vault features.",

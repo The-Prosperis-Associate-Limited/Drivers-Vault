@@ -2,6 +2,7 @@ import {
   BookOpen,
   BriefcaseBusiness,
   LayoutGrid,
+  Search,
   Settings,
   type LucideIcon,
 } from "lucide-react";
@@ -16,6 +17,11 @@ export interface NavLink {
 // the routes still exist but nothing links to them.
 export const NAV_LINKS: NavLink[] = [
   { label: "Overview", href: "/dashboard", icon: LayoutGrid },
+  {
+    label: "Find drivers",
+    href: "/dashboard/requests/find-talent",
+    icon: Search,
+  },
   { label: "My Hire", href: "/dashboard/my-hire", icon: BriefcaseBusiness },
   { label: "Request", href: "/dashboard/requests", icon: BookOpen },
 ];

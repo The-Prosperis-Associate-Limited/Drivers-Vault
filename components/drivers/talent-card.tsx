@@ -18,7 +18,7 @@ export const TalentCard = function ({ driver }: Props) {
     [driver.user.first_name, driver.user.last_name].filter(Boolean).join(" ") ||
     "Driver";
 
-  const chips = driver.certification_titles.slice(0, 4);
+  const chips = driver.languages.slice(0, 4);
 
   return (
     <div className="border-border rounded-2xl border bg-white p-5 shadow-sm">
@@ -64,7 +64,7 @@ export const TalentCard = function ({ driver }: Props) {
             type="caption"
             className="text-muted-foreground block text-[10px] font-semibold tracking-[0.2em] uppercase"
           >
-            Certifications
+            Languages
           </AppText>
           <div className="mt-2 flex flex-wrap gap-2">
             {chips.map((title) => (

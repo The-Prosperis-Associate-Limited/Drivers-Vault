@@ -151,8 +151,7 @@ export interface DocumentsResponse {
   missing: { type: DocumentType; label: string }[];
 }
 
-export type TrustScoreComponent =
-  "verification" | "training" | "completions" | "reviews";
+export type TrustScoreComponent = "verification" | "completions" | "reviews";
 
 export interface TrustScoreActivity {
   id: string;
@@ -168,15 +167,11 @@ export interface TrustScoreBreakdown {
   total: number;
   percentile: number | null;
   verification: number;
-  training: number;
   completions: number;
   reviews: number;
   max: Record<TrustScoreComponent, number>;
   facts: {
     verification_status: DriverVerificationStatus;
-    certifications_earned: number;
-    required_courses: number;
-    required_courses_completed: number;
     bookings_completed: number;
     bookings_engaged: number;
     review_average: number;
@@ -213,15 +208,7 @@ export interface DriverSearchResult {
   rate_currency: string;
   rating: number;
   review_count: number;
-  certification_titles: string[];
   user: DriverPublicUser;
-}
-
-export interface DriverCertification {
-  id: string;
-  title: string;
-  issued_at: string;
-  expires_at: string | null;
 }
 
 export interface PublicDriverProfile extends DriverSearchResult {
@@ -229,7 +216,6 @@ export interface PublicDriverProfile extends DriverSearchResult {
   completed_jobs: number;
   response_time_minutes: number | null;
   on_time_rate: number | null;
-  certifications: DriverCertification[];
   work_experiences: WorkExperience[];
 }
 

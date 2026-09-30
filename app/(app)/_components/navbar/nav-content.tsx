@@ -24,8 +24,18 @@ interface Props {
 export const NavContent = function ({ user, onNavigate }: Props) {
   const pathname = usePathname();
 
-  const isActive = (href: string) =>
-    href === "/dashboard" ? pathname === href : pathname.startsWith(href);
+  // The longest matching href wins, so /dashboard/requests/find-talent lights
+  // up "Find drivers" without also lighting up "Request".
+  const allHrefs = [...NAV_LINKS, ...FOOTER_LINKS].map((link) => link.href);
+  const activeHref = allHrefs
+    .filter((href) =>
+      href === "/dashboard"
+        ? pathname === href
+        : pathname === href || pathname.startsWith(`${href}/`),
+    )
+    .sort((a, b) => b.length - a.length)[0];
+
+  const isActive = (href: string) => href === activeHref;
 
   // Clients never set a location anywhere, so the email stands in rather than
   // a permanent "Location not set".

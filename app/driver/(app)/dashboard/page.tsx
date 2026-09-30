@@ -79,13 +79,6 @@ export default function Overview() {
               captionTone="muted"
               href="/driver/dashboard/reviews"
             />
-            <StatCard
-              label="Training completed"
-              value={stats?.training_completed ?? 0}
-              caption="Required modules"
-              captionTone="muted"
-              href="/driver/dashboard/training"
-            />
           </>
         )}
       </div>
@@ -116,13 +109,13 @@ export default function Overview() {
               description={
                 isVerified
                   ? "New requests from clients will show up here."
-                  : "Take courses to improve your trustscore on the platform"
+                  : "Complete your verification to start receiving job requests"
               }
               action={
                 !isVerified &&
                 !hasAttention && (
                   <Button asChild className="h-11 rounded-lg px-6">
-                    <Link href="/driver/dashboard/training">Get started</Link>
+                    <Link href="/driver/dashboard/settings">Get started</Link>
                   </Button>
                 )
               }

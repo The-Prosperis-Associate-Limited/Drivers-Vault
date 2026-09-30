@@ -40,7 +40,7 @@ export const FAQ_SECTIONS: FaqSection[] = [
       {
         question: "How do I get my first job?",
         answer:
-          "Finish verification, then complete the required learning path. Clients search verified drivers by trust score, so certifications and a complete profile are what put you in front of them.",
+          "Finish verification and keep your profile complete. Clients search verified drivers by trust score, so cleared checks, completed bookings and good reviews are what put you in front of them.",
       },
       {
         question: "A client cancelled my booking",
@@ -72,7 +72,7 @@ export const FAQ_SECTIONS: FaqSection[] = [
       {
         question: "How is my trust score calculated?",
         answer:
-          "Four things: clearing verification, completing required training, completing bookings, and your average client rating. Open Trust score from your dashboard to see exactly what each one is worth right now.",
+          "Three things: clearing verification, completing bookings, and your average client rating. Open Trust score from your dashboard to see exactly what each one is worth right now.",
       },
     ],
   },

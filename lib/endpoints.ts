@@ -109,30 +109,6 @@ export const API_ENDPOINTS = {
     summary: "/driver/reviews/summary",
   },
 
-  training: {
-    stats: "/driver/training/stats",
-    path: "/driver/training/path",
-    courses: ({
-      page,
-      limit,
-      search,
-      category,
-    }: {
-      page: number;
-      limit: number;
-      search?: string;
-      category?: string;
-    }) =>
-      `/driver/training/courses?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}${category ? `&category=${encodeURIComponent(category)}` : ""}`,
-    getCourse: (slug: string) => `/driver/training/courses/${slug}`,
-    enroll: (slug: string) => `/driver/training/courses/${slug}/enroll`,
-    moduleProgress: (slug: string, moduleId: string) =>
-      `/driver/training/courses/${slug}/modules/${moduleId}/progress`,
-    enrollments: ({ page, limit }: { page: number; limit: number }) =>
-      `/driver/training/enrollments?page=${page}&limit=${limit}`,
-    certifications: "/driver/training/certifications",
-  },
-
   push: {
     web: "/push/web",
     deviceToken: "/push/device-token",
@@ -277,38 +253,6 @@ export const API_ENDPOINTS = {
       `/admin/payouts?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
     payout: (reference: string) => `/admin/payouts/${reference}`,
     settlePayout: (reference: string) => `/admin/payouts/${reference}`,
-  },
-
-  adminTraining: {
-    stats: "/admin/training/stats",
-    progress: ({
-      page,
-      limit,
-      status,
-      search,
-    }: {
-      page: number;
-      limit: number;
-      status?: string;
-      search?: string;
-    }) =>
-      `/admin/training/progress?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
-    courses: ({
-      page,
-      limit,
-      status,
-    }: {
-      page: number;
-      limit: number;
-      status?: string;
-    }) =>
-      `/admin/training/courses?page=${page}&limit=${limit}${status ? `&status=${status}` : ""}`,
-    createCourse: "/admin/training/courses",
-    course: (id: string) => `/admin/training/courses/${id}`,
-    publishCourse: (id: string) => `/admin/training/courses/${id}/publish`,
-    unpublishCourse: (id: string) => `/admin/training/courses/${id}/unpublish`,
-    addModule: (id: string) => `/admin/training/courses/${id}/modules`,
-    module: (moduleId: string) => `/admin/training/modules/${moduleId}`,
   },
 
   adminTeam: {

@@ -7,7 +7,6 @@ import type {
   Guarantor,
   WorkExperience,
 } from "./driver";
-import type { Course } from "./training";
 
 export type AdminRole =
   | "SUPER_ADMIN"
@@ -202,21 +201,6 @@ export interface AdminPayoutRow {
     account_number: string;
     account_name: string;
   } | null;
-}
-
-export interface AdminTrainingStats {
-  published: number;
-  drafts: number;
-  archived: number;
-  required: number;
-}
-
-export type CourseStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
-
-export interface AdminCourse extends Course {
-  status: CourseStatus;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export type EnrollmentStatus = "IN_PROGRESS" | "COMPLETED" | "ABANDONED";

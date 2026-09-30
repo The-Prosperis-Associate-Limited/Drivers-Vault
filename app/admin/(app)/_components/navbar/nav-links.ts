@@ -1,6 +1,5 @@
 import {
   ArrowLeftRight,
-  GraduationCap,
   LayoutGrid,
   MessagesSquare,
   ReceiptText,
@@ -29,11 +28,6 @@ export const ADMIN_NAV_LINKS: AdminNavLink[] = [
     href: "/admin/dashboard/hires",
     label: "Hires",
     icon: ReceiptText,
-  },
-  {
-    href: "/admin/dashboard/training",
-    label: "Training",
-    icon: GraduationCap,
   },
   {
     href: "/admin/dashboard/support",

@@ -18,7 +18,6 @@ import {
   Clock,
   MessageSquareOff,
   Plus,
-  ScrollText,
   UserRound,
 } from "lucide-react";
 import type {
@@ -177,29 +176,6 @@ export const DriverProfileDialog = function ({
                 >
                   {profile.user.bio}
                 </AppText>
-              </div>
-            )}
-
-            {profile.certifications.length > 0 && (
-              <div className="mt-6">
-                <AppText type="h3" className="text-base font-semibold">
-                  Training and Certificate
-                </AppText>
-                <div className="bg-muted/40 mt-3 flex flex-wrap gap-3 rounded-xl p-3">
-                  {profile.certifications.map((certification) => (
-                    <span
-                      key={certification.id}
-                      className="border-border flex items-center gap-2 rounded-lg border bg-white px-4 py-3"
-                    >
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50">
-                        <ScrollText className="h-4 w-4 text-amber-500" />
-                      </span>
-                      <AppText type="label" className="text-brand text-sm">
-                        {certification.title}
-                      </AppText>
-                    </span>
-                  ))}
-                </div>
               </div>
             )}
 

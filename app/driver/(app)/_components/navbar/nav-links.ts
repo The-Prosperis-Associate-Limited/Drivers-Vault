@@ -1,8 +1,9 @@
 import {
-  BookOpen,
   Briefcase,
   LayoutGrid,
   Settings,
+  ShieldCheck,
+  Star,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,12 +28,14 @@ export const NAV_LINKS: NavLink[] = [
     icon: Briefcase,
   },
   {
-    label: "Training",
-    href: "/driver/dashboard/training",
-    icon: BookOpen,
-    children: [
-      { label: "Courses", href: "/driver/dashboard/training/courses" },
-    ],
+    label: "Reviews",
+    href: "/driver/dashboard/reviews",
+    icon: Star,
+  },
+  {
+    label: "Trust Score",
+    href: "/driver/dashboard/trust-score",
+    icon: ShieldCheck,
   },
 ];
 

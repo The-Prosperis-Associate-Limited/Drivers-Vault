@@ -53,15 +53,6 @@ const componentsFor = function (breakdown: TrustScoreBreakdown) {
         ? `${facts.bookings_completed} of ${facts.bookings_engaged} bookings completed`
         : "No bookings taken on yet",
     },
-    {
-      key: "training",
-      label: "Training",
-      earned: breakdown.training,
-      max: max.training,
-      caption: facts.required_courses
-        ? `${facts.required_courses_completed} of ${facts.required_courses} required modules completed`
-        : "No required modules published yet",
-    },
   ];
 };
 

@@ -20,7 +20,6 @@ import {
 import {
   BadgeCheck,
   CircleCheck,
-  GraduationCap,
   Plus,
   ShieldCheck,
   UserRound,
@@ -182,27 +181,6 @@ export default function DriverProfilePage({
                 This driver hasn't written a bio yet.
               </AppText>
             )}
-
-            {profile.certifications.length > 0 && (
-              <div className="mt-4">
-                <AppText
-                  type="caption"
-                  className="text-muted-foreground block text-[10px] font-semibold tracking-[0.2em] uppercase"
-                >
-                  Certifications
-                </AppText>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {profile.certifications.map((certification) => (
-                    <span
-                      key={certification.id}
-                      className="bg-muted text-ink rounded-full px-3 py-1 text-xs font-medium"
-                    >
-                      {certification.title}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
           </Card>
 
           <Card title="Work history">
@@ -303,7 +281,7 @@ export default function DriverProfilePage({
                 type="caption"
                 className="text-muted-foreground mt-3 block text-center"
               >
-                Based on verified documents, training, reviews and reliability.
+                Based on verified documents, reviews and reliability.
               </AppText>
             </div>
           </Card>
@@ -322,18 +300,6 @@ export default function DriverProfilePage({
                 </span>
               ))}
             </div>
-          </Card>
-
-          <Card
-            title="Training"
-            icon={<GraduationCap className="text-brand h-5 w-5" />}
-          >
-            <AppText type="h2" className="mt-3 block text-2xl font-bold">
-              {profile.certifications.length}
-            </AppText>
-            <AppText type="caption" className="text-muted-foreground block">
-              course{profile.certifications.length === 1 ? "" : "s"} certified
-            </AppText>
           </Card>
 
           <Card title="Rate">
