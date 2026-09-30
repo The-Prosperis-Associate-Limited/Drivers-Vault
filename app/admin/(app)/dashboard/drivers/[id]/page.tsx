@@ -10,6 +10,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import type { APIResponse } from "@/types/response";
 import type { AdminUserDetail } from "@/types/admin";
+import { DeleteAccountButton } from "../../../_components/delete-account-button";
 import { UserWallet } from "../../../_components/user-wallet";
 import { DriverDocuments } from "./_components/driver-documents";
 import { DriverOverview } from "./_components/driver-overview";
@@ -33,14 +34,26 @@ function DriverDetail() {
     <div className="mx-auto max-w-6xl space-y-6">
       <BackLink href="/admin/dashboard/drivers" label="Back to drivers" />
 
-      <div>
-        <AppText type="h2" className="text-xl font-bold md:text-2xl">
-          Know your Driver.
-        </AppText>
-        <AppText type="subtitle" className="text-muted-foreground text-sm">
-          Review the driver's profile, documents and wallet before making a
-          decision.
-        </AppText>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <AppText type="h2" className="text-xl font-bold md:text-2xl">
+            Know your Driver.
+          </AppText>
+          <AppText type="subtitle" className="text-muted-foreground text-sm">
+            Review the driver's profile, documents and wallet before making a
+            decision.
+          </AppText>
+        </div>
+        {user && (
+          <DeleteAccountButton
+            userId={params.id}
+            name={
+              [user.first_name, user.last_name].filter(Boolean).join(" ") ||
+              "this driver"
+            }
+            backHref="/admin/dashboard/drivers"
+          />
+        )}
       </div>
 
       <AppTabs<Tab>
