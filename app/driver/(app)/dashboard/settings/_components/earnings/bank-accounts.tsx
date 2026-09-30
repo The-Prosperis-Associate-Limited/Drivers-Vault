@@ -19,6 +19,7 @@ export const BankAccounts = function () {
   const [adding, setAdding] = useState(false);
   const [bankCode, setBankCode] = useState<string | null>(null);
   const [accountNumber, setAccountNumber] = useState("");
+  const [accountName, setAccountName] = useState("");
 
   const { bankAccounts, isFetching } = useBankAccounts();
   const { banks } = useBanks({
@@ -32,6 +33,7 @@ export const BankAccounts = function () {
       setAdding(false);
       setBankCode(null);
       setAccountNumber("");
+      setAccountName("");
     },
   });
 
@@ -42,11 +44,15 @@ export const BankAccounts = function () {
     if (!/^\d{8,20}$/.test(accountNumber)) {
       return showToast("error", "Enter a valid account number");
     }
+    if (accountName.trim().length < 3) {
+      return showToast("error", "Enter the name on the account");
+    }
 
     addBankAccount({
       bank_code: bank.code,
       bank_name: bank.name,
       account_number: accountNumber,
+      account_name: accountName.trim(),
       currency: bank.currency || "NGN",
     });
   };
@@ -116,10 +122,16 @@ export const BankAccounts = function () {
             onChange={(event) => setAccountNumber(event.target.value)}
           />
 
-          {/* The name is never typed - the server confirms it with the bank, so
-              a typo cannot send money to a stranger. */}
+          <AppInput
+            label="Account name"
+            placeholder="The name on the account"
+            value={accountName}
+            onChange={(event) => setAccountName(event.target.value)}
+          />
+
           <AppText type="caption" className="text-muted-foreground block">
-            We confirm the account name with your bank before saving it.
+            Make sure the name matches your bank records exactly - payments are
+            sent to this account.
           </AppText>
 
           <div className="flex gap-3">

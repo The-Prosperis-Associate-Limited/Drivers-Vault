@@ -88,14 +88,15 @@ export const useAddBankAccount = function ({
       bank_code: string;
       bank_name: string;
       account_number: string;
+      account_name: string;
       currency: string;
     },
     APIResponse<BankAccount>
   >({
     url: API_ENDPOINTS.earnings.bankAccounts,
     method: "post",
-    // The account name is never sent - the server resolves it with the bank so
-    // a typo cannot send money to a stranger.
+    // No provider name-enquiry on the manual rail - the admin's banking app
+    // confirms the name at the moment money is actually sent.
     onSuccessMessage: "Bank account added",
     additionalQueryKeys: [[API_ENDPOINTS.earnings.bankAccounts]],
     onSuccess: () => onSuccess?.(),
