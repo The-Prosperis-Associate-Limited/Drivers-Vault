@@ -30,6 +30,7 @@ import {
 } from "@/lib/utils";
 import {
   BadgeCheck,
+  Clock3,
   ExternalLink,
   ReceiptText,
   Search,
@@ -57,9 +58,17 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
   const [driverSearch, setDriverSearch] = useState("");
 
   const assigned = request.assignments?.length
-    ? request.assignments.map((assignment) => assignment.driver)
+    ? request.assignments
     : request.driver
-      ? [request.driver]
+      ? [
+          {
+            id: request.driver.id,
+            driverId: request.driver.id,
+            status: "PENDING" as const,
+            responded_at: null,
+            driver: request.driver,
+          },
+        ]
       : [];
   const assignedCount = request.assignments?.length ?? 0;
   const fullyAssigned = assignedCount >= request.drivers_needed;
@@ -68,11 +77,11 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
   const rate = assigned.length
     ? Math.max(
         ...assigned.map(
-          (driver) => driver.driver_profile?.expected_monthly_rate ?? 0,
+          (entry) => entry.driver.driver_profile?.expected_monthly_rate ?? 0,
         ),
       ) || null
     : null;
-  const currency = assigned[0]?.driver_profile?.rate_currency ?? "NGN";
+  const currency = assigned[0]?.driver.driver_profile?.rate_currency ?? "NGN";
 
   // Naira input for the admin, kobo on the wire.
   const [amountMajor, setAmountMajor] = useState(
@@ -83,7 +92,7 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
   const [reason, setReason] = useState("");
   const [rejectReason, setRejectReason] = useState("");
 
-  const driver = assigned[0] ?? null;
+  const driver = assigned[0]?.driver ?? null;
   const baseName = driver
     ? [driver.first_name, driver.last_name].filter(Boolean).join(" ") ||
       "Driver"
@@ -113,7 +122,7 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
   const candidates = (driverResults?.data ?? []).filter(
     (row) =>
       row.driver_profile?.verification_status === "APPROVED" &&
-      !assigned.some((driver) => driver.id === row.id),
+      !assigned.some((entry) => entry.driver.id === row.id),
   );
 
   const { mutate: generate, isPending: isGenerating } = useSubmitData<{
@@ -140,12 +149,8 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
     driverId: string;
   }>({
     url: API_ENDPOINTS.adminHires.assign(request.reference),
-    onSuccessMessage: "Driver assigned",
+    onSuccessMessage: "Candidate added - availability ping sent",
     additionalQueryKeys: [[listUrl]],
-    onSuccess: () => {
-      // Keep the dialog open until every seat is filled.
-      if (assignedCount + 1 >= request.drivers_needed) setAssignOpen(false);
-    },
   });
 
   const { mutate: unassign, isPending: isUnassigning } = useSubmitData<{
@@ -213,16 +218,14 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
 
         {request.status === "PENDING_REVIEW" && (
           <div className="flex shrink-0 flex-wrap gap-2">
-            {!fullyAssigned && (
-              <Button
-                variant={assigned.length ? "outline" : "default"}
-                className="h-9 rounded-lg px-4 text-xs"
-                onClick={() => setAssignOpen(true)}
-              >
-                <UserPlus className="h-3.5 w-3.5" />
-                Assign driver ({assignedCount}/{request.drivers_needed})
-              </Button>
-            )}
+            <Button
+              variant={assigned.length ? "outline" : "default"}
+              className="h-9 rounded-lg px-4 text-xs"
+              onClick={() => setAssignOpen(true)}
+            >
+              <UserPlus className="h-3.5 w-3.5" />
+              Add candidates ({assignedCount}/{request.drivers_needed})
+            </Button>
             {fullyAssigned && (
               <Button
                 className="h-9 rounded-lg px-4 text-xs"
@@ -288,23 +291,43 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
               className="bg-muted flex items-center gap-2 rounded-full py-1 pr-2 pl-1"
             >
               <Avatar className="h-6 w-6">
-                <AvatarImage src={entry.profile_pic ?? undefined} alt="" />
+                <AvatarImage
+                  src={entry.driver.profile_pic ?? undefined}
+                  alt=""
+                />
                 <AvatarFallback className="text-[9px]">
-                  {getInitials(entry.first_name, entry.last_name)}
+                  {getInitials(entry.driver.first_name, entry.driver.last_name)}
                 </AvatarFallback>
               </Avatar>
               <AppText type="caption" className="text-xs font-semibold">
-                {[entry.first_name, entry.last_name]
+                {[entry.driver.first_name, entry.driver.last_name]
                   .filter(Boolean)
                   .join(" ") || "Driver"}
               </AppText>
+              {/* The availability handshake at a glance. */}
+              {entry.status === "CONFIRMED" ? (
+                <span title="Confirmed available">
+                  <BadgeCheck className="h-3.5 w-3.5 text-emerald-600" />
+                </span>
+              ) : entry.status === "DECLINED" ? (
+                <span
+                  className="text-[10px] font-semibold text-red-500"
+                  title="Not available"
+                >
+                  Declined
+                </span>
+              ) : (
+                <span title="Awaiting availability">
+                  <Clock3 className="h-3.5 w-3.5 text-amber-500" />
+                </span>
+              )}
               {request.status === "PENDING_REVIEW" && (
                 <button
                   type="button"
-                  aria-label={`Remove ${entry.first_name ?? "driver"}`}
+                  aria-label={`Remove ${entry.driver.first_name ?? "driver"}`}
                   className="text-muted-foreground hover:text-destructive transition-colors disabled:opacity-50"
                   disabled={isUnassigning}
-                  onClick={() => unassign({ driverId: entry.id })}
+                  onClick={() => unassign({ driverId: entry.driver.id })}
                 >
                   <XCircle className="h-3.5 w-3.5" />
                 </button>
@@ -510,8 +533,8 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
       <AppDialog
         isOpen={assignOpen}
         onOpenChange={setAssignOpen}
-        title={`Assign a driver (${assignedCount}/${request.drivers_needed})`}
-        description="Pick an approved driver that fits the client's requirements."
+        title={`Add candidates (${assignedCount} on the shortlist, ${request.drivers_needed} needed)`}
+        description="Every candidate gets an availability ping - add several at once and trim to the confirmed crew before invoicing."
       >
         <div className="space-y-4">
           <AppInput

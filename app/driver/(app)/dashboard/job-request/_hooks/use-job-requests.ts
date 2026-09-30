@@ -54,13 +54,13 @@ export const useJobRequest = function (reference: string, shouldFetch = true) {
 };
 
 /*
-  Accept, decline, start and complete are the same shape - a PATCH on the
-  reference that refetches the booking and the lists it appears in. The server
-  owns which transitions are legal; a refused one comes back as a message.
+  Start and complete are the same shape - a PATCH on the reference that
+  refetches the booking and the lists it appears in. The server owns which
+  transitions are legal; a refused one comes back as a message.
 
   The list url carries the page, limit and tab filter, so it is a different
   query key on every tab and no fixed key invalidates it. Matching on the
-  prefix is what moves an accepted request off the Open tab.
+  prefix is what refreshes every tab after a transition.
 */
 const useBookingAction = function ({
   url,
@@ -84,24 +84,6 @@ const useBookingAction = function ({
       });
     },
   });
-};
-
-export const useAcceptJobRequest = function (reference: string) {
-  const { mutate, isPending } = useBookingAction({
-    url: API_ENDPOINTS.jobRequests.accept(reference),
-    onSuccessMessage: "Job request accepted",
-  });
-
-  return { acceptJobRequest: mutate, isPending };
-};
-
-export const useDeclineJobRequest = function (reference: string) {
-  const { mutate, isPending } = useBookingAction({
-    url: API_ENDPOINTS.jobRequests.decline(reference),
-    onSuccessMessage: "Job request declined",
-  });
-
-  return { declineJobRequest: mutate, isPending };
 };
 
 export const useStartJob = function (reference: string) {

@@ -82,10 +82,34 @@ export interface ComboPack {
   state_of_residence: string | null;
 }
 
+export type AvailabilityStatus = "PENDING" | "CONFIRMED" | "DECLINED";
+
 export interface HireAssignment {
   id: string;
   driverId: string;
+  status: AvailabilityStatus;
+  responded_at: string | null;
   driver: HireRequestDriver;
+}
+
+export interface DriverShortlist {
+  id: string;
+  status: AvailabilityStatus;
+  createdAt: string;
+  hire_request: {
+    reference: string;
+    engagement_type: EngagementType;
+    starts_at: string;
+    schedule: WorkSchedule;
+    resumption_time: string | null;
+    closing_time: string | null;
+    transmission: HireTransmission | null;
+    driver_type: DriverType | null;
+    duration_months: number | null;
+    provides_accommodation: boolean;
+    state: string | null;
+    nearest_area: string | null;
+  };
 }
 
 export interface HireRequest {

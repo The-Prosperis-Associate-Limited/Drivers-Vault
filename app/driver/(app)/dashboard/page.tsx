@@ -12,6 +12,7 @@ import { JobRequestCard } from "../_components/job-request-card";
 import { useDashboardStats, useUpcomingJobs } from "./_hooks/use-dashboard";
 import { AttentionCard } from "./_components/attention-card";
 import { OverallProgressCard } from "./_components/overall-progress-card";
+import { ShortlistCard } from "./_components/shortlist-card";
 
 export default function Overview() {
   const { profile } = useGetProfile();
@@ -43,6 +44,8 @@ export default function Overview() {
           <AttentionCard status={status} />
         </div>
       )}
+
+      {isVerified && <ShortlistCard />}
 
       <div className="grid grid-cols-2 gap-3 md:gap-4 xl:grid-cols-4">
         {isFetching && !stats ? (

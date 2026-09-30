@@ -79,11 +79,14 @@ export const API_ENDPOINTS = {
       `/driver/job-requests?page=${page}&limit=${limit}${bucket ? `&bucket=${bucket}` : ""}`,
     summary: "/driver/job-requests/summary",
     get: (reference: string) => `/driver/job-requests/${reference}`,
-    accept: (reference: string) => `/driver/job-requests/${reference}/accept`,
-    decline: (reference: string) => `/driver/job-requests/${reference}/decline`,
     start: (reference: string) => `/driver/job-requests/${reference}/start`,
     complete: (reference: string) =>
       `/driver/job-requests/${reference}/complete`,
+  },
+
+  shortlists: {
+    list: "/driver/shortlists",
+    respond: (id: string) => `/driver/shortlists/${id}/respond`,
   },
 
   earnings: {
@@ -139,7 +142,6 @@ export const API_ENDPOINTS = {
   bookings: {
     list: ({ page, limit }: { page: number; limit: number }) =>
       `/client/bookings?page=${page}&limit=${limit}`,
-    create: "/client/bookings",
     detail: (reference: string) => `/client/bookings/${reference}`,
     cancel: (reference: string) => `/client/bookings/${reference}/cancel`,
     review: (reference: string) => `/client/bookings/${reference}/review`,

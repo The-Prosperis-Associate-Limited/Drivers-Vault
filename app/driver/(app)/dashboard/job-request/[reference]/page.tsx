@@ -1,15 +1,12 @@
 "use client";
 
-import { AppDialog } from "@/components/shared/app-dialog";
 import { AppText } from "@/components/shared/app-text";
-import { AppTextArea } from "@/components/shared/app-textarea";
 import { BackLink } from "@/components/shared/back-link";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetProfile } from "@/hooks/use-get-profile";
-import { showToast } from "@/lib/show-toast";
 import {
   BOOKING_STATUS_LABELS,
   BOOKING_STATUS_STYLES,
@@ -24,11 +21,8 @@ import {
 } from "@/lib/utils";
 import { CalendarDays, Clock, Info, MapPin, Phone, Wallet } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 import {
-  useAcceptJobRequest,
   useCompleteJob,
-  useDeclineJobRequest,
   useJobRequest,
   useStartJob,
 } from "../_hooks/use-job-requests";
@@ -66,13 +60,6 @@ export default function JobRequestDetail() {
 
   const { booking, isFetching } = useJobRequest(reference, isVerified);
 
-  const [declineOpen, setDeclineOpen] = useState(false);
-  const [reason, setReason] = useState("");
-
-  const { acceptJobRequest, isPending: isAccepting } =
-    useAcceptJobRequest(reference);
-  const { declineJobRequest, isPending: isDeclining } =
-    useDeclineJobRequest(reference);
   const { startJob, isPending: isStarting } = useStartJob(reference);
   const { completeJob, isPending: isCompleting } = useCompleteJob(reference);
 
@@ -223,33 +210,6 @@ export default function JobRequestDetail() {
           </div>
         )}
 
-        {booking.decline_reason && (
-          <div className="p-4 md:p-6">
-            <AppText type="caption" className="text-destructive">
-              You declined this request - {booking.decline_reason}
-            </AppText>
-          </div>
-        )}
-
-        {booking.status === "REQUESTED" && (
-          <div className="flex flex-wrap gap-3 p-4 md:p-6">
-            <Button
-              isLoading={isAccepting}
-              onClick={() => acceptJobRequest({})}
-              className="h-11 rounded-lg px-6"
-            >
-              Accept job
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => setDeclineOpen(true)}
-              className="h-11 rounded-lg px-6"
-            >
-              Decline
-            </Button>
-          </div>
-        )}
-
         {booking.status === "ACCEPTED" && (
           <div className="p-4 md:p-6">
             <Button
@@ -279,8 +239,7 @@ export default function JobRequestDetail() {
         <div className="flex items-start gap-2.5 rounded-xl border border-amber-200 bg-amber-50 p-4">
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
           <AppText type="caption" className="text-amber-700">
-            Contact details are shared only after both you and the client
-            confirm the booking
+            Contact details are shared once the client's payment is confirmed
           </AppText>
         </div>
       )}
@@ -312,48 +271,6 @@ export default function JobRequestDetail() {
           </ol>
         </div>
       )}
-
-      <AppDialog
-        isOpen={declineOpen}
-        onOpenChange={setDeclineOpen}
-        title="Decline this request"
-        isSubmitting={isDeclining}
-        dialogFooter={
-          <>
-            <Button
-              variant="outline"
-              onClick={() => setDeclineOpen(false)}
-              className="h-10 rounded-lg px-5"
-            >
-              Cancel
-            </Button>
-            <Button
-              isLoading={isDeclining}
-              onClick={() => {
-                if (reason.trim().length < 3) {
-                  return showToast("error", "Let the client know why");
-                }
-
-                declineJobRequest({ reason: reason.trim() });
-                setDeclineOpen(false);
-                setReason("");
-              }}
-              className="h-10 rounded-lg px-5"
-            >
-              Decline request
-            </Button>
-          </>
-        }
-      >
-        <AppTextArea
-          label="Let the client know why"
-          placeholder="E.g I'm unavailable on that date"
-          value={reason}
-          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setReason(event.target.value)
-          }
-        />
-      </AppDialog>
     </div>
   );
 }

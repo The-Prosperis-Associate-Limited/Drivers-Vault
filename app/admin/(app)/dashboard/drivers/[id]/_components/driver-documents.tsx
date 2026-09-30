@@ -345,7 +345,7 @@ export const DriverDocuments = function ({ userId }: Props) {
         isOpen={approveOpen}
         onOpenChange={setApproveOpen}
         title={`Approve ${driverName || "this driver"}?`}
-        description="Their profile becomes visible to clients immediately and they are notified by email."
+        description="This also auto-approves every submitted document that hasn't been reviewed yet. Their profile becomes visible to clients immediately and they are notified by email."
         confirmLabel="Approve Driver"
         isLoading={isReviewingSubmission}
         onConfirm={() => reviewSubmission({ status: "APPROVED" })}

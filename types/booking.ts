@@ -57,16 +57,13 @@ export interface Booking {
   status_events?: BookingStatusEvent[];
 }
 
-// The server owns which statuses each bucket covers.
-export type JobRequestBucket = "open" | "accepted" | "declined";
+// The server owns which statuses each bucket covers. Jobs arrive already
+// accepted (admin-brokered), so the buckets are about lifecycle, not consent.
+export type JobRequestBucket = "active" | "completed";
 
 export interface JobRequestSummary {
-  open: number;
-  accepted: number;
-  declined: number;
-  // Null until a request has actually closed - a driver nobody has asked yet
-  // has no record, and 0% would read as a bad one.
-  response_rate: number | null;
+  active: number;
+  completed: number;
 }
 
 export interface DashboardStats {

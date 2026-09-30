@@ -18,7 +18,9 @@ import type { JobRequestBucket } from "@/types/booking";
 
 /*
   The bucket names only - the server owns which statuses each one covers, so a
-  request cannot be counted under one tab and listed under another.
+  job cannot be counted under one tab and listed under another. Jobs arrive
+  already accepted (the platform brokers every hire), so the tabs track the
+  engagement lifecycle rather than a request inbox.
 */
 const TABS: {
   value: JobRequestBucket;
@@ -27,30 +29,24 @@ const TABS: {
   emptyHint: string;
 }[] = [
   {
-    value: "open",
-    label: "Open",
-    empty: "Nothing is waiting on you right now",
-    emptyHint: "New requests land here as soon as a client sends one.",
-  },
-  {
-    value: "accepted",
-    label: "Accepted",
-    empty: "You have not Accepted any Job Yet",
+    value: "active",
+    label: "Active",
+    empty: "No active jobs right now",
     emptyHint:
-      "Jobs you take on stay here while they run and after they finish.",
+      "When a client hires you, the engagement lands here - start it on day one and it runs until completion.",
   },
   {
-    value: "declined",
-    label: "Declined",
-    empty: "You have not Declined any Job Yet",
-    emptyHint: "Requests you turn down are kept here for your records.",
+    value: "completed",
+    label: "Completed",
+    empty: "You have not completed any jobs yet",
+    emptyHint: "Finished engagements stay here for your records.",
   },
 ];
 
 const LIMIT = 10;
 
 export default function JobRequests() {
-  const [tab, setTab] = useState<JobRequestBucket>("open");
+  const [tab, setTab] = useState<JobRequestBucket>("active");
   const [page, setPage] = useState(1);
 
   const active = TABS.find((entry) => entry.value === tab) ?? TABS[0];
@@ -69,44 +65,32 @@ export default function JobRequests() {
   });
 
   const counts: Record<JobRequestBucket, number | undefined> = {
-    open: summary?.open,
-    accepted: summary?.accepted,
-    declined: summary?.declined,
+    active: summary?.active,
+    completed: summary?.completed,
   };
 
   return (
     <div className="mx-auto max-w-6xl space-y-5">
       <PageHeader
-        title="Job requests"
-        subtitle="Clients who matched your verified profile have sent these requests. Open one to see the full brief before responding."
+        title="My jobs"
+        subtitle="Engagements clients have hired you for. Start each job on day one and mark it complete when it ends."
       />
 
       {profile && !isVerified ? (
         <UnverifiedNotice status={status ?? "UNSUBMITTED"} />
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <StatCard
-              label="Open requests"
-              value={summary?.open ?? 0}
-              caption="Awaiting your response"
+              label="Active jobs"
+              value={summary?.active ?? 0}
+              caption="Running or about to start"
               captionTone="muted"
             />
             <StatCard
-              label="Accepted"
-              value={summary?.accepted ?? 0}
-              caption="Client notified"
-              captionTone="muted"
-            />
-            <StatCard
-              label="Response rate"
-              value={
-                summary?.response_rate == null
-                  ? "-"
-                  : `${summary.response_rate}%`
-              }
-              hint="How many closed requests you answered, accepted or declined. A request that expires before you reply counts against it."
-              caption="Fast replies rank you higher"
+              label="Completed"
+              value={summary?.completed ?? 0}
+              caption="Finished engagements"
               captionTone="muted"
             />
           </div>
