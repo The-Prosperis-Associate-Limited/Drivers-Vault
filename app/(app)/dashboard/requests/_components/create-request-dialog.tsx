@@ -7,13 +7,14 @@ import { AppDialog } from "@/components/shared/app-dialog";
 import { Button } from "@/components/ui/button";
 import { useSubmitData } from "@/hooks/use-submit-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
+import { lgaOptionsForState } from "@/lib/nigeria-lgas";
 import { DRIVER_TYPE_OPTIONS } from "@/lib/utils";
 import {
   createRequestSchema,
   type CreateRequestFormValues,
 } from "@/schemas/requests/create-request";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { City, State } from "country-state-city";
+import { State } from "country-state-city";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 
@@ -72,17 +73,7 @@ export const CreateRequestDialog = function ({
     [],
   );
 
-  const cities = useMemo(() => {
-    const iso = State.getStatesOfCountry(NIGERIA).find(
-      (entry) => entry.name === state,
-    )?.isoCode;
-    if (!iso) return [];
-
-    return City.getCitiesOfState(NIGERIA, iso).map((entry) => ({
-      value: entry.name,
-      label: entry.name,
-    }));
-  }, [state]);
+  const cities = useMemo(() => lgaOptionsForState(state), [state]);
 
   const { mutate, isPending } = useSubmitData({
     url: API_ENDPOINTS.requests.create,

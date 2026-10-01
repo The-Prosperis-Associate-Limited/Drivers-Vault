@@ -2,8 +2,9 @@
 
 import { AppSelect } from "@/components/shared/app-select";
 import { Button } from "@/components/ui/button";
+import { lgaOptionsForState } from "@/lib/nigeria-lgas";
 import { BUDGET_RANGE_OPTIONS, cn, DRIVER_TYPE_OPTIONS } from "@/lib/utils";
-import { City, State } from "country-state-city";
+import { State } from "country-state-city";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
@@ -48,17 +49,7 @@ export const SearchPanel = function ({
     [],
   );
 
-  const cities = useMemo(() => {
-    const iso = State.getStatesOfCountry(NIGERIA).find(
-      (entry) => entry.name === state,
-    )?.isoCode;
-    if (!iso) return [];
-
-    return City.getCitiesOfState(NIGERIA, iso).map((entry) => ({
-      value: entry.name,
-      label: entry.name,
-    }));
-  }, [state]);
+  const cities = useMemo(() => lgaOptionsForState(state), [state]);
 
   const submit = () => {
     const filters: SearchFilters = {
