@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { RemoveScroll } from "react-remove-scroll";
 
 export interface SelectOption {
   label: string;
@@ -169,57 +170,62 @@ export const AppSelect = function ({
         {/* Dropdown - body portal, above the dialog's z-50. pointer-events-auto
             undoes the pointer lock a modal dialog puts on everything outside
             its subtree; stopping pointerdown propagation keeps the dialog from
-            reading an option click as an outside dismissal. */}
+            reading an option click as an outside dismissal. RemoveScroll joins
+            the dialog's scroll lock so wheel events inside the list scroll it
+            instead of being swallowed by the lock. */}
         {open &&
           createPortal(
-            <div
-              ref={listRef}
-              onPointerDown={(e) => e.stopPropagation()}
-              style={{
-                top: position.top,
-                left: position.left,
-                width: position.width,
-              }}
-              className="border-foreground/10 bg-popover text-popover-foreground pointer-events-auto fixed z-[60] rounded-md border shadow-md"
-            >
-              <ul className="no-scrollbar max-h-72 overflow-y-auto overscroll-contain p-1">
-                {filtered.length === 0 ? (
-                  <li className="text-muted-foreground py-2 text-center text-sm">
-                    No options found.
-                  </li>
-                ) : (
-                  filtered.map((option) => (
-                    <li
-                      key={option.value}
-                      // preventDefault stops the focus steal; selection waits
-                      // for click so the list is still mounted when the event
-                      // completes - unmounting on mousedown let the click land
-                      // on whatever input sat underneath and open it.
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => handleSelect(option)}
-                      className={cn(
-                        "relative flex cursor-pointer flex-col rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
-                        "hover:bg-accent hover:text-accent-foreground",
-                        option.value === value &&
-                          "bg-accent/50 text-accent-foreground",
-                      )}
-                    >
-                      {option.label}
-                      {option.description && (
-                        <span className="text-muted-foreground text-xs">
-                          {option.description}
-                        </span>
-                      )}
-                      {option.value === value && (
-                        <span className="absolute right-2 flex size-4 items-center justify-center">
-                          <Check className="size-3.5" />
-                        </span>
-                      )}
+            // listRef rides on RemoveScroll - its forwardProps clone replaces
+            // the child's own ref, and a dead ref makes every click "outside".
+            <RemoveScroll ref={listRef} forwardProps removeScrollBar={false}>
+              <div
+                onPointerDown={(e) => e.stopPropagation()}
+                style={{
+                  top: position.top,
+                  left: position.left,
+                  width: position.width,
+                }}
+                className="border-foreground/10 bg-popover text-popover-foreground pointer-events-auto fixed z-[60] rounded-md border shadow-md"
+              >
+                <ul className="no-scrollbar max-h-72 overflow-y-auto overscroll-contain p-1">
+                  {filtered.length === 0 ? (
+                    <li className="text-muted-foreground py-2 text-center text-sm">
+                      No options found.
                     </li>
-                  ))
-                )}
-              </ul>
-            </div>,
+                  ) : (
+                    filtered.map((option) => (
+                      <li
+                        key={option.value}
+                        // preventDefault stops the focus steal; selection waits
+                        // for click so the list is still mounted when the event
+                        // completes - unmounting on mousedown let the click land
+                        // on whatever input sat underneath and open it.
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => handleSelect(option)}
+                        className={cn(
+                          "relative flex cursor-pointer flex-col rounded-sm py-1.5 pr-8 pl-2 text-sm select-none",
+                          "hover:bg-accent hover:text-accent-foreground",
+                          option.value === value &&
+                            "bg-accent/50 text-accent-foreground",
+                        )}
+                      >
+                        {option.label}
+                        {option.description && (
+                          <span className="text-muted-foreground text-xs">
+                            {option.description}
+                          </span>
+                        )}
+                        {option.value === value && (
+                          <span className="absolute right-2 flex size-4 items-center justify-center">
+                            <Check className="size-3.5" />
+                          </span>
+                        )}
+                      </li>
+                    ))
+                  )}
+                </ul>
+              </div>
+            </RemoveScroll>,
             document.body,
           )}
       </div>
