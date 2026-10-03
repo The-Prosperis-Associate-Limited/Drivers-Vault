@@ -14,6 +14,9 @@ export const createRequestSchema = z.object({
   city: z.string().optional().or(z.literal("")),
   // Major units in the input; the server stores minor units.
   budget: z.string().trim().regex(/^\d+$/, "Digits only, e.g. 250000"),
+  preferred_ethnicity: z.string().optional().or(z.literal("")),
+  preferred_religion: z.string().optional().or(z.literal("")),
+  preferred_age_range: z.string().optional().or(z.literal("")),
 });
 
 export type CreateRequestFormValues = z.infer<typeof createRequestSchema>;

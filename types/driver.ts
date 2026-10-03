@@ -99,6 +99,7 @@ export interface DriverProfile {
   languages: string[];
   language_count: number | null;
   religion: string | null;
+  ethnicity: string | null;
   expected_monthly_rate: number | null;
   rate_currency: string;
   availability: AvailabilitySlot[] | null;

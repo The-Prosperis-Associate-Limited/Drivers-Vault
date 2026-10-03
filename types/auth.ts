@@ -58,6 +58,7 @@ export interface User {
   address: string | null;
   has_validated_email: boolean;
   account_status: AccountStatus;
+  deactivated_for_inactivity?: boolean;
   client_profile?: ClientProfile | null;
   admin_profile?: AdminProfile | null;
   createdAt: string;

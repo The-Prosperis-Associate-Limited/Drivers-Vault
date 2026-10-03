@@ -15,6 +15,9 @@ export interface StaffingRequest {
   city: string | null;
   budget: number;
   currency: string;
+  preferred_ethnicity: string | null;
+  preferred_religion: string | null;
+  preferred_age_range: string | null;
   status: StaffingRequestStatus;
   closed_at: string | null;
   createdAt: string;

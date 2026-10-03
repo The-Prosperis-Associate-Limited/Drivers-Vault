@@ -542,6 +542,46 @@ export const RELIGION_OPTIONS = [
   { value: "PREFER_NOT_TO_SAY", label: "Prefer not to say" },
 ];
 
+export const ETHNICITY_OPTIONS = [
+  "Hausa",
+  "Yoruba",
+  "Igbo",
+  "Fulani",
+  "Ijaw",
+  "Kanuri",
+  "Ibibio",
+  "Tiv",
+  "Edo",
+  "Nupe",
+  "Urhobo",
+  "Igala",
+  "Idoma",
+  "Efik",
+  "Gbagyi",
+  "Itsekiri",
+  "Esan",
+  "Ebira",
+  "Other",
+].map((name) => ({ value: name, label: name }));
+
+// Bands, not exact ages - the matcher reads them, nothing filters on them.
+export const AGE_RANGE_OPTIONS = [
+  { value: "18-25", label: "18 - 25" },
+  { value: "26-35", label: "26 - 35" },
+  { value: "36-45", label: "36 - 45" },
+  { value: "46-60", label: "46 - 60" },
+  { value: "60+", label: "60 and above" },
+];
+
+// Preference dropdowns rendered for clients - religion stored as the label,
+// not the driver-side enum value, so the admin reads it verbatim.
+export const RELIGION_PREFERENCE_OPTIONS = [
+  { value: "Christianity", label: "Christianity" },
+  { value: "Islam", label: "Islam" },
+  { value: "Traditional", label: "Traditional" },
+  { value: "Other", label: "Other" },
+];
+
 export const DOCUMENT_LABELS: Record<string, string> = {
   NIN_SLIP: "NIN slip",
   PASSPORT_PHOTO: "Your passport photo",

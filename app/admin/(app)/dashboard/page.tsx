@@ -8,6 +8,7 @@ import { API_ENDPOINTS } from "@/lib/endpoints";
 import type { APIResponse } from "@/types/response";
 import type { AdminDashboardStats } from "@/types/admin";
 import { GrowthChart } from "./_components/growth-chart";
+import { VisitorsChart } from "./_components/visitors-chart";
 import { VerificationQueue } from "./_components/verification-queue";
 
 export default function AdminOverview() {
@@ -66,6 +67,8 @@ export default function AdminOverview() {
       </div>
 
       <GrowthChart />
+
+      <VisitorsChart />
 
       <VerificationQueue />
     </div>

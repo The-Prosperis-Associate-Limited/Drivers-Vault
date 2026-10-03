@@ -64,6 +64,9 @@ export const conciergeRequestSchema = z.object({
     .trim()
     .max(120, "Keep it under 120 characters")
     .optional(),
+  preferred_ethnicity: z.string().optional(),
+  preferred_religion: z.string().optional(),
+  preferred_age_range: z.string().optional(),
   note: z
     .string()
     .trim()

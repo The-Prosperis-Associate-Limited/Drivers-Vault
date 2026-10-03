@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useOnboardingProfile } from "@/hooks/use-onboarding-profile";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import {
+  ETHNICITY_OPTIONS,
   LANGUAGE_OPTIONS,
   ONBOARDING_TIPS,
   RELIGION_OPTIONS,
@@ -43,6 +44,7 @@ export default function AdditionalInformationStep() {
       language_count: profile.language_count ?? undefined,
       languages: profile.languages ?? [],
       religion: profile.religion ?? "",
+      ethnicity: profile.ethnicity ?? "",
     });
   }, [profile, reset]);
 
@@ -94,6 +96,15 @@ export default function AdditionalInformationStep() {
           label="Your religion"
           placeholder="E.g Christianity"
           options={RELIGION_OPTIONS}
+        />
+
+        <FormSelect<AdditionalInformationFormValues>
+          control={control}
+          name="ethnicity"
+          errors={errors}
+          label="Your ethnicity"
+          placeholder="E.g Yoruba"
+          options={ETHNICITY_OPTIONS}
         />
 
         <Button

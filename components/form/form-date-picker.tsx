@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Controller,
   get,
@@ -105,6 +106,7 @@ function SingleDatePicker<TFieldValues extends FieldValues>({
 }: SingleProps<TFieldValues>) {
   const errorMessage = get(errors, name)?.message as string | undefined;
   const disabled = buildDisabled(minDate, maxDate);
+  const [open, setOpen] = useState(false);
 
   return (
     <Controller
@@ -121,7 +123,7 @@ function SingleDatePicker<TFieldValues extends FieldValues>({
             className={cn("flex w-full flex-col gap-1.5", containerClassName)}
           >
             {label && <Label htmlFor={inputId}>{label}</Label>}
-            <Popover>
+            <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
                   id={inputId}
@@ -139,9 +141,10 @@ function SingleDatePicker<TFieldValues extends FieldValues>({
                 <Calendar
                   mode="single"
                   selected={selected}
-                  onSelect={(date) =>
-                    field.onChange(date ? date.toISOString() : "")
-                  }
+                  onSelect={(date) => {
+                    field.onChange(date ? date.toISOString() : "");
+                    if (date) setOpen(false);
+                  }}
                   disabled={disabled}
                   // Nothing selected must still open inside the navigable
                   // range, or the grid renders empty (e.g. min a year out).
@@ -201,6 +204,7 @@ function RangeDatePicker<TFieldValues extends FieldValues>({
 
   const disabled = buildDisabled(minDate, maxDate);
   const inputId = label?.toLowerCase().replace(/\s+/g, "-");
+  const [open, setOpen] = useState(false);
 
   return (
     <Controller
@@ -225,6 +229,13 @@ function RangeDatePicker<TFieldValues extends FieldValues>({
                 selected?.from ? selected.from.toISOString() : "",
               );
               endField.onChange(selected?.to ? selected.to.toISOString() : "");
+              // A range is complete once both ends exist on distinct days.
+              if (
+                selected?.from &&
+                selected?.to &&
+                selected.from.getTime() !== selected.to.getTime()
+              )
+                setOpen(false);
             };
 
             return (
@@ -235,7 +246,7 @@ function RangeDatePicker<TFieldValues extends FieldValues>({
                 )}
               >
                 {label && <Label htmlFor={inputId}>{label}</Label>}
-                <Popover>
+                <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       id={inputId}

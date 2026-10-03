@@ -165,13 +165,21 @@ export const useLiveChat = function (isOpen: boolean) {
     if (!messages.some((m) => m.id === entry.id)) messages.push(entry);
   }
 
+  const hasAgent = (conversation?.participants.length ?? 0) > 1;
+
+  // The AI reply rides the send request itself, so "the assistant is
+  // thinking" is precisely: a send in flight on a conversation the AI handles.
+  const awaitingAi =
+    isSending && !hasAgent && (conversation?.status ?? "WAITING") === "WAITING";
+
   return {
     conversation,
     messages,
     isFetching,
     isSending,
+    awaitingAi,
     resolved: resolved || conversation?.status === "RESOLVED",
-    hasAgent: (conversation?.participants.length ?? 0) > 1,
+    hasAgent,
     sendMessage,
   };
 };

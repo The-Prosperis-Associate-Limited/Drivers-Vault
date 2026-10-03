@@ -8,7 +8,12 @@ import { Button } from "@/components/ui/button";
 import { useSubmitData } from "@/hooks/use-submit-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import { lgaOptionsForState } from "@/lib/nigeria-lgas";
-import { DRIVER_TYPE_OPTIONS } from "@/lib/utils";
+import {
+  AGE_RANGE_OPTIONS,
+  DRIVER_TYPE_OPTIONS,
+  ETHNICITY_OPTIONS,
+  RELIGION_PREFERENCE_OPTIONS,
+} from "@/lib/utils";
 import {
   createRequestSchema,
   type CreateRequestFormValues,
@@ -54,6 +59,9 @@ export const CreateRequestDialog = function ({
       state: "",
       city: "",
       budget: "",
+      preferred_ethnicity: "",
+      preferred_religion: "",
+      preferred_age_range: "",
     },
   });
 
@@ -94,6 +102,9 @@ export const CreateRequestDialog = function ({
       state: values.state,
       city: values.city || undefined,
       budget: Number(values.budget),
+      preferred_ethnicity: values.preferred_ethnicity || undefined,
+      preferred_religion: values.preferred_religion || undefined,
+      preferred_age_range: values.preferred_age_range || undefined,
     });
   };
 
@@ -162,6 +173,33 @@ export const CreateRequestDialog = function ({
           placeholder="E.g 250000"
           inputMode="numeric"
         />
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <FormSelect
+            control={control}
+            name="preferred_ethnicity"
+            errors={errors}
+            options={ETHNICITY_OPTIONS}
+            label="Ethnicity (optional)"
+            placeholder="Any"
+          />
+          <FormSelect
+            control={control}
+            name="preferred_religion"
+            errors={errors}
+            options={RELIGION_PREFERENCE_OPTIONS}
+            label="Religion (optional)"
+            placeholder="Any"
+          />
+          <FormSelect
+            control={control}
+            name="preferred_age_range"
+            errors={errors}
+            options={AGE_RANGE_OPTIONS}
+            label="Age range (optional)"
+            placeholder="Any"
+          />
+        </div>
 
         <FormTextarea
           control={control}

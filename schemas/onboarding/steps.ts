@@ -121,6 +121,7 @@ export const additionalInformationSchema = z.object({
   language_count: z.coerce.number<number>().int().min(0).max(20).optional(),
   languages: z.array(z.string()).optional(),
   religion: z.string().trim().optional(),
+  ethnicity: z.string().trim().optional(),
 });
 
 export type PersonalInformationFormValues = z.infer<

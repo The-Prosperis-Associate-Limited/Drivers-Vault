@@ -42,6 +42,13 @@ export interface GrowthSeries {
   series: { date: string; drivers: number; clients: number }[];
 }
 
+export interface VisitorSeries {
+  period: GrowthPeriod;
+  series: { date: string; visitors: number }[];
+  total: number;
+  today: number;
+}
+
 export interface AdminUserRow {
   id: string;
   first_name: string | null;

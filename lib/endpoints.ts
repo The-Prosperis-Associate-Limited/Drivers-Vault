@@ -18,6 +18,7 @@ export const API_ENDPOINTS = {
     updatePassword: "/auth/update-password",
     getProfile: "/auth/get-profile",
     updateProfile: "/auth/update-profile",
+    reactivate: "/auth/reactivate",
     deactivate: "/auth/deactivate",
   },
 
@@ -170,6 +171,8 @@ export const API_ENDPOINTS = {
     stats: "/admin/dashboard/stats",
     growth: (period: "7d" | "14d" | "30d") =>
       `/admin/dashboard/growth?period=${period}`,
+    visitors: (period: "7d" | "14d" | "30d") =>
+      `/admin/dashboard/visitors?period=${period}`,
     activities: ({ limit }: { limit: number }) =>
       `/admin/dashboard/activities?limit=${limit}`,
   },

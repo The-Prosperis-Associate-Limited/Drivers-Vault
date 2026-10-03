@@ -76,7 +76,13 @@ export default function RequestMatches({
                   [request.city, request.state].filter(Boolean).join(", "),
                   HIRE_ENGAGEMENT_LABELS[request.engagement_type],
                   `${formatMoney(request.budget, request.currency)} / month`,
-                ].join(" · ")}
+                  request.preferred_ethnicity,
+                  request.preferred_religion,
+                  request.preferred_age_range &&
+                    `Age ${request.preferred_age_range}`,
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
               </AppText>
             </div>
             <span

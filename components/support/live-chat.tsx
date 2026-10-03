@@ -23,6 +23,24 @@ const bubbleFor = function (message: ChatMessage, selfId: string | undefined) {
   return "support";
 };
 
+const ThinkingBubble = function () {
+  return (
+    <div className="max-w-[85%] rounded-xl bg-gray-100 px-4 py-3">
+      <AppText
+        type="caption"
+        className="text-brand block text-xs font-semibold"
+      >
+        Haya · AI assistant
+      </AppText>
+      <span className="mt-1.5 flex w-fit items-center gap-1.5">
+        <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:0ms]" />
+        <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:150ms]" />
+        <span className="h-2 w-2 animate-bounce rounded-full bg-gray-400 [animation-delay:300ms]" />
+      </span>
+    </div>
+  );
+};
+
 // The real support conversation - REST writes, socket echoes, one open
 // thread per user. Shared by the client and driver support sheets.
 export const LiveChat = function ({
@@ -34,12 +52,18 @@ export const LiveChat = function ({
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const { profile } = useGetProfile();
-  const { messages, isFetching, isSending, resolved, sendMessage } =
+  const { messages, isFetching, isSending, awaitingAi, resolved, sendMessage } =
     useLiveChat(true);
 
+  // Also on mount: the sheet animates in, so the initial scroll must happen
+  // after layout settles or the thread opens stuck at the top.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages.length]);
+    const frame = requestAnimationFrame(() => {
+      const thread = bottomRef.current?.parentElement;
+      if (thread) thread.scrollTop = thread.scrollHeight;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [messages.length, awaitingAi]);
 
   const send = (text: string) => {
     const value = text.trim();
@@ -124,6 +148,8 @@ export const LiveChat = function ({
             );
           })
         )}
+
+        {awaitingAi && <ThinkingBubble />}
 
         {resolved && (
           <AppText

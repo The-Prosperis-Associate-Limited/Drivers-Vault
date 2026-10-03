@@ -1,6 +1,7 @@
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AppProvider } from "./_components/provider";
+import { VisitTracker } from "./_components/visit-tracker";
 import { rootMetadata, viewport } from "./_lib/metadata";
 
 export const metadata = rootMetadata;
@@ -15,6 +16,7 @@ export default function RootLayout({
     <html lang="en" className={cn("h-full", "antialiased")}>
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <AppProvider>{children}</AppProvider>
+        <VisitTracker />
       </body>
     </html>
   );

@@ -8,12 +8,17 @@ import { FormDatePicker } from "@/components/form/form-date-picker";
 import { FormInput } from "@/components/form/form-input";
 import { FormSelect } from "@/components/form/form-select";
 import { FormTextarea } from "@/components/form/form-textarea";
+import { FormTimePicker } from "@/components/form/form-time-picker";
 import { useSubmitData } from "@/hooks/use-submit-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
+import { lgaOptionsForState } from "@/lib/nigeria-lgas";
 import {
+  AGE_RANGE_OPTIONS,
   DRIVER_TYPE_OPTIONS,
+  ETHNICITY_OPTIONS,
   HIRE_PACKAGE_OPTIONS,
   INSURANCE_COVER_OPTIONS,
+  RELIGION_PREFERENCE_OPTIONS,
   TRANSMISSION_OPTIONS,
   WORK_SCHEDULE_OPTIONS,
   cn,
@@ -25,7 +30,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { State } from "country-state-city";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { APIResponse } from "@/types/response";
 import type { HireRequest } from "@/types/hire";
@@ -45,6 +50,7 @@ export default function RequestDriver() {
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<ConciergeRequestFormValues>({
     resolver: zodResolver(conciergeRequestSchema),
@@ -58,6 +64,17 @@ export default function RequestDriver() {
   });
 
   const selectedPackage = watch("package");
+  const selectedState = watch("state");
+
+  const lgas = useMemo(
+    () => lgaOptionsForState(selectedState),
+    [selectedState],
+  );
+
+  // A saved LGA belongs to exactly one state - switching states clears it.
+  useEffect(() => {
+    setValue("nearest_area", "");
+  }, [selectedState, setValue]);
 
   const states = useMemo(
     () =>
@@ -193,19 +210,17 @@ export default function RequestDriver() {
         />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <FormInput<ConciergeRequestFormValues>
+          <FormTimePicker<ConciergeRequestFormValues>
             control={control}
             name="resumption_time"
             errors={errors}
             label="Resumption time (optional)"
-            type="time"
           />
-          <FormInput<ConciergeRequestFormValues>
+          <FormTimePicker<ConciergeRequestFormValues>
             control={control}
             name="closing_time"
             errors={errors}
             label="Closing time (optional)"
-            type="time"
           />
         </div>
 
@@ -224,6 +239,44 @@ export default function RequestDriver() {
             label="Insurance on the vehicle (optional)"
             options={INSURANCE_COVER_OPTIONS}
           />
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <AppText type="label" className="block text-sm font-semibold">
+              Driver preferences (optional)
+            </AppText>
+            <AppText
+              type="caption"
+              className="text-muted-foreground block text-xs"
+            >
+              Our team weighs these when matching - they never exclude a great
+              driver outright.
+            </AppText>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <FormSelect<ConciergeRequestFormValues>
+              control={control}
+              name="preferred_ethnicity"
+              errors={errors}
+              label="Ethnicity"
+              options={ETHNICITY_OPTIONS}
+            />
+            <FormSelect<ConciergeRequestFormValues>
+              control={control}
+              name="preferred_religion"
+              errors={errors}
+              label="Religion"
+              options={RELIGION_PREFERENCE_OPTIONS}
+            />
+            <FormSelect<ConciergeRequestFormValues>
+              control={control}
+              name="preferred_age_range"
+              errors={errors}
+              label="Age range"
+              options={AGE_RANGE_OPTIONS}
+            />
+          </div>
         </div>
 
         <Controller
@@ -256,12 +309,15 @@ export default function RequestDriver() {
             label="State"
             options={states}
           />
-          <FormInput<ConciergeRequestFormValues>
+          <FormSelect<ConciergeRequestFormValues>
             control={control}
             name="nearest_area"
             errors={errors}
-            label="Nearest area (optional)"
-            placeholder="E.g Lekki Phase 1"
+            label="LGA (optional)"
+            options={lgas}
+            placeholder={
+              selectedState ? "Select an LGA" : "Select a state first"
+            }
           />
         </div>
 

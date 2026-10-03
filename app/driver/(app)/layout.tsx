@@ -1,6 +1,7 @@
 "use client";
 
 import { useGetProfile } from "@/hooks/use-get-profile";
+import { ReactivateAccountDialog } from "@/components/shared/reactivate-account-dialog";
 import { MobileNav } from "./_components/navbar/mobile-nav";
 import { Sidebar } from "./_components/navbar/sidebar";
 import { TopNav } from "./_components/navbar/top-nav";
@@ -33,6 +34,8 @@ export default function DashboardLayout({
 
         <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
       </div>
+
+      <ReactivateAccountDialog />
     </div>
   );
 }

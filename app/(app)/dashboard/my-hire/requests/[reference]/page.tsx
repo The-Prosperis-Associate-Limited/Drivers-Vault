@@ -297,6 +297,15 @@ export default function HireRequestDetail({
                       value: `${request.duration_months} month${request.duration_months > 1 ? "s" : ""}`,
                     }
                   : null,
+                request.preferred_ethnicity
+                  ? { label: "Ethnicity", value: request.preferred_ethnicity }
+                  : null,
+                request.preferred_religion
+                  ? { label: "Religion", value: request.preferred_religion }
+                  : null,
+                request.preferred_age_range
+                  ? { label: "Age range", value: request.preferred_age_range }
+                  : null,
                 !assignedDrivers.length && request.driver_type
                   ? {
                       label: "Driver type",

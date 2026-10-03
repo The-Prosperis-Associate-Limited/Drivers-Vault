@@ -133,6 +133,9 @@ export interface HireRequest {
   provides_accommodation: boolean;
   state: string | null;
   nearest_area: string | null;
+  preferred_ethnicity: string | null;
+  preferred_religion: string | null;
+  preferred_age_range: string | null;
   declined_reason: string | null;
   paid_at: string | null;
   createdAt: string;

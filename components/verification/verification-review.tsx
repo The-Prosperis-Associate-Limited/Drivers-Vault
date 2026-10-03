@@ -272,6 +272,7 @@ export const VerificationReview = function ({ profile, documents }: Props) {
       >
         <Row label="Languages" value={profile?.languages.join(", ")} />
         <Row label="Religion" value={profile?.religion} />
+        <Row label="Ethnicity" value={profile?.ethnicity} />
       </Section>
 
       <Section
