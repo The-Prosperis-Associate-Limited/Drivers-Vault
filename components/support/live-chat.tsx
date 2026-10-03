@@ -92,12 +92,14 @@ export const LiveChat = function ({
                   own ? "bg-brand ml-auto" : "bg-gray-100",
                 )}
               >
-                {!own && message.sender && (
+                {!own && (message.sender || message.is_from_ai) && (
                   <AppText
                     type="caption"
                     className="text-brand block text-xs font-semibold"
                   >
-                    {message.sender.first_name ?? "Support"}
+                    {message.is_from_ai
+                      ? "Haya · AI assistant"
+                      : (message.sender?.first_name ?? "Support")}
                   </AppText>
                 )}
                 <AppText

@@ -14,6 +14,7 @@ export interface ChatMessage {
   senderId: string | null;
   sender: ChatSender | null;
   is_system: boolean;
+  is_from_ai: boolean;
   message: string;
   sent_at: string;
 }

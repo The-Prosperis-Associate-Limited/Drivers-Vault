@@ -163,6 +163,7 @@ export const TranscriptPane = function ({ conversationId, onChanged }: Props) {
             }
 
             const fromAdmin = message.sender?.role === "ADMIN";
+            const fromAi = message.is_from_ai;
 
             return (
               <div
@@ -170,6 +171,7 @@ export const TranscriptPane = function ({ conversationId, onChanged }: Props) {
                 className={cn(
                   "max-w-[80%] rounded-xl px-4 py-2.5",
                   fromAdmin ? "bg-brand ml-auto" : "bg-gray-100",
+                  fromAi && "border-brand/20 bg-brand-soft/40 ml-auto border",
                 )}
               >
                 <AppText
@@ -179,7 +181,11 @@ export const TranscriptPane = function ({ conversationId, onChanged }: Props) {
                     fromAdmin ? "text-white/80" : "text-brand",
                   )}
                 >
-                  {message.sender ? personName(message.sender) : "User"}
+                  {fromAi
+                    ? "Haya · AI assistant"
+                    : message.sender
+                      ? personName(message.sender)
+                      : "User"}
                 </AppText>
                 <AppText
                   type="caption"

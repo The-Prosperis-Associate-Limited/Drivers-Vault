@@ -19,6 +19,10 @@ const STATUS_STYLES: Record<Conversation["status"], string> = {
   RESOLVED: "bg-muted text-muted-foreground",
 };
 
+// ACTIVE with nobody but the requester = escalated past the AI, unclaimed.
+const needsAgent = (conversation: Conversation) =>
+  conversation.status === "ACTIVE" && conversation.participants.length < 2;
+
 export const ConversationList = function ({
   conversations,
   isFetching,
@@ -67,10 +71,14 @@ export const ConversationList = function ({
                     <span
                       className={cn(
                         "shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase",
-                        STATUS_STYLES[conversation.status],
+                        needsAgent(conversation)
+                          ? "bg-red-50 text-red-600"
+                          : STATUS_STYLES[conversation.status],
                       )}
                     >
-                      {conversation.status.toLowerCase()}
+                      {needsAgent(conversation)
+                        ? "needs agent"
+                        : conversation.status.toLowerCase()}
                     </span>
                   </span>
 

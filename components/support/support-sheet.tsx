@@ -38,8 +38,8 @@ const OPTIONS: { panel: Panel; title: string; description: string }[] = [
 const HEADINGS: Record<Panel, { title: string; description?: string }> = {
   menu: { title: "Get support for your Haya Drivers experience" },
   chat: {
-    title: "Ada · Support agent",
-    description: "Usually replies in minutes",
+    title: "Haya · Support",
+    description: "Our AI assistant replies right away",
   },
   report: {
     title: "Report an Issue",

@@ -107,8 +107,10 @@ export const useLiveChat = function (isOpen: boolean) {
     silent: true,
     skipRefetch: true,
     onSuccess: (response) => {
-      // First message of a fresh thread - pick up the new conversation id.
-      if (!conversationId) refetch();
+      // A send can open a fresh thread (first ever, or after a resolve) -
+      // resync so echoes on the new conversation id aren't dropped.
+      if (!conversationId || response.data.conversationId !== conversationId)
+        refetch();
       const message = response.data.message;
       seenIds.current.add(message.id);
       setLiveMessages((current) => {
@@ -147,6 +149,7 @@ export const useLiveChat = function (isOpen: boolean) {
           senderId: "self",
           sender: null,
           is_system: false,
+          is_from_ai: false,
           message,
           sent_at: new Date().toISOString(),
         },
