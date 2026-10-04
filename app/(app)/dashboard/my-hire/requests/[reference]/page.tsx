@@ -297,6 +297,12 @@ export default function HireRequestDetail({
                       value: `${request.duration_months} month${request.duration_months > 1 ? "s" : ""}`,
                     }
                   : null,
+                request.duration_days
+                  ? {
+                      label: "Contract length",
+                      value: `${request.duration_days} day${request.duration_days > 1 ? "s" : ""}`,
+                    }
+                  : null,
                 request.preferred_ethnicity
                   ? { label: "Ethnicity", value: request.preferred_ethnicity }
                   : null,
@@ -480,42 +486,37 @@ export default function HireRequestDetail({
 
               <div className="mt-4 space-y-2.5">
                 {[
-                  invoice.per_driver_minor && request.drivers_needed > 1
-                    ? {
-                        label: `Salary per driver × ${request.drivers_needed}`,
-                        value: formatMoney(
-                          invoice.per_driver_minor,
-                          invoice.currency,
-                        ),
-                      }
-                    : null,
-                  {
-                    label: "Engagement amount",
-                    value: formatMoney(invoice.amount_minor, invoice.currency),
-                  },
+                  ...(invoice.breakdown?.length
+                    ? invoice.breakdown.map((line) => ({
+                        label: line.label,
+                        value: formatMoney(line.amount_minor, invoice.currency),
+                      }))
+                    : [
+                        {
+                          label: "Service fee",
+                          value: formatMoney(
+                            invoice.fee_minor,
+                            invoice.currency,
+                          ),
+                        },
+                      ]),
                   {
                     label: `VAT (${invoice.vat_percent}%)`,
                     value: formatMoney(invoice.vat_minor, invoice.currency),
                   },
-                  {
-                    label: "Platform fee",
-                    value: formatMoney(invoice.fee_minor, invoice.currency),
-                  },
-                ]
-                  .filter((row) => row !== null)
-                  .map((row) => (
-                    <span
-                      key={row.label}
-                      className="flex items-center justify-between"
-                    >
-                      <AppText type="caption" className="text-muted-foreground">
-                        {row.label}
-                      </AppText>
-                      <AppText type="label" className="text-sm">
-                        {row.value}
-                      </AppText>
-                    </span>
-                  ))}
+                ].map((row) => (
+                  <span
+                    key={row.label}
+                    className="flex items-center justify-between gap-3"
+                  >
+                    <AppText type="caption" className="text-muted-foreground">
+                      {row.label}
+                    </AppText>
+                    <AppText type="label" className="shrink-0 text-sm">
+                      {row.value}
+                    </AppText>
+                  </span>
+                ))}
 
                 <span className="border-border flex items-center justify-between border-t pt-2.5">
                   <AppText type="label" className="text-sm font-bold">
@@ -525,6 +526,20 @@ export default function HireRequestDetail({
                     {formatMoney(invoice.total_minor, invoice.currency)}
                   </AppText>
                 </span>
+
+                {invoice.per_driver_minor ? (
+                  <AppText
+                    type="caption"
+                    className="text-muted-foreground block pt-1 text-xs"
+                  >
+                    Your driver{request.drivers_needed > 1 ? "s'" : "'s"} salary
+                    ({formatMoney(invoice.per_driver_minor, invoice.currency)}
+                    /month{request.drivers_needed > 1 ? " each" : ""}) is paid
+                    by you to the driver
+                    {request.drivers_needed > 1 ? "s" : ""} directly - it is not
+                    part of this invoice.
+                  </AppText>
+                ) : null}
               </div>
 
               {invoice.note && (

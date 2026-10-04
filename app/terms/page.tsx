@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfService() {
   return (
-    <LegalShell title="Terms of service" updated="29 September 2026">
+    <LegalShell title="Terms of service" updated="4 October 2026">
       <section>
         <p>
           These terms govern your use of Haya Drivers (the "platform", "we",
@@ -26,10 +26,12 @@ export default function TermsOfService() {
         <p>
           Haya Drivers verifies the identity, driving licence and guarantor of
           every driver on the platform before they can be hired, and brokers
-          engagements between clients and drivers. We facilitate introductions,
-          invoicing and payment administration. Unless expressly stated
-          otherwise, drivers are not our employees; the working relationship for
-          an engagement is between the client and the driver.
+          engagements between clients and drivers. We facilitate introductions
+          and charge a service fee for doing so; the driver's salary is agreed
+          through the platform but is paid by the client to the driver directly
+          and never passes through us. Unless expressly stated otherwise,
+          drivers are not our employees; the working relationship for an
+          engagement is between the client and the driver.
         </p>
       </section>
 
@@ -49,6 +51,11 @@ export default function TermsOfService() {
             One person or organisation may not hold multiple accounts for the
             purpose of evading a suspension or restriction.
           </li>
+          <li>
+            An account that has not been signed into for 90 days may be
+            deactivated for inactivity. Signing in again lets you reactivate it
+            in one step, with your data exactly as you left it.
+          </li>
         </ul>
       </section>
 
@@ -62,8 +69,16 @@ export default function TermsOfService() {
           </li>
           <li>
             Invoices are payable by bank transfer to the organisation account
-            shown on your request. The amount on the invoice includes the
-            driver's salary, VAT and our platform fee.
+            shown on your request. The invoice covers our service fee plus VAT
+            on that fee only. The driver's salary is not on the invoice: you pay
+            it to the driver directly, at the rate shown on your request, once
+            the engagement starts.
+          </li>
+          <li>
+            You are responsible for paying your driver's salary in full and on
+            time for the duration of the engagement. Failing to pay a driver for
+            work done is a breach of these terms and may lead to suspension of
+            your account.
           </li>
           <li>
             After transferring, you must upload proof of payment. An engagement
@@ -96,9 +111,17 @@ export default function TermsOfService() {
             agreed to stand for you. We may contact them to confirm.
           </li>
           <li>
-            Salaries for engagements brokered through the platform are settled
-            through us. Amounts credited to your in-app earnings balance reflect
-            what you are owed and are paid out per our payout process.
+            Your salary for an engagement brokered through the platform is paid
+            to you directly by the client at the rate agreed on the engagement.
+            We do not hold, deduct from, or guarantee your salary. If a client
+            fails to pay you, report it to us - we will assist in good faith,
+            including restricting the client's account, but we are not liable
+            for a client's failure to pay.
+          </li>
+          <li>
+            Earnings balances accrued on the platform before 4 October 2026
+            remain yours and can be withdrawn through the payout process in your
+            settings.
           </li>
           <li>
             You agree to show up for engagements you accept, to drive safely and
@@ -113,23 +136,36 @@ export default function TermsOfService() {
         <ul>
           <li>
             All prices are stated in Nigerian naira unless shown otherwise. VAT
-            is applied at the prevailing statutory rate.
+            is applied to our service fee at the prevailing statutory rate -
+            never to the driver's salary.
           </li>
           <li>
-            Our platform fee is shown on every invoice before you pay. Fees are
-            non-refundable once a payment has been confirmed and the driver's
-            details released, except where required by law or where we fail to
-            deliver the service paid for.
+            Our service fee depends on the engagement: for full-time hires it is
+            a percentage of the driver's annual gross salary, and for contract
+            hires it is a one-time fee based on the contract length and your
+            client type, with a discount when hiring multiple drivers on longer
+            contracts. The exact fee and its breakdown are shown on every
+            invoice before you pay.
+          </li>
+          <li>
+            Fees are non-refundable once a payment has been confirmed and the
+            driver's details released, except where required by law or where we
+            fail to deliver the service paid for.
           </li>
           <li>
             If a confirmed engagement cannot be fulfilled (for example, the
             assigned driver becomes unavailable before starting), we will offer
-            a replacement driver or a refund of the amount paid.
+            a replacement driver or a refund of the service fee paid.
           </li>
           <li>
             Payment confirmation is a manual review of your bank transfer. We
             are not responsible for delays caused by your bank or by transfers
             made without the reference we ask you to include.
+          </li>
+          <li>
+            Salary payments between client and driver are made outside the
+            platform, and we are not a party to them. We encourage both sides to
+            keep their own records of salary payments.
           </li>
         </ul>
       </section>

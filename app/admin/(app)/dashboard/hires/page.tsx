@@ -11,6 +11,7 @@ import { ReceiptText } from "lucide-react";
 import { useState } from "react";
 import type { HireRequest, HireRequestStatus } from "@/types/hire";
 import { HireRequestCard } from "./_components/hire-request-card";
+import { PricingGuideDialog } from "./_components/pricing-guide-dialog";
 
 type Filter = "ALL" | HireRequestStatus;
 
@@ -53,14 +54,17 @@ export default function AdminHires() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <div>
-        <AppText type="h2" className="text-xl font-bold md:text-2xl">
-          Hire requests
-        </AppText>
-        <AppText type="subtitle" className="text-muted-foreground text-sm">
-          Review each request, generate the invoice, and the client's payment
-          unlocks the driver's details.
-        </AppText>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <AppText type="h2" className="text-xl font-bold md:text-2xl">
+            Hire requests
+          </AppText>
+          <AppText type="subtitle" className="text-muted-foreground text-sm">
+            Review each request, generate the invoice, and the client's payment
+            unlocks the driver's details.
+          </AppText>
+        </div>
+        <PricingGuideDialog />
       </div>
 
       <div className="flex flex-wrap gap-2">

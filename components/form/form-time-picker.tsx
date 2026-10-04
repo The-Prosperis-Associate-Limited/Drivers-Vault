@@ -57,7 +57,7 @@ const valueFromParts = ({ hour, minute, period }: Parts): string => {
   return `${String(h24).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
 };
 
-const displayTime = (value: string | undefined): string => {
+export const displayTime = (value: string | undefined): string => {
   const { hour, minute, period } = partsFromValue(value);
   if (hour === null) return "";
   return `${hour}:${String(minute).padStart(2, "0")} ${period}`;

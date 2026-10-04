@@ -4,6 +4,10 @@ import { FormInput } from "@/components/form/form-input";
 import { FormSelect } from "@/components/form/form-select";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { AppDialog } from "@/components/shared/app-dialog";
+import {
+  RequestPreviewDialog,
+  type PreviewRow,
+} from "@/components/shared/request-preview-dialog";
 import { Button } from "@/components/ui/button";
 import { useSubmitData } from "@/hooks/use-submit-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
@@ -20,7 +24,7 @@ import {
 } from "@/schemas/requests/create-request";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { State } from "country-state-city";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const NIGERIA = "NG";
@@ -89,22 +93,73 @@ export const CreateRequestDialog = function ({
     additionalQueryKeys: [[listUrl]],
     onSuccess: () => {
       reset();
+      setPreview(null);
       onOpenChange(false);
     },
   });
 
   const submit = (values: CreateRequestFormValues) => {
+    setPreview(values);
+  };
+
+  const [preview, setPreview] = useState<CreateRequestFormValues | null>(null);
+
+  const optionLabel = (
+    options: { value: string; label: string }[],
+    value?: string | null,
+  ) => options.find((option) => option.value === value)?.label;
+
+  const previewRows: PreviewRow[] = preview
+    ? ([
+        { label: "Title", value: preview.title },
+        {
+          label: "Driver category",
+          value: optionLabel(DRIVER_TYPE_OPTIONS, preview.driver_type),
+        },
+        {
+          label: "Engagement",
+          value: optionLabel(ENGAGEMENT_OPTIONS, preview.engagement_type),
+        },
+        {
+          label: "Location",
+          value: [preview.city, preview.state].filter(Boolean).join(", "),
+        },
+        {
+          label: "Monthly budget",
+          value: `₦${Number(preview.budget).toLocaleString()}`,
+        },
+        preview.preferred_ethnicity && {
+          label: "Ethnicity",
+          value: preview.preferred_ethnicity,
+        },
+        preview.preferred_religion && {
+          label: "Religion",
+          value: preview.preferred_religion,
+        },
+        preview.preferred_age_range && {
+          label: "Age range",
+          value: optionLabel(AGE_RANGE_OPTIONS, preview.preferred_age_range),
+        },
+        preview.description && {
+          label: "Description",
+          value: preview.description,
+        },
+      ].filter(Boolean) as PreviewRow[])
+    : [];
+
+  const confirmSubmit = () => {
+    if (!preview) return;
     mutate({
-      title: values.title,
-      description: values.description || undefined,
-      driver_type: values.driver_type,
-      engagement_type: values.engagement_type,
-      state: values.state,
-      city: values.city || undefined,
-      budget: Number(values.budget),
-      preferred_ethnicity: values.preferred_ethnicity || undefined,
-      preferred_religion: values.preferred_religion || undefined,
-      preferred_age_range: values.preferred_age_range || undefined,
+      title: preview.title,
+      description: preview.description || undefined,
+      driver_type: preview.driver_type,
+      engagement_type: preview.engagement_type,
+      state: preview.state,
+      city: preview.city || undefined,
+      budget: Number(preview.budget),
+      preferred_ethnicity: preview.preferred_ethnicity || undefined,
+      preferred_religion: preview.preferred_religion || undefined,
+      preferred_age_range: preview.preferred_age_range || undefined,
     });
   };
 
@@ -113,7 +168,7 @@ export const CreateRequestDialog = function ({
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       title="Post a request"
-      description="Tell drivers what you need - matched profiles see it and apply."
+      description="Tell us what you need - we match verified drivers to your request for you to review."
       width="520px"
       isSubmitting={isPending}
     >
@@ -206,18 +261,25 @@ export const CreateRequestDialog = function ({
           name="description"
           errors={errors}
           label="Description"
-          placeholder="Routes, schedule, vehicle - anything a driver should know before applying."
+          placeholder="Routes, schedule, vehicle - anything that helps us match the right driver."
           rows={4}
         />
 
-        <Button
-          type="submit"
-          disabled={isPending}
-          className="h-11 w-full rounded-xl text-sm"
-        >
-          {isPending ? "Posting…" : "Post request"}
+        <Button type="submit" className="h-11 w-full rounded-xl text-sm">
+          Review request
         </Button>
       </form>
+
+      <RequestPreviewDialog
+        isOpen={!!preview}
+        onOpenChange={(open) => {
+          if (!open) setPreview(null);
+        }}
+        rows={previewRows}
+        onConfirm={confirmSubmit}
+        isSubmitting={isPending}
+        confirmLabel="Confirm & post"
+      />
     </AppDialog>
   );
 };

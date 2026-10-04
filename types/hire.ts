@@ -18,6 +18,11 @@ export type WorkSchedule =
 
 export type HireTransmission = "AUTOMATIC" | "MANUAL" | "BOTH";
 
+export interface HireFeeLine {
+  label: string;
+  amount_minor: number;
+}
+
 export interface HireInvoice {
   id: string;
   reference: string;
@@ -27,6 +32,7 @@ export interface HireInvoice {
   vat_minor: number;
   fee_minor: number;
   total_minor: number;
+  breakdown: HireFeeLine[] | null;
   currency: string;
   status: HireInvoiceStatus;
   note: string | null;
@@ -36,6 +42,40 @@ export interface HireInvoice {
   proof_rejected_reason: string | null;
   paid_at: string | null;
   createdAt: string;
+}
+
+export interface HireInvoiceQuote {
+  client_type: "INDIVIDUAL" | "ORGANISATION";
+  engagement_type: EngagementType;
+  duration_days: number | null;
+  drivers: number;
+  per_driver_minor: number;
+  fee_minor: number;
+  lines: HireFeeLine[];
+  vat_percent: number;
+  vat_minor: number;
+  total_minor: number;
+  currency: string;
+}
+
+export interface HirePricingGuide {
+  full_time: {
+    annual_fee_percent: number;
+    example: { monthly_minor: number; annual_minor: number; fee_minor: number };
+  };
+  contract: {
+    brackets: {
+      label: string;
+      max_days: number;
+      individual_minor: number;
+      corporate_minor: number;
+    }[];
+    multi_driver_discount: {
+      min_duration_days: number;
+      individual_minor: number;
+      corporate_minor: number;
+    };
+  };
 }
 
 export interface PaymentAccount {
@@ -106,6 +146,7 @@ export interface DriverShortlist {
     transmission: HireTransmission | null;
     driver_type: DriverType | null;
     duration_months: number | null;
+    duration_days: number | null;
     provides_accommodation: boolean;
     state: string | null;
     nearest_area: string | null;
@@ -123,6 +164,7 @@ export interface HireRequest {
   status: HireRequestStatus;
   package: HirePackage;
   duration_months: number | null;
+  duration_days: number | null;
   drivers_needed: number;
   driver_type: DriverType | null;
   schedule: WorkSchedule;

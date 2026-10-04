@@ -226,26 +226,6 @@ export const API_ENDPOINTS = {
 
   adminTransactions: {
     stats: "/admin/transactions/stats",
-    wallets: ({
-      page,
-      limit,
-      search,
-    }: {
-      page: number;
-      limit: number;
-      search?: string;
-    }) =>
-      `/admin/transactions/wallets?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
-    serviceFees: ({
-      page,
-      limit,
-      search,
-    }: {
-      page: number;
-      limit: number;
-      search?: string;
-    }) =>
-      `/admin/transactions/service-fees?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
     payouts: ({
       page,
       limit,
@@ -332,6 +312,9 @@ export const API_ENDPOINTS = {
     assign: (reference: string) => `/admin/hires/${reference}/assign`,
     unassign: (reference: string) => `/admin/hires/${reference}/unassign`,
     invoice: (reference: string) => `/admin/hires/${reference}/invoice`,
+    invoiceQuote: (reference: string, query = "") =>
+      `/admin/hires/${reference}/invoice-quote${query ? `?${query}` : ""}`,
+    pricingGuide: "/admin/hires/pricing-guide",
     confirmPayment: (reference: string) =>
       `/admin/hires/${reference}/confirm-payment`,
     rejectProof: (reference: string) =>

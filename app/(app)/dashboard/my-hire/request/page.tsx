@@ -8,7 +8,14 @@ import { FormDatePicker } from "@/components/form/form-date-picker";
 import { FormInput } from "@/components/form/form-input";
 import { FormSelect } from "@/components/form/form-select";
 import { FormTextarea } from "@/components/form/form-textarea";
-import { FormTimePicker } from "@/components/form/form-time-picker";
+import {
+  FormTimePicker,
+  displayTime,
+} from "@/components/form/form-time-picker";
+import {
+  RequestPreviewDialog,
+  type PreviewRow,
+} from "@/components/shared/request-preview-dialog";
 import { useSubmitData } from "@/hooks/use-submit-data";
 import { API_ENDPOINTS } from "@/lib/endpoints";
 import { lgaOptionsForState } from "@/lib/nigeria-lgas";
@@ -30,7 +37,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { State } from "country-state-city";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { APIResponse } from "@/types/response";
 import type { HireRequest } from "@/types/hire";
@@ -65,6 +72,7 @@ export default function RequestDriver() {
 
   const selectedPackage = watch("package");
   const selectedState = watch("state");
+  const selectedEngagement = watch("engagement_type");
 
   const lgas = useMemo(
     () => lgaOptionsForState(selectedState),
@@ -98,12 +106,105 @@ export default function RequestDriver() {
   });
 
   const onSubmit = (data: ConciergeRequestFormValues) => {
+    setPreview(data);
+  };
+
+  const [preview, setPreview] = useState<ConciergeRequestFormValues | null>(
+    null,
+  );
+
+  const optionLabel = (
+    options: { value: string; label: string }[],
+    value?: string | null,
+  ) => options.find((option) => option.value === value)?.label;
+
+  const previewRows: PreviewRow[] = preview
+    ? ([
+        {
+          label: "Package",
+          value: optionLabel(HIRE_PACKAGE_OPTIONS, preview.package),
+        },
+        preview.duration_months && {
+          label: "Duration",
+          value: `${preview.duration_months} month(s)`,
+        },
+        { label: "Drivers", value: preview.drivers_needed },
+        preview.driver_type && {
+          label: "Driver type",
+          value: optionLabel(DRIVER_TYPE_OPTIONS, preview.driver_type),
+        },
+        {
+          label: "Engagement",
+          value: optionLabel(ENGAGEMENT_OPTIONS, preview.engagement_type),
+        },
+        preview.engagement_type === "CONTRACT" &&
+          preview.duration_days && {
+            label: "Contract length",
+            value: `${preview.duration_days} day(s)`,
+          },
+        {
+          label: "Starts",
+          value: new Date(preview.starts_at).toLocaleDateString(),
+        },
+        {
+          label: "Schedule",
+          value: optionLabel(WORK_SCHEDULE_OPTIONS, preview.schedule),
+        },
+        (preview.resumption_time || preview.closing_time) && {
+          label: "Hours",
+          value: [
+            displayTime(preview.resumption_time),
+            displayTime(preview.closing_time),
+          ]
+            .filter(Boolean)
+            .join(" - "),
+        },
+        preview.transmission && {
+          label: "Transmission",
+          value: optionLabel(TRANSMISSION_OPTIONS, preview.transmission),
+        },
+        preview.insurance_cover && {
+          label: "Insurance",
+          value: optionLabel(INSURANCE_COVER_OPTIONS, preview.insurance_cover),
+        },
+        {
+          label: "Accommodation",
+          value: preview.provides_accommodation ? "Provided" : "Not provided",
+        },
+        {
+          label: "Location",
+          value: [preview.nearest_area, preview.state]
+            .filter(Boolean)
+            .join(", "),
+        },
+        preview.preferred_ethnicity && {
+          label: "Ethnicity",
+          value: preview.preferred_ethnicity,
+        },
+        preview.preferred_religion && {
+          label: "Religion",
+          value: preview.preferred_religion,
+        },
+        preview.preferred_age_range && {
+          label: "Age range",
+          value: optionLabel(AGE_RANGE_OPTIONS, preview.preferred_age_range),
+        },
+        preview.note && { label: "Note", value: preview.note },
+      ].filter(Boolean) as PreviewRow[])
+    : [];
+
+  const confirmSubmit = () => {
+    if (!preview) return;
     mutate({
-      ...data,
-      drivers_needed: Number(data.drivers_needed),
-      duration_months: data.duration_months
-        ? Number(data.duration_months)
+      ...preview,
+      drivers_needed: Number(preview.drivers_needed),
+      duration_months: preview.duration_months
+        ? Number(preview.duration_months)
         : undefined,
+      duration_days:
+        preview.engagement_type === "CONTRACT" && preview.duration_days
+          ? Number(preview.duration_days)
+          : undefined,
     });
   };
 
@@ -200,6 +301,17 @@ export default function RequestDriver() {
             minDate={new Date()}
           />
         </div>
+
+        {selectedEngagement === "CONTRACT" && (
+          <FormInput<ConciergeRequestFormValues>
+            control={control}
+            name="duration_days"
+            errors={errors}
+            label="For how many days?"
+            inputMode="numeric"
+            placeholder="E.g 14"
+          />
+        )}
 
         <FormSelect<ConciergeRequestFormValues>
           control={control}
@@ -329,13 +441,20 @@ export default function RequestDriver() {
           placeholder="E.g school runs on weekdays, occasional weekend trips"
         />
 
-        <Button
-          isLoading={isPending}
-          className="h-12 w-full rounded-lg text-sm"
-        >
-          Submit request
+        <Button className="h-12 w-full rounded-lg text-sm">
+          Review request
         </Button>
       </form>
+
+      <RequestPreviewDialog
+        isOpen={!!preview}
+        onOpenChange={(open) => {
+          if (!open) setPreview(null);
+        }}
+        rows={previewRows}
+        onConfirm={confirmSubmit}
+        isSubmitting={isPending}
+      />
     </div>
   );
 }

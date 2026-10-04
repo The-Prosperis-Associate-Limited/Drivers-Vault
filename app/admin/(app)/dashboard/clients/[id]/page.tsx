@@ -12,10 +12,9 @@ import type { APIResponse } from "@/types/response";
 import type { AdminUserDetail } from "@/types/admin";
 import { ActivityTimeline } from "../../../_components/activity-timeline";
 import { DeleteAccountButton } from "../../../_components/delete-account-button";
-import { UserWallet } from "../../../_components/user-wallet";
 import { ClientOverview } from "./_components/client-overview";
 
-type Tab = "overview" | "wallet" | "activity";
+type Tab = "overview" | "activity";
 
 function ClientDetail() {
   const params = useParams<{ id: string }>();
@@ -40,7 +39,7 @@ function ClientDetail() {
             Know your Client.
           </AppText>
           <AppText type="subtitle" className="text-muted-foreground text-sm">
-            Review the client's profile, wallet and account activity.
+            Review the client's profile and account activity.
           </AppText>
         </div>
         {user && (
@@ -63,7 +62,6 @@ function ClientDetail() {
         variant="chip"
         tabs={[
           { value: "overview", label: "Overview" },
-          { value: "wallet", label: "Wallet & Payments" },
           { value: "activity", label: "Activity Log" },
         ]}
       />
@@ -74,8 +72,6 @@ function ClientDetail() {
         ) : (
           isFetching && <Skeleton className="h-64 w-full rounded-2xl" />
         ))}
-
-      {tab === "wallet" && <UserWallet userId={params.id} />}
 
       {tab === "activity" && <ActivityTimeline userId={params.id} />}
     </div>

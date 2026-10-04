@@ -56,7 +56,7 @@ export const FAQ_SECTIONS: FaqSection[] = [
       {
         question: "When do I get paid?",
         answer:
-          "Payment for a completed booking lands in your wallet as pending, then clears to available. You can withdraw anything showing as available from Settings, under Earnings.",
+          "Your salary is paid to you directly by the client - it never passes through Haya Drivers and nothing is deducted from it. Agree the schedule with your client when the engagement starts.",
       },
       {
         question: "How do I change my payout account?",

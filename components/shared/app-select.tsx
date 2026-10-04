@@ -144,7 +144,7 @@ export const AppSelect = function ({
             disabled={disabled}
             aria-invalid={!!error}
             autoComplete="off"
-            className="placeholder:text-muted-foreground flex-1 bg-transparent text-sm outline-none disabled:cursor-not-allowed"
+            className="placeholder:text-muted-foreground min-w-0 flex-1 bg-transparent text-sm outline-none disabled:cursor-not-allowed"
           />
 
           <div className="flex items-center gap-0.5">

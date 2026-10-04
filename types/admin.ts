@@ -131,57 +131,11 @@ export interface AdminWalletTransaction {
 }
 
 export interface AdminTransactionStats {
-  held_in_client_wallets_minor: number;
-  client_wallets: { available_minor: number; pending_minor: number };
   paid_to_drivers_minor: number;
   paid_payouts: number;
   awaiting_release: { amount_minor: number; count: number };
   failed_payouts: number;
-  service_fees: { amount_minor: number; count: number };
   currency: string;
-}
-
-export interface ClientWalletRow extends AdminWallet {
-  user: {
-    id: string;
-    first_name: string | null;
-    last_name: string | null;
-    email: string;
-    profile_pic: string | null;
-    client_profile: {
-      client_type: ClientType;
-      organisation_name: string | null;
-    } | null;
-  };
-  last_top_up: { amount_minor: number; createdAt: string } | null;
-}
-
-export interface ServiceFeeRow {
-  id: string;
-  reference: string;
-  status: AdminWalletTransactionStatus;
-  amount_minor: number;
-  currency: string;
-  createdAt: string;
-  booking: {
-    reference: string;
-    title: string;
-    amount: number;
-    currency: string;
-    engagement_type: string;
-    client: {
-      id: string;
-      first_name: string | null;
-      last_name: string | null;
-      client_profile: { organisation_name: string | null } | null;
-    };
-    driver: {
-      id: string;
-      first_name: string | null;
-      last_name: string | null;
-      profile_pic: string | null;
-    } | null;
-  } | null;
 }
 
 export type PayoutStatus =

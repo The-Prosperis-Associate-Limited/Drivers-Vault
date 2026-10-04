@@ -2,8 +2,13 @@
 
 import { AppDialog } from "@/components/shared/app-dialog";
 import { AppText } from "@/components/shared/app-text";
+import {
+  RequestPreviewDialog,
+  type PreviewRow,
+} from "@/components/shared/request-preview-dialog";
 import { Button } from "@/components/ui/button";
 import { FormDatePicker } from "@/components/form/form-date-picker";
+import { FormInput } from "@/components/form/form-input";
 import { FormSelect } from "@/components/form/form-select";
 import { FormTextarea } from "@/components/form/form-textarea";
 import { useSubmitData } from "@/hooks/use-submit-data";
@@ -19,6 +24,7 @@ import {
 } from "@/schemas/requests/hire-request";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { APIResponse } from "@/types/response";
 import type { HireRequest } from "@/types/hire";
@@ -53,6 +59,7 @@ export const HireRequestDialog = function ({
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<HireRequestFormValues>({
     resolver: zodResolver(hireRequestSchema),
@@ -66,10 +73,46 @@ export const HireRequestDialog = function ({
     url: API_ENDPOINTS.hireRequests.create,
     onSuccessMessage: "Request sent - we'll review it and send your invoice",
     onSuccess: (response) => {
+      setPreview(null);
       onOpenChange(false);
       router.push(`/dashboard/my-hire/requests/${response.data.reference}`);
     },
   });
+
+  const [preview, setPreview] = useState<HireRequestFormValues | null>(null);
+
+  const optionLabel = (
+    options: { value: string; label: string }[],
+    value?: string | null,
+  ) => options.find((option) => option.value === value)?.label;
+
+  const previewRows: PreviewRow[] = preview
+    ? ([
+        { label: "Driver", value: driverName },
+        {
+          label: "Engagement",
+          value: optionLabel(ENGAGEMENT_OPTIONS, preview.engagement_type),
+        },
+        preview.engagement_type === "CONTRACT" &&
+          preview.duration_days && {
+            label: "Contract length",
+            value: `${preview.duration_days} day(s)`,
+          },
+        {
+          label: "Starts",
+          value: new Date(preview.starts_at).toLocaleDateString(),
+        },
+        {
+          label: "Schedule",
+          value: optionLabel(WORK_SCHEDULE_OPTIONS, preview.schedule),
+        },
+        preview.transmission && {
+          label: "Transmission",
+          value: optionLabel(TRANSMISSION_OPTIONS, preview.transmission),
+        },
+        preview.note && { label: "Note", value: preview.note },
+      ].filter(Boolean) as PreviewRow[])
+    : [];
 
   return (
     <AppDialog
@@ -79,9 +122,7 @@ export const HireRequestDialog = function ({
       description="Tell us when you need them. Our team reviews every hire and sends you an invoice - you pay nothing now."
     >
       <form
-        onSubmit={handleSubmit((data) =>
-          mutate({ ...data, driverId: driverUserId }),
-        )}
+        onSubmit={handleSubmit((data) => setPreview(data))}
         className="space-y-4"
       >
         <div className="bg-brand-soft/60 flex items-center justify-between rounded-xl px-4 py-3">
@@ -100,6 +141,17 @@ export const HireRequestDialog = function ({
           label="Engagement type"
           options={ENGAGEMENT_OPTIONS}
         />
+
+        {watch("engagement_type") === "CONTRACT" && (
+          <FormInput<HireRequestFormValues>
+            control={control}
+            name="duration_days"
+            errors={errors}
+            label="For how many days?"
+            inputMode="numeric"
+            placeholder="E.g 14"
+          />
+        )}
 
         <FormDatePicker<HireRequestFormValues>
           control={control}
@@ -134,13 +186,30 @@ export const HireRequestDialog = function ({
           placeholder="E.g school runs on weekdays, occasional weekend trips"
         />
 
-        <Button
-          isLoading={isPending}
-          className="h-12 w-full rounded-lg text-sm"
-        >
-          Submit hire request
+        <Button className="h-12 w-full rounded-lg text-sm">
+          Review hire request
         </Button>
       </form>
+
+      <RequestPreviewDialog
+        isOpen={!!preview}
+        onOpenChange={(open) => {
+          if (!open) setPreview(null);
+        }}
+        rows={previewRows}
+        onConfirm={() =>
+          preview &&
+          mutate({
+            ...preview,
+            duration_days:
+              preview.engagement_type === "CONTRACT" && preview.duration_days
+                ? preview.duration_days
+                : undefined,
+            driverId: driverUserId,
+          })
+        }
+        isSubmitting={isPending}
+      />
     </AppDialog>
   );
 };

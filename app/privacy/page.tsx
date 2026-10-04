@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <LegalShell title="Privacy policy" updated="29 September 2026">
+    <LegalShell title="Privacy policy" updated="4 October 2026">
       <section>
         <p>
           This policy explains what personal data Haya Drivers ("we", "us")
@@ -30,12 +30,24 @@ export default function PrivacyPolicy() {
             Usage data: pages visited, device and browser information, and IP
             address, used for security and to improve the product.
           </li>
+          <li>
+            Visitor statistics on our public pages: we count unique daily
+            visitors using a one-way hash of IP address and browser information.
+            The raw IP address is never stored for this purpose and no cookie is
+            set.
+          </li>
+          <li>
+            Support chat messages: what you write to our support chat, including
+            the automated assistant described in section 2.
+          </li>
         </ul>
         <h3>Clients</h3>
         <ul>
           <li>
             Organisation details where applicable, hiring preferences, and the
-            requirements you describe in hire requests.
+            requirements you describe in hire requests - including any optional
+            preferences you state about a driver's ethnicity, religion or age
+            range.
           </li>
           <li>
             Proof-of-payment documents you upload so we can confirm bank
@@ -50,13 +62,21 @@ export default function PrivacyPolicy() {
             and employment history.
           </li>
           <li>
+            Profile details you provide during onboarding: date of birth,
+            gender, languages, and - optionally - your religion and ethnicity.
+            Religion and ethnicity are sensitive personal data: providing them
+            is entirely voluntary, they are used only to match you with clients
+            who state a preference, and leaving them blank never counts against
+            you.
+          </li>
+          <li>
             Guarantor and reference details: their name, relationship, phone
             number, address and NIN, which you must have their consent to
             provide.
           </li>
           <li>
             Payout details: your bank account name, number and bank, used only
-            to pay you.
+            to pay out your remaining in-app earnings balance.
           </li>
         </ul>
       </section>
@@ -67,8 +87,19 @@ export default function PrivacyPolicy() {
           <li>To verify drivers before they can be hired.</li>
           <li>
             To match clients with suitable drivers and broker engagements.
+            Stated preferences (such as ethnicity, religion or age range) guide
+            our matching team; they are never used as automatic filters.
           </li>
-          <li>To administer invoices, confirm payments and settle salaries.</li>
+          <li>
+            To administer invoices for our service fee and confirm payments.
+            Driver salaries are paid by clients to drivers directly and do not
+            pass through us.
+          </li>
+          <li>
+            To answer support chats: an automated assistant generates the first
+            reply using the text of your conversation. When it cannot help, or
+            when you ask, a human support agent takes over.
+          </li>
           <li>
             To send transactional notifications and emails about your account
             and engagements.
@@ -84,10 +115,12 @@ export default function PrivacyPolicy() {
         <ul>
           <li>
             Clients see a driver's professional profile (name, photograph,
-            driver type, experience, trust score, city and state, advertised
-            rate). A driver's phone number, WhatsApp number and email are
-            released to a client only after that client's payment for the
-            engagement is confirmed.
+            driver type, experience, trust score, city and state, languages,
+            advertised rate). Your religion and ethnicity are never shown on
+            your profile - only our matching team sees them, and only to match a
+            stated client preference. A driver's phone number, WhatsApp number
+            and email are released to a client only after that client's payment
+            for the engagement is confirmed.
           </li>
           <li>
             Drivers see the engagement details a client provides (schedule,
@@ -95,9 +128,11 @@ export default function PrivacyPolicy() {
           </li>
           <li>
             Service providers who process data for us: cloud hosting, media
-            storage (Cloudinary), email delivery (Resend) and payment
-            processing. They may only use the data to provide their service to
-            us.
+            storage (Cloudinary), email delivery (Resend), payment processing
+            for driver payouts, and AI inference providers (Groq and OpenRouter)
+            that process the text of support-chat conversations to generate the
+            automated assistant's replies. They may only use the data to provide
+            their service to us.
           </li>
           <li>
             Law enforcement or regulators where the law requires it, or to
@@ -150,7 +185,8 @@ export default function PrivacyPolicy() {
         <p>
           We use cookies strictly to keep you signed in and to remember which
           surface of the platform your session belongs to. We do not use
-          advertising or cross-site tracking cookies.
+          advertising or cross-site tracking cookies, and our visitor statistics
+          work without cookies entirely.
         </p>
       </section>
 

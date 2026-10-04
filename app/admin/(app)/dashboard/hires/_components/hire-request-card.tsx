@@ -38,9 +38,10 @@ import {
   XCircle,
 } from "lucide-react";
 import { useState } from "react";
+import { PricingGuideDialog } from "./pricing-guide-dialog";
 import type { AdminUserRow } from "@/types/admin";
-import type { HireRequest } from "@/types/hire";
-import type { PaginatedResponse } from "@/types/response";
+import type { HireInvoiceQuote, HireRequest } from "@/types/hire";
+import type { APIResponse, PaginatedResponse } from "@/types/response";
 
 interface Props {
   request: HireRequest;
@@ -103,8 +104,29 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
   const invoice = request.invoice;
 
   const amountMinor = Math.round(Number(amountMajor || 0) * 100);
-  const salaryMinor = amountMinor * Math.max(request.drivers_needed, 1);
-  const vatMinor = Math.round((salaryMinor * Number(vatPercent || 0)) / 100);
+
+  // The server owns the pricing maths - the dialog shows its quote verbatim.
+  const debouncedAmount = useDebounce(amountMajor, 400);
+  const debouncedVat = useDebounce(vatPercent, 400);
+  const quoteParams = new URLSearchParams();
+  if (Number(debouncedAmount) > 0)
+    quoteParams.set(
+      "amount_minor",
+      String(Math.round(Number(debouncedAmount) * 100)),
+    );
+  if (debouncedVat !== "") quoteParams.set("vat_percent", debouncedVat);
+
+  const { data: quoteData, isFetching: isQuoting } = useGetData<
+    APIResponse<HireInvoiceQuote>
+  >({
+    url: API_ENDPOINTS.adminHires.invoiceQuote(
+      request.reference,
+      quoteParams.toString(),
+    ),
+    shouldFetch:
+      invoiceOpen && request.status === "PENDING_REVIEW" && fullyAssigned,
+  });
+  const quote = quoteData?.data;
 
   const debouncedSearch = useDebounce(driverSearch, 400);
   const { data: driverResults, isFetching: isSearching } = useGetData<
@@ -388,6 +410,12 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
                 value: `${request.duration_months} month${request.duration_months > 1 ? "s" : ""}`,
               }
             : null,
+          request.duration_days
+            ? {
+                label: "Contract length",
+                value: `${request.duration_days} day${request.duration_days > 1 ? "s" : ""}`,
+              }
+            : null,
           request.preferred_ethnicity
             ? { label: "Ethnicity", value: request.preferred_ethnicity }
             : null,
@@ -461,11 +489,7 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
         isOpen={invoiceOpen}
         onOpenChange={setInvoiceOpen}
         title="Generate invoice"
-        description={
-          request.drivers_needed > 1
-            ? `The client pays the total below; each of the ${request.drivers_needed} drivers receives the per-driver salary in full.`
-            : `The client pays the total below; ${driverName} receives the engagement amount in full.`
-        }
+        description="The client pays only the service fee plus VAT - driver salaries are paid to the drivers directly and are not part of this invoice."
       >
         <div className="space-y-4">
           <AppInput
@@ -495,36 +519,70 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
           />
 
           <div className="bg-brand-soft/60 space-y-1.5 rounded-xl px-4 py-3">
-            <span className="flex items-center justify-between">
-              <AppText type="caption" className="text-muted-foreground text-xs">
-                {request.drivers_needed > 1
-                  ? `Salary × ${request.drivers_needed} drivers`
-                  : "Amount"}
+            {quote ? (
+              <>
+                {quote.lines.map((line) => (
+                  <span
+                    key={line.label}
+                    className="flex items-center justify-between gap-3"
+                  >
+                    <AppText
+                      type="caption"
+                      className="text-muted-foreground text-xs"
+                    >
+                      {line.label}
+                    </AppText>
+                    <AppText type="label" className="shrink-0 text-sm">
+                      {formatMoney(line.amount_minor, quote.currency)}
+                    </AppText>
+                  </span>
+                ))}
+                <span className="flex items-center justify-between">
+                  <AppText
+                    type="caption"
+                    className="text-muted-foreground text-xs"
+                  >
+                    VAT ({quote.vat_percent}%)
+                  </AppText>
+                  <AppText type="label" className="text-sm">
+                    {formatMoney(quote.vat_minor, quote.currency)}
+                  </AppText>
+                </span>
+                <span className="border-border flex items-center justify-between border-t pt-1.5">
+                  <AppText type="caption" className="text-xs font-semibold">
+                    Invoice total
+                  </AppText>
+                  <AppText type="label" className="text-sm font-bold">
+                    {formatMoney(quote.total_minor, quote.currency)}
+                  </AppText>
+                </span>
+                <AppText
+                  type="caption"
+                  className="text-muted-foreground block pt-1 text-xs"
+                >
+                  Driver salary (
+                  {formatMoney(quote.per_driver_minor, quote.currency)}/month
+                  per driver) is paid directly to the driver
+                  {quote.drivers > 1 ? "s" : ""} by the client.
+                </AppText>
+              </>
+            ) : (
+              <AppText
+                type="caption"
+                className="text-muted-foreground block text-xs"
+              >
+                {isQuoting
+                  ? "Computing the quote…"
+                  : "The quote appears once the shortlist is complete."}
               </AppText>
-              <AppText type="label" className="text-sm">
-                {formatMoney(salaryMinor, currency)}
-              </AppText>
-            </span>
-            <span className="flex items-center justify-between">
-              <AppText type="caption" className="text-muted-foreground text-xs">
-                VAT ({vatPercent || 0}%)
-              </AppText>
-              <AppText type="label" className="text-sm">
-                {formatMoney(vatMinor, currency)}
-              </AppText>
-            </span>
-            {/* The platform fee is quoted server-side at issue time. */}
-            <AppText
-              type="caption"
-              className="text-muted-foreground block text-xs"
-            >
-              The payment fee is added when the invoice is issued.
-            </AppText>
+            )}
           </div>
+
+          <PricingGuideDialog />
 
           <Button
             className="h-11 w-full rounded-lg text-sm"
-            disabled={amountMinor <= 0}
+            disabled={amountMinor <= 0 || !quote}
             isLoading={isGenerating}
             onClick={() =>
               generate({
@@ -620,11 +678,11 @@ export const HireRequestCard = function ({ request, listUrl }: Props) {
         onOpenChange={setConfirmOpen}
         icon={BadgeCheck}
         title="Confirm this payment?"
-        description={`Confirming means the transfer landed in the organisation account. ${
-          assigned.length > 1
-            ? `Each of the ${assigned.length} drivers is credited ${invoice?.per_driver_minor ? formatMoney(invoice.per_driver_minor, invoice.currency) : "their salary"}`
-            : `${driverName} is credited ${invoice ? formatMoney(invoice.per_driver_minor ?? invoice.amount_minor, invoice.currency) : ""}`
-        } and the client unlocks their contact details immediately.`}
+        description={`Confirming means the transfer landed in the organisation account. The engagement${
+          assigned.length > 1 ? "s are" : " is"
+        } created and the client unlocks the contact details immediately - driver salaries are paid to the driver${
+          assigned.length > 1 ? "s" : ""
+        } directly by the client.`}
         confirmLabel="Confirm payment"
         isLoading={isConfirming}
         onConfirm={() => confirmPayment({})}
