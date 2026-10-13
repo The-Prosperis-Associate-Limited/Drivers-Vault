@@ -15,15 +15,22 @@ import { SearchX } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useDriverSearch } from "@/hooks/use-driver-search";
+import { useGetProfile } from "@/hooks/use-get-profile";
 
 const PAGE_SIZE = 6;
 
 export default function FindTalent() {
-  const [filters, setFilters] = useState<SearchFilters>({});
+  const { profile } = useGetProfile();
+  const savedBudget = profile?.client_profile?.monthly_budget;
+  const defaults: SearchFilters = savedBudget
+    ? { budget: String(savedBudget / 100) }
+    : {};
+
+  const [filters, setFilters] = useState<SearchFilters | null>(null);
   const [page, setPage] = useState(1);
 
   const { drivers, total, totalPages, isFetching } = useDriverSearch({
-    ...filters,
+    ...(filters ?? defaults),
     page,
     limit: PAGE_SIZE,
   });
@@ -41,6 +48,8 @@ export default function FindTalent() {
       </AppText>
 
       <SearchPanel
+        key={savedBudget ?? "none"}
+        defaults={defaults}
         className="border-border mt-5 border shadow-sm"
         onSearch={(next) => {
           setFilters(next);

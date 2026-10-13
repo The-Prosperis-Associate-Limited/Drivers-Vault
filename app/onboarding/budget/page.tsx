@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BUDGET_RANGE_OPTIONS } from "@/lib/utils";
-import type { BudgetRange } from "@/types/auth";
+import { AppInput } from "@/components/shared/app-input";
 import { OnboardingShell } from "../_components/onboarding-shell";
-import { OptionCard } from "../_components/option-card";
 import { usePreferences } from "../_hooks/use-preferences";
 import {
   useCompleteOnboarding,
@@ -14,10 +12,11 @@ import {
 export default function Budget() {
   const { preferences } = usePreferences();
 
-  const [budget, setBudget] = useState<BudgetRange | null>(null);
+  const [budget, setBudget] = useState("");
 
   useEffect(() => {
-    if (preferences) setBudget(preferences.budget_range);
+    if (preferences?.monthly_budget)
+      setBudget(String(preferences.monthly_budget / 100));
   }, [preferences]);
 
   const { complete, isPending: isCompleting } = useCompleteOnboarding();
@@ -30,22 +29,19 @@ export default function Budget() {
     <OnboardingShell
       step={5}
       title="What's your budget per driver?"
-      subtitle="We'll match drivers within your range. You can change this later."
+      subtitle="Tell us what you're willing to pay each month and we'll match drivers within it. You can change this later."
       isPending={isSaving || isCompleting}
-      continueDisabled={!budget}
-      onContinue={() => save({ budget_range: budget })}
+      continueDisabled={!Number(budget)}
+      onContinue={() => save({ monthly_budget: Number(budget) * 100 })}
     >
-      <p className="text-ink mb-3 text-sm font-medium">Budget range</p>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {BUDGET_RANGE_OPTIONS.map((option) => (
-          <OptionCard
-            key={option.value}
-            label={option.label}
-            selected={budget === option.value}
-            onSelect={() => setBudget(option.value)}
-          />
-        ))}
-      </div>
+      <AppInput
+        label="Monthly budget per driver (₦)"
+        placeholder="E.g 250000"
+        inputMode="numeric"
+        suffix="/ month"
+        value={budget}
+        onChange={(event) => setBudget(event.target.value.replace(/\D/g, ""))}
+      />
     </OnboardingShell>
   );
 }

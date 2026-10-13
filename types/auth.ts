@@ -21,9 +21,6 @@ export type AssignmentType = "PERMANENT" | "TEMPORARY";
 export type HiringTimeline =
   "IMMEDIATELY" | "WITHIN_TWO_WEEKS" | "THIS_MONTH" | "EXPLORING";
 
-export type BudgetRange =
-  "RANGE_150_200K" | "RANGE_201_250K" | "RANGE_251_300K" | "RANGE_301K_PLUS";
-
 export interface ClientProfile {
   id: string;
   client_type: ClientType;
@@ -35,7 +32,7 @@ export interface ClientProfile {
   assignment_type: AssignmentType | null;
   primary_location: string | null;
   hiring_timeline: HiringTimeline | null;
-  budget_range: BudgetRange | null;
+  monthly_budget: number | null;
   onboarding_completed_at: string | null;
 }
 

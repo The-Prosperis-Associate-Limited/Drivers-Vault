@@ -23,7 +23,6 @@ import type {
 } from "@/types/booking";
 import type {
   AssignmentType,
-  BudgetRange,
   ClientDriverCategory,
   DriversNeededRange,
   HiringTimeline,
@@ -701,25 +700,6 @@ export const HIRING_TIMELINE_OPTIONS: {
   { value: "THIS_MONTH", label: "This month" },
   { value: "EXPLORING", label: "Just exploring" },
 ];
-
-export const BUDGET_RANGE_OPTIONS: { value: BudgetRange; label: string }[] = [
-  { value: "RANGE_150_200K", label: "₦150k - ₦200k / month" },
-  { value: "RANGE_201_250K", label: "₦201k - ₦250k / month" },
-  { value: "RANGE_251_300K", label: "₦251k - ₦300k / month" },
-  { value: "RANGE_301K_PLUS", label: "₦301k / per month and above" },
-];
-
-// Kobo bounds per budget option - what the search actually sends. Kept beside
-// the labels so a new range is one entry, not two edits.
-export const BUDGET_RANGE_BOUNDS: Record<
-  BudgetRange,
-  { min?: number; max?: number }
-> = {
-  RANGE_150_200K: { min: 15_000_000, max: 20_000_000 },
-  RANGE_201_250K: { min: 20_100_000, max: 25_000_000 },
-  RANGE_251_300K: { min: 25_100_000, max: 30_000_000 },
-  RANGE_301K_PLUS: { min: 30_100_000 },
-};
 
 // The hire screens say "Full-time" where the booking model says MONTHLY - the
 // driver screens keep the literal engagement labels above.

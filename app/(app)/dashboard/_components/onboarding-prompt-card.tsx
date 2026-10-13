@@ -20,7 +20,7 @@ export const OnboardingPromptCard = function ({ clientProfile }: Props) {
     (clientProfile?.hiring_categories.length ?? 0) > 0,
     Boolean(clientProfile?.drivers_needed && clientProfile?.assignment_type),
     Boolean(clientProfile?.primary_location && clientProfile?.hiring_timeline),
-    Boolean(clientProfile?.budget_range),
+    Boolean(clientProfile?.monthly_budget),
   ];
   const answeredCount = answered.filter(Boolean).length;
 

@@ -1,9 +1,10 @@
 "use client";
 
+import { AppInput } from "@/components/shared/app-input";
 import { AppSelect } from "@/components/shared/app-select";
 import { Button } from "@/components/ui/button";
 import { lgaOptionsForState } from "@/lib/nigeria-lgas";
-import { BUDGET_RANGE_OPTIONS, cn, DRIVER_TYPE_OPTIONS } from "@/lib/utils";
+import { cn, DRIVER_TYPE_OPTIONS } from "@/lib/utils";
 import { State } from "country-state-city";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -101,12 +102,14 @@ export const SearchPanel = function ({
         disabled={!state}
       />
 
-      <AppSelect
-        label="Salary Budget"
-        placeholder="Any budget"
-        options={BUDGET_RANGE_OPTIONS}
-        value={budget || null}
-        onValueChange={(value) => setBudget(value ?? "")}
+      <AppInput
+        label="Salary Budget (₦)"
+        placeholder="E.g 250000"
+        inputMode="numeric"
+        suffix="/ month"
+        className="h-11"
+        value={budget}
+        onChange={(event) => setBudget(event.target.value.replace(/\D/g, ""))}
       />
 
       <Button onClick={submit} className="h-12 rounded-xl px-8 text-sm">
